@@ -1,0 +1,2 @@
+include ':popStar'
+project(':popStar').projectDir = new File(settingsDir, 'app')
