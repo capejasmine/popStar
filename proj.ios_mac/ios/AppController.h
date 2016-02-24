@@ -1,9 +1,9 @@
 #import <UIKit/UIKit.h>
-#import <AppRootController.h>
+
 
 @class RootViewController;
 
-@interface AppController : AppRootController <UIApplicationDelegate> {
+@interface AppController : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 }
 

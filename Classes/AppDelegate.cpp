@@ -1,8 +1,8 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
-
+#include "GameController.hpp"
 USING_NS_CC;
-
+using namespace std;
 AppDelegate::AppDelegate() {
 
 }
@@ -26,11 +26,21 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
-    // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
-
+    
+    //set resource search path
+    vector<string> searchPahts;
+    searchPahts.push_back("background");
+    searchPahts.push_back("config");
+    searchPahts.push_back("fonts");
+    searchPahts.push_back("particle");
+    searchPahts.push_back("sounds");
+    searchPahts.push_back("star");
+    searchPahts.push_back("ui");
+    
+    FileUtils::getInstance()->setSearchPaths(searchPahts);
+    
     // run
-    director->runWithScene(scene);
+    GameController::getInstace()->enterStartScene();
 
     return true;
 }

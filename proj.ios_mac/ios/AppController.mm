@@ -27,7 +27,7 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
-#import <AnalyticsSDK/AnalyticsSDK.h>
+//#import <AnalyticsSDK/AnalyticsSDK.h>
 
 @implementation AppController
 
@@ -87,9 +87,9 @@ static AppDelegate s_sharedApplication;
 
     cocos2d::Application::getInstance()->run();
     
-    [[Analytics getInstance] setDebugMode:true];
-    
-    [super launchingWork];
+//    [[Analytics getInstance] setDebugMode:true];
+//    
+//    [super launchingWork];
 
     return YES;
 }
