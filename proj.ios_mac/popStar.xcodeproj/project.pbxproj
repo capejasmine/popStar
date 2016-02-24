@@ -113,7 +113,7 @@
 		A22E7BF31B5E249F0005A90A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A22E7BE91B5E249F0005A90A /* OpenGLES.framework */; };
 		A22E7BF51B5E249F0005A90A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A22E7BEB1B5E249F0005A90A /* UIKit.framework */; };
 		A22E7BF71B5E24CA0005A90A /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A22E7BF61B5E24CA0005A90A /* libcurl.a */; };
-		A24DD9981BFB070F00F1E5E0 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24DD9971BFB070F00F1E5E0 /* Social.framework */; };
+		A24DD9981BFB070F00F1E5E0 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24DD9971BFB070F00F1E5E0 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A24DD99A1BFB075B00F1E5E0 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24DD9991BFB075B00F1E5E0 /* Twitter.framework */; };
 		A24DD99C1BFB076F00F1E5E0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24DD99B1BFB076F00F1E5E0 /* CFNetwork.framework */; };
 		A24DD99F1BFB079D00F1E5E0 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A24DD99D1BFB079D00F1E5E0 /* libz.1.2.5.tbd */; };

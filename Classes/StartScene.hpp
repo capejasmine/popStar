@@ -13,7 +13,7 @@
 
 USING_NS_CC;
 
-class StartScene : public Scene{
+class StartScene : public Layer{
 public:
     
     CREATE_FUNC(StartScene);

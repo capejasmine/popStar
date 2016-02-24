@@ -13,7 +13,7 @@
 
 USING_NS_CC;
 
-class GameScene : public Scene{
+class GameScene : public Layer{
 public:
     CREATE_FUNC(GameScene);
     

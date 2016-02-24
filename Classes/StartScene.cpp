@@ -15,12 +15,12 @@ Scene* StartScene::scene() {
 }
 
 bool StartScene::init() {
-    if (!Scene::init()) {
+    if (!Layer::init()) {
         return false;
     }
     
     
-    
+    log("StartScene");
     
     
     
