@@ -12,7 +12,12 @@
 #include <stdio.h>
 
 
-
+typedef enum {
+    kzOrderBackground = 1,
+    kzOrderContent = 50,
+    kzOrderUI = 100,
+    kzOrderPopUp = 200
+}LAYER_ZORDER;
 
 
 #endif /* Appconfig_hpp */

@@ -21,6 +21,8 @@ public:
     static Scene* scene();
     
     virtual bool init();
+    
+    void initBackGround();
 private:
     
 };

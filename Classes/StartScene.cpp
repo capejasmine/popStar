@@ -5,8 +5,15 @@
 //  Created by huangwen on 16/2/23.
 //
 //
+#define   BACK_GROUND_PNG   "bg_main.png"
+#define   START_PNG         "newgame.png"
+#define   RESUME_PNG        "resume.png"
+#define   RATE_PNG          "rate.png"
+#define   POP_PNG           "pop.png"
+#define   STAR_PNG          "star.png"
 
 #include "StartScene.hpp"
+#include "Appconfig.hpp"
 
 Scene* StartScene::scene() {
     Scene* pScene = Scene::create();
@@ -19,11 +26,16 @@ bool StartScene::init() {
         return false;
     }
     
-    
     log("StartScene");
-    
-    
-    
+    initBackGround();
     
     return true;
+}
+
+void StartScene::initBackGround() {
+    auto size = Director::getInstance()->getWinSize();
+    
+    auto bg = Sprite::create(BACK_GROUND_PNG);
+    addChild(bg,kzOrderBackground);
+    bg->setPosition(size/2);
 }
