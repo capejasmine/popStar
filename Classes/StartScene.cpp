@@ -37,5 +37,9 @@ void StartScene::initBackGround() {
     
     auto bg = Sprite::create(BACK_GROUND_PNG);
     addChild(bg,kzOrderBackground);
-    bg->setPosition(size/2);
+    STsetPostion(bg,size/2);
+    
+    
 }
+
+

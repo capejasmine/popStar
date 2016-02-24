@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
 #include "GameController.hpp"
+#include "Globle.hpp"
 USING_NS_CC;
 using namespace std;
 AppDelegate::AppDelegate() {
@@ -20,13 +21,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
-    glview->setDesignResolutionSize(720, 1280, ResolutionPolicy::NO_BORDER);
+    //glview->setDesignResolutionSize(640, 960, ResolutionPolicy::NO_BORDER);
     // turn on display FPS
-    director->setDisplayStats(true);
+    //director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-
+    
+    DESIGN_SIZE =  Size(720, 1280);
     
     //set resource search path
     vector<string> searchPahts;
@@ -40,10 +42,21 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     FileUtils::getInstance()->setSearchPaths(searchPahts);
     
+    initDesignScale();
+    
     // run
     GameController::getInstace()->enterStartScene();
 
     return true;
+}
+
+void AppDelegate::initDesignScale() {
+    REAL_SIZE = Director::getInstance()->getWinSize();
+    
+    float scalex = REAL_SIZE.width/DESIGN_SIZE.width;
+    float scaley = REAL_SIZE.height/DESIGN_SIZE.height;
+    
+    DESIGN_SCALE = Point(scalex,scaley);
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too

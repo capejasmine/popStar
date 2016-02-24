@@ -61,6 +61,7 @@
 		26054ADD1C7C03C500DE718B /* LoadingLaeyr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26054ADB1C7C03C500DE718B /* LoadingLaeyr.cpp */; settings = {ASSET_TAGS = (); }; };
 		261D5DF21C7D403900F7E4B8 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5DF01C7D403900F7E4B8 /* GameController.cpp */; settings = {ASSET_TAGS = (); }; };
 		261D5DFD1C7D5C4300F7E4B8 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 261D5DFC1C7D5C4300F7E4B8 /* star.png */; settings = {ASSET_TAGS = (); }; };
+		261D5E021C7D919300F7E4B8 /* Globle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E001C7D919300F7E4B8 /* Globle.cpp */; settings = {ASSET_TAGS = (); }; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -329,6 +330,8 @@
 		261D5DF11C7D403900F7E4B8 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameController.hpp; path = ../Classes/GameController.hpp; sourceTree = "<group>"; };
 		261D5DF71C7D48AE00F7E4B8 /* SingleTon.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SingleTon.hpp; path = ../Classes/SingleTon.hpp; sourceTree = "<group>"; };
 		261D5DFC1C7D5C4300F7E4B8 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		261D5E001C7D919300F7E4B8 /* Globle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Globle.cpp; path = ../Classes/Globle.cpp; sourceTree = "<group>"; };
+		261D5E011C7D919300F7E4B8 /* Globle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Globle.hpp; path = ../Classes/Globle.hpp; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -620,6 +623,8 @@
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 				26054ADF1C7C03DA00DE718B /* Appconfig.hpp */,
+				261D5E001C7D919300F7E4B8 /* Globle.cpp */,
+				261D5E011C7D919300F7E4B8 /* Globle.hpp */,
 			);
 			name = Configs;
 			sourceTree = "<group>";
@@ -1039,6 +1044,7 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				26054AD41C7C038C00DE718B /* StartScene.cpp in Sources */,
+				261D5E021C7D919300F7E4B8 /* Globle.cpp in Sources */,
 				261D5DF21C7D403900F7E4B8 /* GameController.cpp in Sources */,
 				26054ADD1C7C03C500DE718B /* LoadingLaeyr.cpp in Sources */,
 				26054AD71C7C039C00DE718B /* GameScene.cpp in Sources */,

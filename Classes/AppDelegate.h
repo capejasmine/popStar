@@ -13,7 +13,7 @@ class  AppDelegate : private cocos2d::Application
 public:
     AppDelegate();
     virtual ~AppDelegate();
-
+    
     /**
     @brief    Implement Director and Scene init code here.
     @return true    Initialize success, app continue.
@@ -32,6 +32,8 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+    
+    virtual void initDesignScale();
 };
 
 #endif // _APP_DELEGATE_H_
