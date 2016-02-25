@@ -21,10 +21,8 @@ typedef enum {
     kzOrderPopUp = 200
 }LAYER_ZORDER;
 
-void STsetPostion(Node* node,Vec2 pos){
-    node->setPosition(pos);
-    node->setScale(DESIGN_SCALE.x,DESIGN_SCALE.y);
-}
+#define     NUMX    10
+#define     NUMY    10
 
 
 

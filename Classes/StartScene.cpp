@@ -14,6 +14,7 @@
 
 #include "StartScene.hpp"
 #include "Appconfig.hpp"
+#include "GameController.hpp"
 
 Scene* StartScene::scene() {
     Scene* pScene = Scene::create();
@@ -39,7 +40,16 @@ void StartScene::initBackGround() {
     addChild(bg,kzOrderBackground);
     STsetPostion(bg,size/2);
     
+    auto start = cocos2d::ui::Button::create(START_PNG);
+    addChild(start,kzOrderUI);
+    STsetPostion(start, size/2);
+    start->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
+}
+
+void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
+    if (ui::Widget::TouchEventType::ENDED != type) return;
     
+    GameController::getInstace()->enterGameScene();
 }
 
 

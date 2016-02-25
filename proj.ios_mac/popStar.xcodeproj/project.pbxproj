@@ -62,6 +62,8 @@
 		261D5DF21C7D403900F7E4B8 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5DF01C7D403900F7E4B8 /* GameController.cpp */; settings = {ASSET_TAGS = (); }; };
 		261D5DFD1C7D5C4300F7E4B8 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 261D5DFC1C7D5C4300F7E4B8 /* star.png */; settings = {ASSET_TAGS = (); }; };
 		261D5E021C7D919300F7E4B8 /* Globle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E001C7D919300F7E4B8 /* Globle.cpp */; settings = {ASSET_TAGS = (); }; };
+		261D5E061C7D9E3B00F7E4B8 /* StartSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E041C7D9E3B00F7E4B8 /* StartSprite.cpp */; settings = {ASSET_TAGS = (); }; };
+		261D5E0A1C7DA0C500F7E4B8 /* UITools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E081C7DA0C500F7E4B8 /* UITools.cpp */; settings = {ASSET_TAGS = (); }; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -326,12 +328,17 @@
 		26054ADB1C7C03C500DE718B /* LoadingLaeyr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LoadingLaeyr.cpp; path = ../Classes/LoadingLaeyr.cpp; sourceTree = "<group>"; };
 		26054ADC1C7C03C500DE718B /* LoadingLaeyr.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = LoadingLaeyr.hpp; path = ../Classes/LoadingLaeyr.hpp; sourceTree = "<group>"; };
 		26054ADF1C7C03DA00DE718B /* Appconfig.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Appconfig.hpp; path = ../Classes/Appconfig.hpp; sourceTree = "<group>"; };
+		2617ED151C7E90B10050B1B2 /* UIHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIHeader.h; path = ../Classes/UIHeader.h; sourceTree = "<group>"; };
 		261D5DF01C7D403900F7E4B8 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameController.cpp; path = ../Classes/GameController.cpp; sourceTree = "<group>"; };
 		261D5DF11C7D403900F7E4B8 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameController.hpp; path = ../Classes/GameController.hpp; sourceTree = "<group>"; };
 		261D5DF71C7D48AE00F7E4B8 /* SingleTon.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SingleTon.hpp; path = ../Classes/SingleTon.hpp; sourceTree = "<group>"; };
 		261D5DFC1C7D5C4300F7E4B8 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		261D5E001C7D919300F7E4B8 /* Globle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Globle.cpp; path = ../Classes/Globle.cpp; sourceTree = "<group>"; };
 		261D5E011C7D919300F7E4B8 /* Globle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Globle.hpp; path = ../Classes/Globle.hpp; sourceTree = "<group>"; };
+		261D5E041C7D9E3B00F7E4B8 /* StartSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StartSprite.cpp; path = ../Classes/StartSprite.cpp; sourceTree = "<group>"; };
+		261D5E051C7D9E3B00F7E4B8 /* StartSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = StartSprite.hpp; path = ../Classes/StartSprite.hpp; sourceTree = "<group>"; };
+		261D5E081C7DA0C500F7E4B8 /* UITools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITools.cpp; path = ../Classes/UITools.cpp; sourceTree = "<group>"; };
+		261D5E091C7DA0C500F7E4B8 /* UITools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITools.h; path = ../Classes/UITools.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -499,6 +506,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				261D5E031C7D9E1F00F7E4B8 /* Star */,
 				261D5DF51C7D489100F7E4B8 /* util */,
 				26054AD11C7C013B00DE718B /* Layer */,
 				26054AD01C7C013500DE718B /* Scene */,
@@ -658,9 +666,21 @@
 		261D5DF51C7D489100F7E4B8 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				2617ED151C7E90B10050B1B2 /* UIHeader.h */,
+				261D5E081C7DA0C500F7E4B8 /* UITools.cpp */,
+				261D5E091C7DA0C500F7E4B8 /* UITools.h */,
 				261D5DF71C7D48AE00F7E4B8 /* SingleTon.hpp */,
 			);
 			name = util;
+			sourceTree = "<group>";
+		};
+		261D5E031C7D9E1F00F7E4B8 /* Star */ = {
+			isa = PBXGroup;
+			children = (
+				261D5E041C7D9E3B00F7E4B8 /* StartSprite.cpp */,
+				261D5E051C7D9E3B00F7E4B8 /* StartSprite.hpp */,
+			);
+			name = Star;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -1040,9 +1060,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				261D5E061C7D9E3B00F7E4B8 /* StartSprite.cpp in Sources */,
 				26054ADA1C7C03B800DE718B /* PopLayer.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
+				261D5E0A1C7DA0C500F7E4B8 /* UITools.cpp in Sources */,
 				26054AD41C7C038C00DE718B /* StartScene.cpp in Sources */,
 				261D5E021C7D919300F7E4B8 /* Globle.cpp in Sources */,
 				261D5DF21C7D403900F7E4B8 /* GameController.cpp in Sources */,

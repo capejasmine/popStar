@@ -10,6 +10,7 @@
 #define StartScene_hpp
 
 #include "cocos2d.h"
+#include "cocosgui.h"
 
 USING_NS_CC;
 
@@ -23,6 +24,8 @@ public:
     virtual bool init();
     
     void initBackGround();
+    
+    void touchDown(Ref* pSender,ui::Widget::TouchEventType type);
 private:
     
 };

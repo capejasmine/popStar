@@ -17,4 +17,6 @@ extern Size DESIGN_SIZE;
 extern Size REAL_SIZE;
 extern Point DESIGN_SCALE;
 
+void STsetPostion(Node* node,Vec2 pos);
+
 #endif /* Globle_hpp */
