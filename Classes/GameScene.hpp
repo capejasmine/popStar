@@ -18,6 +18,8 @@ class GameScene : public Layer{
 public:
     GameScene();
     
+    ~GameScene();
+    
     CREATE_FUNC(GameScene);
     
     static Scene* scene();
@@ -27,7 +29,14 @@ public:
     void initBackGround();
     
     void initStar();
+    //touch event
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event);
+    virtual void onTouchMoved(Touch *touch, Event *unused_event);
+    virtual void onTouchEnded(Touch *touch, Event *unused_event);
+    virtual void onTouchCancelled(Touch *touch, Event *unused_event);
+    
 private:
+    
     StartSprite** m_starArr;
     
     int m_width;
