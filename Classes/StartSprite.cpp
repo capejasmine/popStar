@@ -21,7 +21,7 @@ StartSprite* StartSprite::create(int row, int col) {
     auto star = new StartSprite();
     auto filename = star->getStarFilename();
     if (star && star->initWithFile(filename)) {
-        star->setName(filename);
+        star->setData(filename, row, col);
         star->autorelease();
         star->initAction(row, col);
         return star;
@@ -43,6 +43,16 @@ void StartSprite::initAction(int row, int col){
     auto fallTime = row/5;
     auto fallAction = MoveTo::create(fallTime, Vec2(60 + starSize * col, 36 + starSize * row));
     runAction(fallAction);
+}
+
+void StartSprite::setData(std::string name, int row, int col) {
+    m_data.name = name;
+    m_data.row = row;
+    m_data.col = col;
+}
+
+starData StartSprite::getData() {
+    return m_data;
 }
 
 

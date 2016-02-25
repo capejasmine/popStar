@@ -21,6 +21,12 @@ enum kStarColorTag{
     kYellowTag
 };
 
+struct starData{
+    int row;
+    int col;
+    std::string name;
+};
+
 class StartSprite : public Sprite {
 public:
     
@@ -30,8 +36,12 @@ public:
     
     void initAction(int row, int col);
     
-private:
+    void setData(std::string name, int row, int col);
     
+    starData getData();
+    
+private:
+    starData m_data;
 };
 
 #endif /* StartSprite_hpp */

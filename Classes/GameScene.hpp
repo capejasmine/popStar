@@ -20,6 +20,8 @@ public:
     
     ~GameScene();
     
+    CC_SYNTHESIZE(StartSprite*, curentStar, CurrentTouchStar);
+    
     CREATE_FUNC(GameScene);
     
     static Scene* scene();
@@ -29,6 +31,10 @@ public:
     void initBackGround();
     
     void initStar();
+    
+    void cheakSameColorStar(StartSprite* star);
+    
+    void removeSameColorStar();
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
@@ -38,6 +44,10 @@ public:
 private:
     
     StartSprite** m_starArr;
+    
+    std::list<StartSprite*> sameColorList;
+    
+    std::list<StartSprite*> cheakedColorList;
     
     int m_width;
     
