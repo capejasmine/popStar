@@ -112,23 +112,79 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
 
 void GameScene::cheakSameColorStar(StartSprite* star)  {
     // 判断四周(上下左右) 相同颜色的star
-    // 1. 超过边界 return
-    // 2. 如果为空  return
-    // 3. 已经检查过了 return
+    
+    
+    cheakedColorList.push_back(star);
+    
     // 4. 颜色不一样 return
     
     //top
-        
     
+    cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
     
     //down
     
+    cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kDown);
+    
     //left
+    
+    cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col - 1], kSideTag::kLeft);
     
     //right
     
+    cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col + 1], kSideTag::kRight);
+}
+
+StartSprite* GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
+    // 1. 如果为空 return
+    if (star == nullptr)
+    {
+        return nullptr;
+    }
+    
+    // 2. 超过边界  return
+        starData data = star->getData();
+    if(data.row > 9 || data.row < 0 || data.col > 9 || data.col < 0)
+    {
+        return nullptr;
+    }
+    
+    // 3. 已经检查过了 return
+    for (auto s : cheakedColorList) {
+        if (s == star) {
+            return nullptr;
+        }
+    }
+    
+    cheakedColorList.push_back(star);
+    
+    if (star->getName().compare(getCurrentTouchStar()->getName()) == 0) {
+        sameColorList.push_back(star);
+        
+        switch (side) {
+            case kSideTag::kTop:
+                return cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
+                break;
+            case kSideTag::kDown:
+                return cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kTop);
+                break;
+            case kSideTag::kLeft:
+                return cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col - 1], kSideTag::kTop);
+                break;
+            case kSideTag::kRight:
+                return cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col + 1], kSideTag::kTop);
+                break;
+            default:
+                break;
+        }
+    }
+    else
+    {
+        return nullptr;
+    }
     
 }
+
 
 void GameScene::removeSameColorStar() {
     

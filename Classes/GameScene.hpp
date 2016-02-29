@@ -14,6 +14,13 @@
 
 USING_NS_CC;
 
+enum kSideTag{
+    kTop = 567,
+    kDown,
+    kLeft,
+    kRight
+};
+
 class GameScene : public Layer{
 public:
     GameScene();
@@ -35,6 +42,9 @@ public:
     void cheakSameColorStar(StartSprite* star);
     
     void removeSameColorStar();
+    
+    StartSprite* cheakFourSide(StartSprite* star, kSideTag side);
+    
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
