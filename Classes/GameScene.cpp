@@ -93,6 +93,8 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
                 else
                 {
                     //第一次点击  判断  四周相同颜色star 加入队列
+                    sameColorList.clear();
+                    cheakedColorList.clear();
                     setCurrentTouchStar(target);
                     this->cheakSameColorStar(target);
                     
@@ -121,11 +123,11 @@ void GameScene::cheakSameColorStar(StartSprite* star)  {
     //top
     
     if(star->getData().row + 1 <= 9)
-        cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
+    cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
     
     //down
     if(star->getData().row - 1 >= 0)
-        cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kDown);
+    cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kDown);
     
     //left
     if(star->getData().col - 1 >= 0)
@@ -135,38 +137,38 @@ void GameScene::cheakSameColorStar(StartSprite* star)  {
     if(star->getData().col + 1 <= 9)
     cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col + 1], kSideTag::kRight);
     
-    auto scaleAction = ScaleTo::create(0.2, 1.08f);
-    for (auto same : sameColorList) {
-        same->runAction(scaleAction);
-    }
 }
 
-StartSprite* GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
+void GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
     // 1. 如果为空 return
     if (star == nullptr)
     {
-        return nullptr;
+        return;
     }
     
     // 2. 超过边界  return
         starData data = star->getData();
     if(data.row > 9 || data.row < 0 || data.col > 9 || data.col < 0)
     {
-        return nullptr;
+        return;
     }
     
     // 3. 已经检查过了 return
     for (auto s : cheakedColorList) {
         if (s == star) {
-            return nullptr;
+            return;
         }
     }
     
-    cheakedColorList.push_back(star);
+    //cheakedColorList.push_back(star);
     
     log("star = %s curr = %s ", star->getData().name.c_str(),getCurrentTouchStar()->getData().name.c_str());
     if (star->getData().name.compare(getCurrentTouchStar()->getData().name) == 0) {
         sameColorList.push_back(star);
+        
+        auto scaleAction = ScaleTo::create(0.2, 1.08f);
+        star->runAction(scaleAction);
+        
         log(".................");
         for (auto s : sameColorList) {
         
@@ -176,39 +178,35 @@ StartSprite* GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
         switch (side) {
             case kSideTag::kTop:{
                 if(star->getData().row + 1 <= 9)
-                    return cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
+                    cheakSameColorStar(star);
                 else
-                    return nullptr;
+                    return;
             }
                 break;
             case kSideTag::kDown:{
                 if(star->getData().row - 1 >= 0)
-                    return cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kTop);
+                    cheakSameColorStar(star);
                 else
-                    return nullptr;
+                    return;
             }
                 break;
             case kSideTag::kLeft:{
                 if(star->getData().col - 1 >= 0)
-                    return cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col - 1], kSideTag::kTop);
+                    cheakSameColorStar(star);
                 else
-                    return nullptr;
+                    return;
             }
                 break;
             case kSideTag::kRight:{
                 if(star->getData().col + 1 <= 9)
-                    return cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col + 1], kSideTag::kTop);
+                    cheakSameColorStar(star);
                 else
-                    return nullptr;
+                    return;
             }
                 break;
             default:
                 break;
         }
-    }
-    else
-    {
-        return nullptr;
     }
     
 }

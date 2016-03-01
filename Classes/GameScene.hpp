@@ -43,7 +43,7 @@ public:
     
     void removeSameColorStar();
     
-    StartSprite* cheakFourSide(StartSprite* star, kSideTag side);
+    void cheakFourSide(StartSprite* star, kSideTag side);
     
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
