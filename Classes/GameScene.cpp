@@ -120,19 +120,25 @@ void GameScene::cheakSameColorStar(StartSprite* star)  {
     
     //top
     
-    cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
+    if(star->getData().row + 1 <= 9)
+        cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
     
     //down
-    
-    cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kDown);
+    if(star->getData().row - 1 >= 0)
+        cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kDown);
     
     //left
-    
+    if(star->getData().col - 1 >= 0)
     cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col - 1], kSideTag::kLeft);
     
     //right
-    
+    if(star->getData().col + 1 <= 9)
     cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col + 1], kSideTag::kRight);
+    
+    auto scaleAction = ScaleTo::create(0.2, 1.08f);
+    for (auto same : sameColorList) {
+        same->runAction(scaleAction);
+    }
 }
 
 StartSprite* GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
@@ -158,21 +164,43 @@ StartSprite* GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
     
     cheakedColorList.push_back(star);
     
-    if (star->getName().compare(getCurrentTouchStar()->getName()) == 0) {
+    log("star = %s curr = %s ", star->getData().name.c_str(),getCurrentTouchStar()->getData().name.c_str());
+    if (star->getData().name.compare(getCurrentTouchStar()->getData().name) == 0) {
         sameColorList.push_back(star);
+        log(".................");
+        for (auto s : sameColorList) {
+        
+            log("row = %d , col = %d ",s->getData().row,s->getData().col);
+        }
         
         switch (side) {
-            case kSideTag::kTop:
-                return cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
+            case kSideTag::kTop:{
+                if(star->getData().row + 1 <= 9)
+                    return cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
+                else
+                    return nullptr;
+            }
                 break;
-            case kSideTag::kDown:
-                return cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kTop);
+            case kSideTag::kDown:{
+                if(star->getData().row - 1 >= 0)
+                    return cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kTop);
+                else
+                    return nullptr;
+            }
                 break;
-            case kSideTag::kLeft:
-                return cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col - 1], kSideTag::kTop);
+            case kSideTag::kLeft:{
+                if(star->getData().col - 1 >= 0)
+                    return cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col - 1], kSideTag::kTop);
+                else
+                    return nullptr;
+            }
                 break;
-            case kSideTag::kRight:
-                return cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col + 1], kSideTag::kTop);
+            case kSideTag::kRight:{
+                if(star->getData().col + 1 <= 9)
+                    return cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col + 1], kSideTag::kTop);
+                else
+                    return nullptr;
+            }
                 break;
             default:
                 break;
