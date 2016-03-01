@@ -45,6 +45,7 @@ public:
     
     void cheakFourSide(StartSprite* star, kSideTag side);
     
+    
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     virtual void onTouchMoved(Touch *touch, Event *unused_event);

@@ -81,29 +81,41 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
     for (int row = 0; row < NUMX; row ++) {
         for (int col = 0; col <NUMY; col ++) {
             auto target = m_starArr[row * m_width + col];
-            if (target->getBoundingBox().containsPoint(point)) {
-                // 判断 是否是第一次点击star
-                if (getCurrentTouchStar() == target) {
-                    // 第二次点击  消除 star 队列
-                    this->removeSameColorStar();
-                    
-                    // 当前点击star 设置为空
-                    setCurrentTouchStar(nullptr);
-                }
-                else
-                {
-                    //第一次点击  判断  四周相同颜色star 加入队列
-                    sameColorList.clear();
-                    cheakedColorList.clear();
+            if(target){
+                if (target->getBoundingBox().containsPoint(point)) {
+                    // 判断 是否是第一次点击star
+                    if (getCurrentTouchStar() == target) {
+                        // 第二次点击  消除 star 队列  (在相同颜色列表中获取点击位置判断)
+                        this->removeSameColorStar();
+                        
+                        // 当前点击star 设置为空
+                        setCurrentTouchStar(nullptr);
+                    }
+                    else
+                    {
+                        //第一次点击  判断  四周相同颜色star 加入队列
+                        
+                        
+                        if(sameColorList.size() != 0)
+                        {
+                            auto action = ScaleTo::create(0.2, 1.0f);
+                            for (auto cava : sameColorList) {
+                                cava->runAction(action);
+                            }
+                        }
+                        sameColorList.clear();
+                        cheakedColorList.clear();
+                        
+                        setCurrentTouchStar(target);
+                        this->cheakSameColorStar(target);
+                        
+                    }
                     setCurrentTouchStar(target);
-                    this->cheakSameColorStar(target);
                     
+                    //auto touchAction = Sequence::create(ScaleTo::create(0.1, 1.2), DelayTime::create(0.15), ScaleTo::create(0.1, 1.0),NULL);
+                    //target->runAction(touchAction);
+                    return true;
                 }
-                setCurrentTouchStar(target);
-                
-                auto touchAction = Sequence::create(ScaleTo::create(0.1, 1.2), DelayTime::create(0.15), ScaleTo::create(0.1, 1.0),NULL);
-                target->runAction(touchAction);
-                return true;
             }
         }
     }
@@ -113,27 +125,29 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
 }
 
 void GameScene::cheakSameColorStar(StartSprite* star)  {
-    // 判断四周(上下左右) 相同颜色的star
+    
     
     
     cheakedColorList.push_back(star);
+    sameColorList.push_back(star);
     
-    // 4. 颜色不一样 return
     
-    //top
+    // 判断四周(上下左右) 相同颜色的star
+    
+    //      top
     
     if(star->getData().row + 1 <= 9)
     cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
     
-    //down
+    //      down
     if(star->getData().row - 1 >= 0)
     cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kDown);
     
-    //left
+    //      left
     if(star->getData().col - 1 >= 0)
     cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col - 1], kSideTag::kLeft);
     
-    //right
+    //      right
     if(star->getData().col + 1 <= 9)
     cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col + 1], kSideTag::kRight);
     
@@ -162,9 +176,11 @@ void GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
     
     //cheakedColorList.push_back(star);
     
+    // 4. 颜色不一样 return
+    
     log("star = %s curr = %s ", star->getData().name.c_str(),getCurrentTouchStar()->getData().name.c_str());
     if (star->getData().name.compare(getCurrentTouchStar()->getData().name) == 0) {
-        sameColorList.push_back(star);
+        
         
         auto scaleAction = ScaleTo::create(0.2, 1.08f);
         star->runAction(scaleAction);
@@ -213,7 +229,13 @@ void GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
 
 
 void GameScene::removeSameColorStar() {
-    
+    setCurrentTouchStar(nullptr);
+    log("--------removeSameColorStar--------");
+    for (auto cava : sameColorList) {
+        starData data = cava->getData();
+        cava->removeFromParent();
+        m_starArr[data.row * m_width + data.col] = nullptr;
+    }
 }
 
 
