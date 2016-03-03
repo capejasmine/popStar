@@ -45,6 +45,9 @@ public:
     
     void cheakFourSide(StartSprite* star, kSideTag side);
     
+    bool inSameColorList(StartSprite* star);
+    
+    void cheakAndFallStar();
     
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);

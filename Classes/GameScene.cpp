@@ -84,7 +84,7 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
             if(target){
                 if (target->getBoundingBox().containsPoint(point)) {
                     // 判断 是否是第一次点击star
-                    if (getCurrentTouchStar() == target) {
+                    if (getCurrentTouchStar() == target || inSameColorList(target)) {
                         // 第二次点击  消除 star 队列  (在相同颜色列表中获取点击位置判断)
                         this->removeSameColorStar();
                         
@@ -95,7 +95,7 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
                     {
                         //第一次点击  判断  四周相同颜色star 加入队列
                         
-                        
+                        // 若不为空
                         if(sameColorList.size() != 0)
                         {
                             auto action = ScaleTo::create(0.2, 1.0f);
@@ -121,6 +121,16 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
     }
     
     
+    return false;
+}
+
+bool GameScene::inSameColorList(StartSprite* star) {
+    for( auto s : sameColorList)
+    {
+        if (star == s) {
+            return true;
+        }
+    }
     return false;
 }
 
@@ -235,6 +245,40 @@ void GameScene::removeSameColorStar() {
         starData data = cava->getData();
         cava->removeFromParent();
         m_starArr[data.row * m_width + data.col] = nullptr;
+    }
+    
+    sameColorList.clear();
+    cheakedColorList.clear();
+    
+    // 消除 后 检查 掉落
+    this->cheakAndFallStar();
+}
+
+void GameScene::cheakAndFallStar() {
+    for (int row = 0; row < m_width; row++) {
+        for (int col = 0; col < m_height; col++) {
+            auto target = m_starArr[row * m_width + col];
+            if (target == nullptr) {
+                // 如果 目标 为空 那么 由他上面那个方块掉下补充
+                if (row + 1 < m_height) {
+                    auto temp = m_starArr[(row + 1) * m_width + col];
+                    
+                    if(temp != nullptr){
+                        target = temp;
+                        // action
+                        
+//                        auto action = MoveBy::create(0.1f, Vec2(0, -72));
+//                        temp->runAction(action);
+                        
+                        temp = nullptr;
+                    }
+                }
+            }
+            
+            
+            
+            
+        }
     }
 }
 
