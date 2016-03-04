@@ -260,17 +260,33 @@ void GameScene::cheakAndFallStar() {
             auto target = m_starArr[row * m_width + col];
             if (target == nullptr) {
                 // 如果 目标 为空 那么 由他上面那个方块掉下补充
-                if (row + 1 < m_height) {
-                    auto temp = m_starArr[(row + 1) * m_width + col];
-                    
-                    if(temp != nullptr){
-                        target = temp;
-                        // action
-                        
-//                        auto action = MoveBy::create(0.1f, Vec2(0, -72));
-//                        temp->runAction(action);
-                        
-                        temp = nullptr;
+//                if (row + 1 < m_height) {
+//                    auto temp = m_starArr[(row + 1) * m_width + col];
+//                    int i = 0;
+//                    while(temp == nullptr){
+//                        temp = m_starArr[(row + i) * m_width +col];
+//                    }
+//                    target = temp;
+//                    // action
+//                    
+//                    //                        auto action = MoveBy::create(0.1f, Vec2(0, -72));
+//                    //                        temp->runAction(action);
+//                    
+//                    temp = nullptr;
+//                }
+                for (int i = 1; i < m_height; i++) {
+                    if (row + i < m_height) {
+                        auto temp = m_starArr[(row + i) * m_width + col];
+                        if (temp !=nullptr) {
+                            //action
+                            target = temp;
+                            
+                            auto action = MoveBy::create(0.1 * i, Vec2(0, -(72 * i)));
+                            temp->runAction(action);
+                            
+                            temp = nullptr;
+                            break;
+                        }
                     }
                 }
             }
