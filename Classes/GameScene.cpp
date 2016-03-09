@@ -124,7 +124,7 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
     return false;
 }
 
-bool GameScene::inSameColorList(StartSprite* star) {
+bool GameScene::inSameColorList(StartSprite* star) { //判断 第二次点击是否在 已经检测过的 一样颜色的队列中 也可以消除
     for( auto s : sameColorList)
     {
         if (star == s) {
@@ -201,38 +201,39 @@ void GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
             log("row = %d , col = %d ",s->getData().row,s->getData().col);
         }
         
-        switch (side) {
-            case kSideTag::kTop:{
-                if(star->getData().row + 1 <= 9)
-                    cheakSameColorStar(star);
-                else
-                    return;
-            }
-                break;
-            case kSideTag::kDown:{
-                if(star->getData().row - 1 >= 0)
-                    cheakSameColorStar(star);
-                else
-                    return;
-            }
-                break;
-            case kSideTag::kLeft:{
-                if(star->getData().col - 1 >= 0)
-                    cheakSameColorStar(star);
-                else
-                    return;
-            }
-                break;
-            case kSideTag::kRight:{
-                if(star->getData().col + 1 <= 9)
-                    cheakSameColorStar(star);
-                else
-                    return;
-            }
-                break;
-            default:
-                break;
-        }
+//        switch (side) {
+//            case kSideTag::kTop:{
+//                //if(star->getData().row + 1 <= 9)
+//                    cheakSameColorStar(star);
+//                //else
+//                    //return;
+//            }
+//                break;
+//            case kSideTag::kDown:{
+//                //if(star->getData().row - 1 >= 0)
+//                    cheakSameColorStar(star);
+//                //else
+//                    //return;
+//            }
+//                break;
+//            case kSideTag::kLeft:{
+//                //if(star->getData().col - 1 >= 0)
+//                    cheakSameColorStar(star);
+//                //else
+//                    //return;
+//            }
+//                break;
+//            case kSideTag::kRight:{
+//               // if(star->getData().col + 1 <= 9)
+//                    cheakSameColorStar(star);
+//               // else
+//                  //  return;
+//            }
+//                break;
+//            default:
+//                break;
+//        }
+        cheakSameColorStar(star);  // 最后 简单的让我 恍然大悟
     }
     
 }
@@ -260,8 +261,8 @@ void GameScene::cheakAndFallStar() {
             auto target = m_starArr[row * m_width + col];
             if (target == nullptr) {
                 // 如果 目标 为空 那么 由他上面那个方块掉下补充
-//                if (row + 1 < m_height) {
-//                    auto temp = m_starArr[(row + 1) * m_width + col];
+//                if (col + 1 < m_height) {
+//                    auto temp = m_starArr[row * m_width + (col + 1)];
 //                    int i = 0;
 //                    while(temp == nullptr){
 //                        temp = m_starArr[(row + i) * m_width +col];
@@ -274,21 +275,21 @@ void GameScene::cheakAndFallStar() {
 //                    
 //                    temp = nullptr;
 //                }
-                for (int i = 1; i < m_height; i++) {
-                    if (row + i < m_height) {
-                        auto temp = m_starArr[(row + i) * m_width + col];
-                        if (temp !=nullptr) {
-                            //action
-                            target = temp;
-                            
-                            auto action = MoveBy::create(0.1 * i, Vec2(0, -(72 * i)));
-                            temp->runAction(action);
-                            
-                            temp = nullptr;
-                            break;
-                        }
-                    }
-                }
+//                for (int i = 1; i < m_height; i++) {
+//                    if (row + i < m_height) {
+//                        auto temp = m_starArr[(row + i) * m_width + col];
+//                        if (temp !=nullptr) {
+//                            //action
+//                            target = temp;
+//                            
+//                            auto action = MoveBy::create(0.1 * i, Vec2(0, -(72 * i)));
+//                            temp->runAction(action);
+//                            
+//                            temp = nullptr;
+//                            break;
+//                        }
+//                    }
+//                }
             }
             
             
