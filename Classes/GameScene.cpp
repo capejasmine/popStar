@@ -259,47 +259,52 @@ void GameScene::cheakAndFallStar() {
     for (int row = 0; row < m_width; row++) {
         for (int col = 0; col < m_height; col++) {
             auto target = m_starArr[row * m_width + col];
+            
             if (target == nullptr) {
+                log("target = %d %d",row,col);
                 // 如果 目标 为空 那么 由他上面那个方块掉下补充
-//                if (col + 1 < m_height) {
-//                    auto temp = m_starArr[row * m_width + (col + 1)];
-//                    int i = 0;
-//                    while(temp == nullptr){
-//                        temp = m_starArr[(row + i) * m_width +col];
-//                    }
-//                    target = temp;
-//                    // action
-//                    
-//                    //                        auto action = MoveBy::create(0.1f, Vec2(0, -72));
-//                    //                        temp->runAction(action);
-//                    
-//                    temp = nullptr;
-//                }
-//                for (int i = 1; i < m_height; i++) {
-//                    if (row + i < m_height) {
-//                        auto temp = m_starArr[(row + i) * m_width + col];
-//                        if (temp !=nullptr) {
-//                            //action
-//                            target = temp;
-//                            
-//                            auto action = MoveBy::create(0.1 * i, Vec2(0, -(72 * i)));
-//                            temp->runAction(action);
-//                            
-//                            temp = nullptr;
-//                            break;
-//                        }
-//                    }
-//                }
+                StartSprite* temp = nullptr;
+                int dest = row;
+                do{
+                    if (++dest < m_width ) {
+                        log("temp = %d %d",dest,col);
+                        temp = m_starArr[dest * m_width + col];
+                    }
+                    else
+                    {
+                        // 如果超过上边界 还没找到 那么就跳出循环
+                        break;
+                    }
+                    
+                }while (temp == nullptr);
+                
+                if(temp != nullptr) //再次判断， 因为temp 也可能为空
+                { // 交换 数据 并执行 动作
+                    temp->runAction(MoveBy::create(0.2, Vec2(0, -(dest - row) * 72)));
+                    temp->setData(temp->getData().name, row, col);
+                    m_starArr[dest* m_width + col] = nullptr;
+                    m_starArr[row* m_width + col] = temp;
+                }
             }
             
-            
-            
+        }
+    }
+    // 掉落后 检查是否需要 合并
+    this->cheakAndCombineStar();
+}
+
+
+void GameScene::cheakAndCombineStar() {
+    for (int row = 0; row < m_width; row++) {
+        for (int col = 0; col <m_height; col++) {
             
         }
     }
 }
 
-
+void GameScene::swapStarPlace(StartSprite* starA, StartSprite* starB) {
+    
+}
 
 void GameScene::onTouchMoved(Touch *touch, Event *unused_event) {
     log("----touchMove----");
