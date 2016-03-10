@@ -295,9 +295,22 @@ void GameScene::cheakAndFallStar() {
 
 
 void GameScene::cheakAndCombineStar() {
-    for (int row = 0; row < m_width; row++) {
-        for (int col = 0; col <m_height; col++) {
-            
+    for (int col = 0; col < m_width; col++) {
+        if(m_starArr[col] == nullptr)
+        {   // 掉落后的 最底部 为空 执行合并
+            if (col + 1 < m_height) {  // 判断是否为最后一列
+                int temp_col = col + 1;
+                for(int row = 0; row < m_height; row++)
+                {
+                    auto temp = m_starArr[row * m_width + col];
+                    if (temp != nullptr) {
+                        temp->runAction(MoveBy::create(0.2, Vec2(-72, 0)));
+                        temp->setData(temp->getData().name, row, col);
+                        m_starArr[row* m_width + temp_col] = nullptr;
+                        m_starArr[row* m_width + col] = temp;
+                    }
+                }
+            }
         }
     }
 }
