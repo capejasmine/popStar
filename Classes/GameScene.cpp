@@ -110,7 +110,7 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
                         this->cheakSameColorStar(target);
                         
                     }
-                    setCurrentTouchStar(target);
+                    //setCurrentTouchStar(target);
                     
                     //auto touchAction = Sequence::create(ScaleTo::create(0.1, 1.2), DelayTime::create(0.15), ScaleTo::create(0.1, 1.0),NULL);
                     //target->runAction(touchAction);
@@ -280,6 +280,7 @@ void GameScene::cheakAndFallStar() {
                 
                 if(temp != nullptr) //再次判断， 因为temp 也可能为空
                 { // 交换 数据 并执行 动作
+                    log("temp : name = %s row = %d,col = %d",temp->getData().name.c_str(),temp->getData().row,temp->getData().col);
                     temp->runAction(MoveBy::create(0.2, Vec2(0, -(dest - row) * 72)));
                     temp->setData(temp->getData().name, row, col);
                     m_starArr[dest* m_width + col] = nullptr;
@@ -295,21 +296,36 @@ void GameScene::cheakAndFallStar() {
 
 
 void GameScene::cheakAndCombineStar() {
-    for (int col = 0; col < m_width; col++) {
+    for (int col = 0; col < m_height; col++) {   // 因为 首先执行下落 所以底部为空 那么那一列就为空 所以只需 判断底部一行
         if(m_starArr[col] == nullptr)
         {   // 掉落后的 最底部 为空 执行合并
             if (col + 1 < m_height) {  // 判断是否为最后一列
-                int temp_col = col + 1;
-                for(int row = 0; row < m_height; row++)
-                {
-                    auto temp = m_starArr[row * m_width + col];
-                    if (temp != nullptr) {
-                        temp->runAction(MoveBy::create(0.2, Vec2(-72, 0)));
-                        temp->setData(temp->getData().name, row, col);
-                        m_starArr[row* m_width + temp_col] = nullptr;
-                        m_starArr[row* m_width + col] = temp;
+                int temp_col = col;
+                StartSprite* temp = nullptr;
+                do{
+                    if (++temp_col < m_height) {
+                        temp = m_starArr[temp_col];  // temp 只是找出 那一列的底部不为空
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }while(temp == nullptr);
+                
+                if(temp != nullptr){ //再次判断， 因为temp 也可能为空
+                    // 开始 合并
+                    for (int row = 0; row < m_width; row++) {
+                        auto temp_star = m_starArr[row * m_width + temp_col];  // 逐个 移动
+                        if(temp_star != nullptr)
+                        {
+                            temp_star->runAction(MoveBy::create(0.2, Vec2(-72 * (temp_col - col), 0)));
+                            temp_star->setData(temp_star->getData().name, row, col);
+                            m_starArr[row * m_width + temp_col] = nullptr;
+                            m_starArr[row * m_width + col] = temp_star;
+                        }
                     }
                 }
+                
             }
         }
     }
