@@ -9,6 +9,7 @@
 
 
 #include "GameScene.hpp"
+#include "AudioController.hpp"
 #include "Appconfig.hpp"
 
 GameScene::GameScene()
@@ -45,6 +46,8 @@ bool GameScene::init() {
     initStar();
     setCurrentTouchStar(nullptr);
     
+    //Audio->playMuic("");
+    
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     listener->onTouchBegan =  CC_CALLBACK_2(GameScene::onTouchBegan, this);
@@ -62,6 +65,10 @@ void GameScene::initBackGround() {
     auto bg = Sprite::create(BACK_GROUND_PNG);
     addChild(bg,kzOrderBackground);
     STsetPostion(bg,size/2);
+    
+    auto bg_particle = ParticleSystemQuad::create("bg_environment" + std::to_string(rand()%4) + ".plist");
+    addChild(bg_particle,kzOrderPopUp);
+    STsetPostion(bg_particle,Vec2(size.width/2,size.height));
     
 }
 
@@ -86,10 +93,13 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
                     // 判断 是否是第一次点击star
                     if (getCurrentTouchStar() == target || inSameColorList(target)) {
                         // 第二次点击  消除 star 队列  (在相同颜色列表中获取点击位置判断)
-                        this->removeSameColorStar();
-                        
-                        // 当前点击star 设置为空
-                        setCurrentTouchStar(nullptr);
+                        if(sameColorList.size() > 1) //  单个 的不能消除
+                        {
+                            this->removeSameColorStar();
+                            
+                            // 当前点击star 设置为空
+                            setCurrentTouchStar(nullptr);
+                        }
                     }
                     else
                     {
@@ -136,7 +146,8 @@ bool GameScene::inSameColorList(StartSprite* star) { //判断 第二次点击是
 
 void GameScene::cheakSameColorStar(StartSprite* star)  {
     
-    
+    auto scaleAction = ScaleTo::create(0.2, 1.08f);
+    star->runAction(scaleAction);
     
     cheakedColorList.push_back(star);
     sameColorList.push_back(star);
@@ -192,8 +203,6 @@ void GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
     if (star->getData().name.compare(getCurrentTouchStar()->getData().name) == 0) {
         
         
-        auto scaleAction = ScaleTo::create(0.2, 1.08f);
-        star->runAction(scaleAction);
         
         log(".................");
         for (auto s : sameColorList) {
@@ -244,7 +253,8 @@ void GameScene::removeSameColorStar() {
     log("--------removeSameColorStar--------");
     for (auto cava : sameColorList) {
         starData data = cava->getData();
-        cava->removeFromParent();
+        cava->deadAction();
+        //cava->removeFromParent();
         m_starArr[data.row * m_width + data.col] = nullptr;
     }
     

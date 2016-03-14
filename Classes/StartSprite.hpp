@@ -38,7 +38,11 @@ public:
     
     void setData(std::string name, int row, int col);
     
+    void deadAction();
+    
     starData getData();
+    
+    
     
 private:
     starData m_data;

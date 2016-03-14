@@ -15,6 +15,7 @@
 #include "StartScene.hpp"
 #include "Appconfig.hpp"
 #include "GameController.hpp"
+#include "AudioController.hpp"
 
 Scene* StartScene::scene() {
     Scene* pScene = Scene::create();
@@ -49,6 +50,7 @@ void StartScene::initBackGround() {
 void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
     if (ui::Widget::TouchEventType::ENDED != type) return;
     
+    Audio->playEffect("click.mp3");
     GameController::getInstace()->enterGameScene();
 }
 

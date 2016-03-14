@@ -12,6 +12,8 @@
 #define   STAR_RED          "star_r.png"
 #define   STAR_YELLOW       "star_y.png"
 
+#define   STAR_DEAD_PARTICLE  "point_star.plist"
+
 #include "StartSprite.hpp"
 #include "Globle.hpp"
 #include "UITools.h"
@@ -55,7 +57,16 @@ starData StartSprite::getData() {
     return m_data;
 }
 
-
+void StartSprite::deadAction() {
+    auto particle = ParticleSystemQuad::create(STAR_DEAD_PARTICLE);
+    particle->setPosition(getContentSize()/2);
+    addChild(particle);
+    
+    auto dead = Sequence::create(ScaleTo::create(0.3, 0), CallFunc::create([&](){
+        this->removeFromParent();
+    }),NULL);
+    runAction(dead);
+}
 
 
 
