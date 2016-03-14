@@ -11,6 +11,7 @@
 #include "GameScene.hpp"
 #include "AudioController.hpp"
 #include "Appconfig.hpp"
+#include "ScoreManager.hpp"
 
 GameScene::GameScene()
 :m_starArr(NULL)
@@ -401,7 +402,6 @@ void GameScene::cheakAndGameOver() {
     log("cheakAndGameOver()  sameColorList.szie =   %ld", sameColorList.size() - m_countStar);
     if(sameColorList.size() - m_countStar < 1)  //  减去 每次遍历 添加的 m_countStar 个本体,  剩下的就是目前游戏中还 可以 消除的 队列数
     {
-        
         log("gameOver");
     }
     

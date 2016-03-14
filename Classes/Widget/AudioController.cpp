@@ -6,7 +6,7 @@
 //
 //
 
-#include "widget/AudioController.hpp"
+#include "AudioController.hpp"
 #include "SimpleAudioEngine.h"
 
 using namespace CocosDenshion;

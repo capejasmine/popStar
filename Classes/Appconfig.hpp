@@ -24,6 +24,7 @@ typedef enum {
 #define     NUMX    10
 #define     NUMY    10
 
+#define     POPSTAR_SCORE        "popstar_core"
 
 
 #endif /* Appconfig_hpp */
