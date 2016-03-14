@@ -28,6 +28,7 @@ public:
     ~GameScene();
     
     CC_SYNTHESIZE(StartSprite*, curentStar, CurrentTouchStar);
+    CC_SYNTHESIZE(bool, touch, touchTag);
     
     CREATE_FUNC(GameScene);
     
@@ -43,6 +44,8 @@ public:
     
     void removeSameColorStar();
     
+    void playBrokenEffect();
+    
     void cheakFourSide(StartSprite* star, kSideTag side);
     
     bool inSameColorList(StartSprite* star);
@@ -50,8 +53,6 @@ public:
     void cheakAndFallStar();
     
     void cheakAndCombineStar();
-    
-    void swapStarPlace(StartSprite* starA, StartSprite* starB);
     
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);

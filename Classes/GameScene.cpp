@@ -45,7 +45,7 @@ bool GameScene::init() {
     initBackGround();
     initStar();
     setCurrentTouchStar(nullptr);
-    
+    settouchTag(true);
     //Audio->playMuic("");
     
     auto listener = EventListenerTouchOneByOne::create();
@@ -84,47 +84,54 @@ void GameScene::initStar() {
 
 
 bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
+    if (gettouchTag()) {  // 还没有消除 不能点击
+    
     auto point = touch->getLocation();
-    for (int row = 0; row < NUMX; row ++) {
-        for (int col = 0; col <NUMY; col ++) {
-            auto target = m_starArr[row * m_width + col];
-            if(target){
-                if (target->getBoundingBox().containsPoint(point)) {
-                    // 判断 是否是第一次点击star
-                    if (getCurrentTouchStar() == target || inSameColorList(target)) {
-                        // 第二次点击  消除 star 队列  (在相同颜色列表中获取点击位置判断)
-                        if(sameColorList.size() > 1) //  单个 的不能消除
-                        {
-                            this->removeSameColorStar();
-                            
-                            // 当前点击star 设置为空
-                            setCurrentTouchStar(nullptr);
-                        }
-                    }
-                    else
-                    {
-                        //第一次点击  判断  四周相同颜色star 加入队列
-                        
-                        // 若不为空
-                        if(sameColorList.size() != 0)
-                        {
-                            auto action = ScaleTo::create(0.2, 1.0f);
-                            for (auto cava : sameColorList) {
-                                cava->runAction(action);
+        for (int row = 0; row < NUMX; row ++) {
+            for (int col = 0; col <NUMY; col ++) {
+                auto target = m_starArr[row * m_width + col];
+                if(target){
+                    if (target->getBoundingBox().containsPoint(point)) {
+                        // 判断 是否是第一次点击star
+                        if (getCurrentTouchStar() == target || inSameColorList(target)) {
+                            // 第二次点击  消除 star 队列  (在相同颜色列表中获取点击位置判断)
+                            if(sameColorList.size() > 1) //  单个 的不能消除
+                            {
+                                settouchTag(false);
+                                
+                                this->playBrokenEffect();
+                                this->removeSameColorStar();
+                                
+                                // 当前点击star 设置为空
+                                setCurrentTouchStar(nullptr);
                             }
                         }
-                        sameColorList.clear();
-                        cheakedColorList.clear();
+                        else
+                        {
+                            //第一次点击  判断  四周相同颜色star 加入队列
+                            Audio->playEffect("select.mp3");
+                            
+                            // 若不为空
+                            if(sameColorList.size() != 0)
+                            {
+                                auto action = ScaleTo::create(0.2, 1.0f);
+                                for (auto cava : sameColorList) {
+                                    cava->runAction(action);
+                                }
+                            }
+                            sameColorList.clear();
+                            cheakedColorList.clear();
+                            
+                            setCurrentTouchStar(target);
+                            this->cheakSameColorStar(target);
+                            
+                        }
+                        //setCurrentTouchStar(target);
                         
-                        setCurrentTouchStar(target);
-                        this->cheakSameColorStar(target);
-                        
+                        //auto touchAction = Sequence::create(ScaleTo::create(0.1, 1.2), DelayTime::create(0.15), ScaleTo::create(0.1, 1.0),NULL);
+                        //target->runAction(touchAction);
+                        return true;
                     }
-                    //setCurrentTouchStar(target);
-                    
-                    //auto touchAction = Sequence::create(ScaleTo::create(0.1, 1.2), DelayTime::create(0.15), ScaleTo::create(0.1, 1.0),NULL);
-                    //target->runAction(touchAction);
-                    return true;
                 }
             }
         }
@@ -251,18 +258,42 @@ void GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
 void GameScene::removeSameColorStar() {
     setCurrentTouchStar(nullptr);
     log("--------removeSameColorStar--------");
-    for (auto cava : sameColorList) {
-        starData data = cava->getData();
-        cava->deadAction();
+//    for (auto cava : sameColorList) {
+//        
+//        starData data = cava->getData();
+//        cava->deadAction();
+//        //cava->removeFromParent();
+//        m_starArr[data.row * m_width + data.col] = nullptr;
+//    }
+    auto time = sameColorList.size() - 1;
+    auto repeat = Repeat::create(Sequence::create(CallFunc::create([=](){
+        auto it = sameColorList.back();
+        sameColorList.pop_back();
+        
+        starData data = it->getData();
+        it->deadAction();
         //cava->removeFromParent();
         m_starArr[data.row * m_width + data.col] = nullptr;
-    }
+    }), DelayTime::create(0.08f),NULL), time);
+    runAction(repeat);
     
-    sameColorList.clear();
-    cheakedColorList.clear();
+    auto delay = CallFunc::create([=](){
+        sameColorList.clear();
+        cheakedColorList.clear();
+        
+        // 消除 后 检查 掉落
+        this->cheakAndFallStar();
+    });
     
-    // 消除 后 检查 掉落
-    this->cheakAndFallStar();
+    runAction(Sequence::create(repeat, delay,NULL));
+}
+
+void GameScene::playBrokenEffect() {
+    auto count = sameColorList.size();
+    auto repeat = Repeat::create(Sequence::create(CallFunc::create([=](){
+        Audio->playEffect("broken.mp3");
+    }), DelayTime::create(0.05),NULL), count);
+    runAction(repeat);
 }
 
 void GameScene::cheakAndFallStar() {
@@ -339,10 +370,8 @@ void GameScene::cheakAndCombineStar() {
             }
         }
     }
-}
-
-void GameScene::swapStarPlace(StartSprite* starA, StartSprite* starB) {
     
+    settouchTag(true);
 }
 
 void GameScene::onTouchMoved(Touch *touch, Event *unused_event) {

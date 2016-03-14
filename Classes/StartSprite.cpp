@@ -62,7 +62,7 @@ void StartSprite::deadAction() {
     particle->setPosition(getContentSize()/2);
     addChild(particle);
     
-    auto dead = Sequence::create(ScaleTo::create(0.3, 0), CallFunc::create([&](){
+    auto dead = Sequence::create(ScaleTo::create(0.4, 0), CallFunc::create([&](){
         this->removeFromParent();
     }),NULL);
     runAction(dead);
