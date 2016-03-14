@@ -40,19 +40,21 @@ public:
     
     void initStar();
     
-    void cheakSameColorStar(StartSprite* star);
+    void cheakSameColorStar(StartSprite* star,bool tag);
     
     void removeSameColorStar();
     
     void playBrokenEffect();
     
-    void cheakFourSide(StartSprite* star, kSideTag side);
+    void cheakFourSide(StartSprite* star, kSideTag side, bool tag);
     
     bool inSameColorList(StartSprite* star);
     
     void cheakAndFallStar();
     
     void cheakAndCombineStar();
+    
+    void cheakAndGameOver();
     
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
@@ -71,6 +73,9 @@ private:
     int m_width;
     
     int m_height;
+    
+    int m_countStar;  // 记录总数 判断是否结束游戏
+    
 };
 
 #endif /* GameScene_hpp */

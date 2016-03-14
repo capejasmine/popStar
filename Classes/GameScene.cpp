@@ -6,7 +6,7 @@
 //
 //
 #define   BACK_GROUND_PNG   "bg_main.png"
-
+#define   STAR_COUNT        100;
 
 #include "GameScene.hpp"
 #include "AudioController.hpp"
@@ -36,6 +36,7 @@ bool GameScene::init() {
     
     m_width = NUMX;
     m_height = NUMY;
+    m_countStar = STAR_COUNT;
     int arrSize = sizeof(StartSprite*) * m_width * m_height;
     m_starArr = (StartSprite**)malloc(arrSize);
     memset((void*)m_starArr, 0, arrSize);
@@ -123,7 +124,7 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
                             cheakedColorList.clear();
                             
                             setCurrentTouchStar(target);
-                            this->cheakSameColorStar(target);
+                            this->cheakSameColorStar(target, true);
                             
                         }
                         //setCurrentTouchStar(target);
@@ -151,13 +152,17 @@ bool GameScene::inSameColorList(StartSprite* star) { //判断 第二次点击是
     return false;
 }
 
-void GameScene::cheakSameColorStar(StartSprite* star)  {
-    
-    auto scaleAction = ScaleTo::create(0.2, 1.08f);
-    star->runAction(scaleAction);
+void GameScene::cheakSameColorStar(StartSprite* star,bool tag)  {
+    if(tag) // tag区分 判断 还是 检查
+    {
+        // 递归调用 检查 star
+        auto scaleAction = ScaleTo::create(0.2, 1.08f);
+        star->runAction(scaleAction);
+    }
     
     cheakedColorList.push_back(star);
     sameColorList.push_back(star);
+    
     
     
     // 判断四周(上下左右) 相同颜色的star
@@ -165,23 +170,23 @@ void GameScene::cheakSameColorStar(StartSprite* star)  {
     //      top
     
     if(star->getData().row + 1 <= 9)
-    cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop);
+    cheakFourSide(m_starArr[(star->getData().row + 1)* m_width + star->getData().col], kSideTag::kTop, tag);
     
     //      down
     if(star->getData().row - 1 >= 0)
-    cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kDown);
+    cheakFourSide(m_starArr[(star->getData().row - 1)* m_width + star->getData().col], kSideTag::kDown, tag);
     
     //      left
     if(star->getData().col - 1 >= 0)
-    cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col - 1], kSideTag::kLeft);
+    cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col - 1], kSideTag::kLeft, tag);
     
     //      right
     if(star->getData().col + 1 <= 9)
-    cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col + 1], kSideTag::kRight);
+    cheakFourSide(m_starArr[star->getData().row * m_width + star->getData().col + 1], kSideTag::kRight, tag);
     
 }
 
-void GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
+void GameScene::cheakFourSide(StartSprite* star, kSideTag side, bool tag) {
     // 1. 如果为空 return
     if (star == nullptr)
     {
@@ -249,7 +254,7 @@ void GameScene::cheakFourSide(StartSprite* star, kSideTag side) {
 //            default:
 //                break;
 //        }
-        cheakSameColorStar(star);  // 最后 简单的让我 恍然大悟
+        cheakSameColorStar(star, tag);  // 最后 简单的让我 恍然大悟
     }
     
 }
@@ -265,7 +270,10 @@ void GameScene::removeSameColorStar() {
 //        //cava->removeFromParent();
 //        m_starArr[data.row * m_width + data.col] = nullptr;
 //    }
-    auto time = sameColorList.size() - 1;
+    // 延时 播放消失动作
+    m_countStar -= sameColorList.size();
+    
+    auto time = sameColorList.size() - 1;   // 因为 执行循环动作 默认执行一次 所以要减一
     auto repeat = Repeat::create(Sequence::create(CallFunc::create([=](){
         auto it = sameColorList.back();
         sameColorList.pop_back();
@@ -285,10 +293,15 @@ void GameScene::removeSameColorStar() {
         this->cheakAndFallStar();
     });
     
-    runAction(Sequence::create(repeat, delay,NULL));
+    runAction(Sequence::create(repeat, delay,CallFunc::create([=](){
+        this->cheakAndGameOver();
+    }),NULL));
+    
 }
 
 void GameScene::playBrokenEffect() {
+    // 延时 播放 star 消失音效
+    
     auto count = sameColorList.size();
     auto repeat = Repeat::create(Sequence::create(CallFunc::create([=](){
         Audio->playEffect("broken.mp3");
@@ -372,6 +385,29 @@ void GameScene::cheakAndCombineStar() {
     }
     
     settouchTag(true);
+    
+}
+
+void GameScene::cheakAndGameOver() {
+    for (int row = 0; row < NUMX; row++) {
+        for (int col = 0; col < NUMY; col++) {
+            auto target = m_starArr[row * m_width + col];
+            if (target) {
+                setCurrentTouchStar(target);
+                cheakSameColorStar(target, false);
+            }
+        }
+    }
+    log("cheakAndGameOver()  sameColorList.szie =   %ld", sameColorList.size() - m_countStar);
+    if(sameColorList.size() - m_countStar < 1)  //  减去 每次遍历 添加的 m_countStar 个本体,  剩下的就是目前游戏中还 可以 消除的 队列数
+    {
+        
+        log("gameOver");
+    }
+    
+    sameColorList.clear();
+    cheakedColorList.clear();
+    
 }
 
 void GameScene::onTouchMoved(Touch *touch, Event *unused_event) {
