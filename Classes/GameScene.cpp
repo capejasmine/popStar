@@ -12,6 +12,7 @@
 #include "AudioController.hpp"
 #include "Appconfig.hpp"
 #include "ScoreManager.hpp"
+#include "GameController.hpp"
 
 GameScene::GameScene()
 :m_starArr(NULL)
@@ -43,7 +44,7 @@ bool GameScene::init() {
     memset((void*)m_starArr, 0, arrSize);
     
     
-    
+    xScor->initScore();
     initBackGround();
     initStar();
     setCurrentTouchStar(nullptr);
@@ -298,6 +299,7 @@ void GameScene::removeSameColorStar() {
         this->cheakAndGameOver();
     }),NULL));
     
+    xScor->addScore(sameColorList.size());
 }
 
 void GameScene::playBrokenEffect() {
@@ -403,11 +405,45 @@ void GameScene::cheakAndGameOver() {
     if(sameColorList.size() - m_countStar < 1)  //  减去 每次遍历 添加的 m_countStar 个本体,  剩下的就是目前游戏中还 可以 消除的 队列数
     {
         log("gameOver");
+        settouchTag(false);
+        
+        if (xScor->getScore() > xScor->getTaskScore(1)) {
+            // 过关
+            Audio->playEffect("fire.mp3");
+            m_popLayer = PopLayer::create("");
+            m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
+            m_popLayer->setText("Are you sure quit the game?");
+            addChild(m_popLayer,kzOrderPopUp,"pop");
+        }
+        else
+        {
+            Audio->playEffect("gameover.mp3");
+        }
     }
     
     sameColorList.clear();
     cheakedColorList.clear();
     
+}
+
+void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
+    if(ui::Widget::TouchEventType::ENDED != type) return;
+    
+    auto target = (Widget*)obj;
+    std::string name = target->getName();
+    
+    
+}
+
+void GameScene::yesBtnCall() {
+    // 保存 退出游戏
+    xScor->saveScore();
+    xGam->enterStartScene();
+}
+
+void GameScene::noBtnCall() {
+    m_popLayer->removeFromParent();
+    m_popLayer = nullptr;
 }
 
 void GameScene::onTouchMoved(Touch *touch, Event *unused_event) {

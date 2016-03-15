@@ -9,9 +9,12 @@
 #include "ScoreManager.hpp"
 #include "Appconfig.hpp"
 
+void ScoreManager::initScore() {
+    m_score = xUser->getIntegerForKey(POPSTAR_SCORE, 0);
+}
+
 void ScoreManager::resetScore() {
-    m_score = 0;
-    xUser->setIntegerForKey(POPSTAR_SCORE, m_score);
+    xUser->setIntegerForKey(POPSTAR_SCORE, 0);
     xUser->flush();
 }
 
@@ -25,6 +28,9 @@ void ScoreManager::addScore(int pair) {
 }
 
 int ScoreManager::getScore() {
-    return xUser->getIntegerForKey(POPSTAR_SCORE);
+    return m_score;
 }
 
+int ScoreManager::getTaskScore(int level) {
+    return 1000 * (1 + level) * level/2;
+}

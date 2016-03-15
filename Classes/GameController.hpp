@@ -13,6 +13,8 @@
 #include "GameScene.hpp"
 #include "SingleTon.hpp"
 
+#define  xGam       GameController::getInstace()
+
 enum KSceneType{
     kTagStartScene = 111,
     kTagGameScene

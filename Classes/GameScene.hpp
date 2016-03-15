@@ -11,6 +11,8 @@
 
 #include "cocos2d.h"
 #include "StartSprite.hpp"
+#include "cocosGui.h"
+#include "PopLayer.hpp"
 
 USING_NS_CC;
 
@@ -56,11 +58,17 @@ public:
     
     void cheakAndGameOver();
     
+    void yesBtnCall();
+    
+    void noBtnCall();
+    
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
     virtual void onTouchEnded(Touch *touch, Event *unused_event);
     virtual void onTouchCancelled(Touch *touch, Event *unused_event);
+    
+    void touchDown(Ref* obj, ui::Widget::TouchEventType type);
     
 private:
     
@@ -75,6 +83,8 @@ private:
     int m_height;
     
     int m_countStar;  // 记录总数 判断是否结束游戏
+    
+    PopLayer* m_popLayer;
     
 };
 
