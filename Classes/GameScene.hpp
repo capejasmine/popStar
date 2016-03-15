@@ -62,6 +62,8 @@ public:
     
     void noBtnCall();
     
+    void saveData();
+    
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
@@ -85,6 +87,8 @@ private:
     int m_countStar;  // 记录总数 判断是否结束游戏
     
     PopLayer* m_popLayer;
+    
+    std::string m_data;
     
 };
 

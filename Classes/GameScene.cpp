@@ -73,6 +73,12 @@ void GameScene::initBackGround() {
     addChild(bg_particle,kzOrderPopUp);
     STsetPostion(bg_particle,Vec2(size.width/2,size.height));
     
+    
+    auto back = ui::Button::create("save&exit.png");
+    back->addTouchEventListener(CC_CALLBACK_2(GameScene::touchDown, this));
+    addChild(back,kzOrderUI);
+    back->setPosition(Vec2(size.width/2,size.height));
+    
 }
 
 void GameScene::initStar() {
@@ -426,12 +432,19 @@ void GameScene::cheakAndGameOver() {
     
 }
 
+
+void GameScene::saveData() {
+    
+    
+    
+}
+
+
 void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
     if(ui::Widget::TouchEventType::ENDED != type) return;
     
     auto target = (Widget*)obj;
     std::string name = target->getName();
-    
     
 }
 

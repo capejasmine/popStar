@@ -34,3 +34,6 @@ int ScoreManager::getScore() {
 int ScoreManager::getTaskScore(int level) {
     return 1000 * (1 + level) * level/2;
 }
+
+
+

@@ -73,6 +73,7 @@
 		261D5E021C7D919300F7E4B8 /* Globle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E001C7D919300F7E4B8 /* Globle.cpp */; };
 		261D5E061C7D9E3B00F7E4B8 /* StartSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E041C7D9E3B00F7E4B8 /* StartSprite.cpp */; };
 		261D5E0A1C7DA0C500F7E4B8 /* UITools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E081C7DA0C500F7E4B8 /* UITools.cpp */; };
+		26AA79D71C97E93C00D097A0 /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26AA79D51C97E93C00D097A0 /* DataManager.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -359,6 +360,8 @@
 		261D5E051C7D9E3B00F7E4B8 /* StartSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = StartSprite.hpp; path = ../Classes/StartSprite.hpp; sourceTree = "<group>"; };
 		261D5E081C7DA0C500F7E4B8 /* UITools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITools.cpp; path = ../Classes/UITools.cpp; sourceTree = "<group>"; };
 		261D5E091C7DA0C500F7E4B8 /* UITools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITools.h; path = ../Classes/UITools.h; sourceTree = "<group>"; };
+		26AA79D51C97E93C00D097A0 /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataManager.cpp; path = ../Classes/DataManager.cpp; sourceTree = "<group>"; };
+		26AA79D61C97E93C00D097A0 /* DataManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DataManager.hpp; path = ../Classes/DataManager.hpp; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -698,6 +701,8 @@
 				260CDF121C9668C80027A797 /* AudioController.hpp */,
 				260CDF151C96ADAF0027A797 /* ScoreManager.cpp */,
 				260CDF161C96ADAF0027A797 /* ScoreManager.hpp */,
+				26AA79D51C97E93C00D097A0 /* DataManager.cpp */,
+				26AA79D61C97E93C00D097A0 /* DataManager.hpp */,
 			);
 			name = widget;
 			sourceTree = "<group>";
@@ -1110,6 +1115,7 @@
 				26054ADA1C7C03B800DE718B /* PopLayer.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
+				26AA79D71C97E93C00D097A0 /* DataManager.cpp in Sources */,
 				261D5E0A1C7DA0C500F7E4B8 /* UITools.cpp in Sources */,
 				26054AD41C7C038C00DE718B /* StartScene.cpp in Sources */,
 				261D5E021C7D919300F7E4B8 /* Globle.cpp in Sources */,
