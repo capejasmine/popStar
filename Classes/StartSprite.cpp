@@ -38,7 +38,7 @@ StartSprite* StartSprite::createWithTag(int row, int col, int tag) {
     }else
     {
         auto star = new StartSprite();
-        auto filename = star->getStarFilename();
+        auto filename = star->getStarFilenameWhihTag(tag);
         if (star && star->initWithFile(filename)) {
             star->setData(filename, row, col);
             star->autorelease();
@@ -55,6 +55,30 @@ std::string StartSprite::getStarFilename() {
     
     int len = sizeof(arrStar)/sizeof(arrStar[0]) - 1;
     return arrStar[quickRandom(0, len)];
+}
+
+std::string StartSprite::getStarFilenameWhihTag(int tag) {
+    switch (tag) {
+        case 1:
+            return STAR_BLUE;
+            break;
+        case 2:
+            return STAR_GREEN;
+            break;
+        case 3:
+            return STAR_PURPLE;
+            break;
+        case 4:
+            return STAR_RED;
+            break;
+        case 5:
+            return STAR_YELLOW;
+            break;
+        default:
+            break;
+    }
+    CCASSERT(!tag, "dont exsit the tag picture");
+    return nullptr;
 }
 
 void StartSprite::initAction(int row, int col){

@@ -15,7 +15,7 @@ void DataManager::saveToFile(StartSprite** m_starArr) {
         for (int col = 0; col < 10; col++) {
             auto target = m_starArr[row * 10 + col];
             if (target) {
-                data.append((getTagFromNmae(target->getData().name)));
+                data.append((getTagFromNmae(target->getData().name))); // 将star信息以tag 的形式追加到 string中
             }
             else
             {
@@ -23,13 +23,15 @@ void DataManager::saveToFile(StartSprite** m_starArr) {
             }
         }
     }
-    
+    //  构造一个valuemap 然后 保存在 指定 路径
     Value value =  Value(data);
     
     ValueMap map;
     map["data"] = value;
     auto path = FileUtils::getInstance()->getWritablePath();
-    auto fullPath = path + "/Data";
+    auto fullPath = path + "data.plist";
+    
+    log("----path = %s", fullPath.c_str());
     FileUtils::getInstance()->writeToFile(map, fullPath);
 }
 
@@ -49,9 +51,10 @@ std::string DataManager::getTagFromNmae(std::string name) {
 
 
 std::string DataManager::getData() {
-    auto path = FileUtils::getInstance()->getWritablePath() + "/Data";
+    auto path = FileUtils::getInstance()->getWritablePath() + "data.plist";
     bool exist = FileUtils::getInstance()->isFileExist(path);
     
+    // 查看文件是否存在
     if (exist) {
         auto map = FileUtils::getInstance()->getValueMapFromFile(path);
         std::string data = map["data"].asString();
@@ -62,4 +65,18 @@ std::string DataManager::getData() {
     return nullptr;
 }
 
+bool DataManager::isExsitRecord() {
+    auto path = FileUtils::getInstance()->getWritablePath() + "data.plist";
+    return FileUtils::getInstance()->isFileExist(path);
+}
+
+void DataManager::removeRecord() {
+    auto path = FileUtils::getInstance()->getWritablePath() + "data.plist";
+    bool exist = FileUtils::getInstance()->isFileExist(path);
+    
+    // 查看文件是否存在
+    if (exist) {
+        std::remove(path.c_str());
+    }
+}
 

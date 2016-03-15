@@ -36,6 +36,8 @@ public:
     
     std::string getStarFilename();
     
+    std::string getStarFilenameWhihTag(int tag);
+    
     void initAction(int row, int col);
     
     void setData(std::string name, int row, int col);

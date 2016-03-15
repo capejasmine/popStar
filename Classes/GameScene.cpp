@@ -47,8 +47,14 @@ bool GameScene::init() {
     
     xScor->initScore();
     initBackGround();
-    initStar();
-    //intStarWithRecord();
+    
+    if(!xData->isExsitRecord()){
+        initStar();
+    }
+    else{
+        intStarWithRecord();
+    }
+    
     setCurrentTouchStar(nullptr);
     settouchTag(true);
     //Audio->playMuic("");
@@ -249,38 +255,6 @@ void GameScene::cheakFourSide(StartSprite* star, kSideTag side, bool tag) {
             log("row = %d , col = %d ",s->getData().row,s->getData().col);
         }
         
-//        switch (side) {
-//            case kSideTag::kTop:{
-//                //if(star->getData().row + 1 <= 9)
-//                    cheakSameColorStar(star);
-//                //else
-//                    //return;
-//            }
-//                break;
-//            case kSideTag::kDown:{
-//                //if(star->getData().row - 1 >= 0)
-//                    cheakSameColorStar(star);
-//                //else
-//                    //return;
-//            }
-//                break;
-//            case kSideTag::kLeft:{
-//                //if(star->getData().col - 1 >= 0)
-//                    cheakSameColorStar(star);
-//                //else
-//                    //return;
-//            }
-//                break;
-//            case kSideTag::kRight:{
-//               // if(star->getData().col + 1 <= 9)
-//                    cheakSameColorStar(star);
-//               // else
-//                  //  return;
-//            }
-//                break;
-//            default:
-//                break;
-//        }
         cheakSameColorStar(star, tag);  // 最后 简单的让我 恍然大悟
     }
     
@@ -465,7 +439,8 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
     auto target = (Widget*)obj;
     std::string name = target->getName();
     
-    xData->saveToFile(m_starArr);
+    xData->saveToFile(m_starArr); // 保存 star 数据信息
+    yesBtnCall();
 }
 
 void GameScene::yesBtnCall() {

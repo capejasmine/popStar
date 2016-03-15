@@ -19,12 +19,15 @@ USING_NS_CC;
 
 class DataManager : public SingleTon<DataManager>{
 public:
+    void removeRecord();
     
     void saveToFile(StartSprite** m_starArr);
     
     std::string getTagFromNmae(std::string name);
     
     std::string getData();
+    
+    bool isExsitRecord();
     
 private:
     
