@@ -42,6 +42,8 @@ public:
     
     void initStar();
     
+    void intStarWithRecord();
+    
     void cheakSameColorStar(StartSprite* star,bool tag);
     
     void removeSameColorStar();

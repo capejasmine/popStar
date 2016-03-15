@@ -32,6 +32,8 @@ public:
     
     static StartSprite* create(int row, int col);
     
+    static StartSprite* createWithTag(int row, int col, int tag);
+    
     std::string getStarFilename();
     
     void initAction(int row, int col);

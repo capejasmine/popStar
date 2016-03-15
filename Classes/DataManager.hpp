@@ -13,6 +13,8 @@
 #include "SingleTon.hpp"
 #include "StartSprite.hpp"
 
+#define xData       DataManager::getInstace()
+
 USING_NS_CC;
 
 class DataManager : public SingleTon<DataManager>{

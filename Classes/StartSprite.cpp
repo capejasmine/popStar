@@ -32,6 +32,24 @@ StartSprite* StartSprite::create(int row, int col) {
     return nullptr;
 }
 
+StartSprite* StartSprite::createWithTag(int row, int col, int tag) {
+    if (tag == 0) {
+        return nullptr;
+    }else
+    {
+        auto star = new StartSprite();
+        auto filename = star->getStarFilename();
+        if (star && star->initWithFile(filename)) {
+            star->setData(filename, row, col);
+            star->autorelease();
+            star->initAction(row, col);
+            return star;
+        }
+        CC_SAFE_DELETE(star);
+        return nullptr;
+    }
+}
+
 std::string StartSprite::getStarFilename() {
     std::string arrStar[] = {STAR_BLUE,STAR_GREEN,STAR_PURPLE,STAR_RED,STAR_YELLOW};
     

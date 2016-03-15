@@ -13,6 +13,7 @@
 #include "Appconfig.hpp"
 #include "ScoreManager.hpp"
 #include "GameController.hpp"
+#include "DataManager.hpp"
 
 GameScene::GameScene()
 :m_starArr(NULL)
@@ -38,7 +39,7 @@ bool GameScene::init() {
     
     m_width = NUMX;
     m_height = NUMY;
-    m_countStar = STAR_COUNT;
+    m_countStar = 0;
     int arrSize = sizeof(StartSprite*) * m_width * m_height;
     m_starArr = (StartSprite**)malloc(arrSize);
     memset((void*)m_starArr, 0, arrSize);
@@ -47,6 +48,7 @@ bool GameScene::init() {
     xScor->initScore();
     initBackGround();
     initStar();
+    //intStarWithRecord();
     setCurrentTouchStar(nullptr);
     settouchTag(true);
     //Audio->playMuic("");
@@ -87,10 +89,27 @@ void GameScene::initStar() {
             auto star = StartSprite::create(row, col);
             m_starArr[row * m_width + col] = star;
             addChild(star,kzOrderContent);
+            m_countStar++;
         }
     }
 }
 
+void GameScene::intStarWithRecord() {
+    std::string record = xData->getData();
+    int pos = 0;
+    
+    for (int row = 0; row < NUMX; row++) {
+        for (int col= 0; col < NUMY; col++) {
+            int tag = record.at(pos++) - 48;
+            auto star = StartSprite::createWithTag(row, col, tag);
+            m_starArr[row * m_width + col] = star;
+            if(star){
+                addChild(star,kzOrderContent);
+                m_countStar++;
+            }
+        }
+    }
+}
 
 bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
     if (gettouchTag()) {  // 还没有消除 不能点击
@@ -446,6 +465,7 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
     auto target = (Widget*)obj;
     std::string name = target->getName();
     
+    xData->saveToFile(m_starArr);
 }
 
 void GameScene::yesBtnCall() {
