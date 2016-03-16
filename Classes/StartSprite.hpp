@@ -47,7 +47,6 @@ public:
     starData getData();
     
     
-    
 private:
     starData m_data;
 };
