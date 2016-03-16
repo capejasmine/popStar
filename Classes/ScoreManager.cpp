@@ -31,8 +31,8 @@ int ScoreManager::getScore() {
     return m_score;
 }
 
-int ScoreManager::getTaskScore(int level) {
-    return 1000 * (1 + level) * level/2;
+int ScoreManager::getTaskScore() {
+    return 1000 * (1 + m_level) * m_level/2;
 }
 
 #pragma mark- Level

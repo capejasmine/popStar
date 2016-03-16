@@ -68,6 +68,8 @@ public:
     
     void saveData();
     
+    void updateAnimation(float dt);
+    
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
@@ -98,6 +100,7 @@ private:
     
     Text*  m_score;
     
+    float m_delay = 0;
 };
 
 #endif /* GameScene_hpp */

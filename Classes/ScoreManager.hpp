@@ -29,7 +29,7 @@ public:
     
     int getScore();
     
-    int getTaskScore(int level);
+    int getTaskScore();
     
     //level
     
@@ -40,6 +40,7 @@ public:
     int  getLevel();
     
     void addLevel();
+    
 private:
     
     int m_score;

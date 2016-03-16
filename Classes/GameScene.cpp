@@ -72,6 +72,8 @@ bool GameScene::init() {
     listener->onTouchCancelled =  CC_CALLBACK_2(GameScene::onTouchCancelled, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+    this->schedule(schedule_selector(GameScene::updateAnimation), 5, 100, 5.0);
+    
     return true;
 }
 
@@ -287,7 +289,7 @@ void GameScene::removeSameColorStar() {
     // 延时 播放消失动作
     m_countStar -= sameColorList.size();
     
-    auto time = sameColorList.size() - 1;   // 因为 执行循环动作 默认执行一次 所以要减一
+    auto time = sameColorList.size() ;
     auto repeat = Repeat::create(Sequence::create(CallFunc::create([=](){
         auto it = sameColorList.back();
         sameColorList.pop_back();
@@ -297,7 +299,7 @@ void GameScene::removeSameColorStar() {
         //cava->removeFromParent();
         m_starArr[data.row * m_width + data.col] = nullptr;
     }), DelayTime::create(0.08f),NULL), time);
-    runAction(repeat);
+    //runAction(repeat);
     
     auto delay = CallFunc::create([=](){
         sameColorList.clear();
@@ -420,9 +422,12 @@ void GameScene::cheakAndGameOver() {
         log("gameOver");
         settouchTag(false);
         
-        if (xScor->getScore() > xScor->getTaskScore(1)) {
+        if (xScor->getScore() > xScor->getTaskScore()) {
             // 过关
             Audio->playEffect("fire.mp3");
+            xScor->saveScore();
+            xScor->addLevel();
+            
             m_popLayer = PopLayer::create("");
             m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
             m_popLayer->setText("Are you sure quit the game?");
@@ -477,6 +482,21 @@ void GameScene::yesBtnCall() {
 void GameScene::noBtnCall() {
     m_popLayer->removeFromParent();
     m_popLayer = nullptr;
+}
+
+void GameScene::updateAnimation(float dt) {
+    m_delay = 0.5;
+    
+    for (int row = 0; row < NUMX; row++) {
+        for (int col = 0; col < NUMY; col++) {
+            auto star = m_starArr[row * m_width + col];
+            if(star){
+                auto jump = Sequence::create(DelayTime::create(m_delay), MoveBy::create(0.15f, Vec2(0, 10)), MoveBy::create(0.15f, Vec2(0, -10)),NULL);
+                star->runAction(jump);
+                m_delay += 0.05;
+            }
+        }
+    }
 }
 
 void GameScene::onTouchMoved(Touch *touch, Event *unused_event) {
