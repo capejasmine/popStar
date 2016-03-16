@@ -28,6 +28,9 @@ bool StartScene::init() {
         return false;
     }
     
+    m_root = GUIReader::getInstance()->widgetFromJsonFile("start.json");
+    addChild(m_root);
+    
     log("StartScene");
     initBackGround();
     
@@ -35,16 +38,26 @@ bool StartScene::init() {
 }
 
 void StartScene::initBackGround() {
+    
+    auto new_game = (Button*)(Helper::seekWidgetByName(m_root, "new_game"));
+    new_game->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
+    
+    auto rate = (Button*)(Helper::seekWidgetByName(m_root, "rate"));
+    rate->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
+    
+    auto resume = (Button*)(Helper::seekWidgetByName(m_root, "resume"));
+    resume->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
+    
     auto size = Director::getInstance()->getWinSize();
     
-    auto bg = Sprite::create(BACK_GROUND_PNG);
-    addChild(bg,kzOrderBackground);
-    STsetPostion(bg,size/2);
-    
-    auto start = cocos2d::ui::Button::create(START_PNG);
-    addChild(start,kzOrderUI);
-    STsetPostion(start, size/2);
-    start->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
+//    auto bg = Sprite::create(BACK_GROUND_PNG);
+//    addChild(bg,kzOrderBackground);
+//    STsetPostion(bg,size/2);
+//    
+//    auto start = cocos2d::ui::Button::create(START_PNG);
+//    addChild(start,kzOrderUI);
+//    STsetPostion(start, size/2);
+//    start->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
 }
 
 void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {

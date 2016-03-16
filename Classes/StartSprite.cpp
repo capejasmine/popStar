@@ -85,7 +85,7 @@ void StartSprite::initAction(int row, int col){
     int starSize = 72;
     setPosition(Vec2(36 + starSize * col, 1300));
     auto fallTime = row/5;
-    auto fallAction = MoveTo::create(fallTime, Vec2(60 + starSize * col, 36 + starSize * row));
+    auto fallAction = MoveTo::create(fallTime, Vec2(36 + starSize * col, 36 + starSize * row));
     runAction(fallAction);
 }
 

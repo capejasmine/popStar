@@ -11,6 +11,9 @@
 
 #include "cocos2d.h"
 #include "cocosgui.h"
+#include "ui/CocosGui.h"
+#include "cocostudio/CocoStudio.h"
+#include "cocostudio/CCSGUIReader.h"
 
 USING_NS_CC;
 
@@ -28,6 +31,7 @@ public:
     void touchDown(Ref* pSender,ui::Widget::TouchEventType type);
 private:
     
+    cocos2d::ui::Widget* m_root;
 };
 
 #endif /* StartScene_hpp */

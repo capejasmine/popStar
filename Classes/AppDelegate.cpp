@@ -21,7 +21,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
-    //glview->setDesignResolutionSize(640, 960, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(720, 1280, ResolutionPolicy::NO_BORDER);
     // turn on display FPS
     //director->setDisplayStats(true);
 
@@ -39,6 +39,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     searchPahts.push_back("sounds");
     searchPahts.push_back("star");
     searchPahts.push_back("ui");
+    searchPahts.push_back("studio");
     
     FileUtils::getInstance()->setSearchPaths(searchPahts);
     
