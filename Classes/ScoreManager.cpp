@@ -35,5 +35,25 @@ int ScoreManager::getTaskScore(int level) {
     return 1000 * (1 + level) * level/2;
 }
 
+#pragma mark- Level
+
+void ScoreManager::initLevel() {
+    m_level = xUser->getIntegerForKey(POPSTAR_LEVEL, 1);
+}
+
+void ScoreManager::resetLevel() {
+    xUser->setIntegerForKey(POPSTAR_LEVEL, 0);
+    xUser->flush();
+}
+
+int  ScoreManager::getLevel() {
+    return m_level;
+}
+
+void ScoreManager::addLevel() {
+    m_level += 1;
+    xUser->setIntegerForKey(POPSTAR_LEVEL, m_level);
+    xUser->flush();
+}
 
 

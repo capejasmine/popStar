@@ -488,7 +488,7 @@
           "adaptScreen": false,
           "backGroundImage": null,
           "backGroundImageData": {
-            "path": "start/bg_main.png",
+            "path": "start/bg_m.png",
             "plistFile": "",
             "resourceType": 0
           },

@@ -18,6 +18,7 @@ USING_NS_CC;
 
 class ScoreManager : public SingleTon<ScoreManager>,public Ref{
 public:
+    // score
     void initScore();
     
     void resetScore();
@@ -29,10 +30,21 @@ public:
     int getScore();
     
     int getTaskScore(int level);
+    
+    //level
+    
+    void initLevel();
+    
+    void resetLevel();
+    
+    int  getLevel();
+    
+    void addLevel();
 private:
     
     int m_score;
     
+    int m_level;
 };
 
 #endif /* ScoreManager_hpp */

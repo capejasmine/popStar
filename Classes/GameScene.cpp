@@ -37,6 +37,9 @@ bool GameScene::init() {
     }
     log("GameScene");
     
+    m_root = GUIReader::getInstance()->widgetFromJsonFile("game.json");
+    addChild(m_root, kzOrderBackground);
+    
     m_width = NUMX;
     m_height = NUMY;
     m_countStar = 0;
@@ -46,6 +49,7 @@ bool GameScene::init() {
     
     
     xScor->initScore();
+    xScor->initLevel();
     initBackGround();
     
     if(!xData->isExsitRecord()){
@@ -53,6 +57,7 @@ bool GameScene::init() {
     }
     else{
         intStarWithRecord();
+        m_score->setString(std::to_string(xScor->getScore()));
     }
     
     setCurrentTouchStar(nullptr);
@@ -73,9 +78,17 @@ bool GameScene::init() {
 void GameScene::initBackGround() {
     auto size = Director::getInstance()->getWinSize();
     
-    auto bg = Sprite::create(BACK_GROUND_PNG);
-    addChild(bg,kzOrderBackground);
-    STsetPostion(bg,size/2);
+//    auto bg = Sprite::create(BACK_GROUND_PNG);
+//    addChild(bg,kzOrderBackground);
+//    STsetPostion(bg,size/2);
+    auto pause = (Button*)(Helper::seekWidgetByName(m_root, "pause"));
+    pause->addTouchEventListener(CC_CALLBACK_2(GameScene::touchDown, this));
+    
+    auto music = (Button*)(Helper::seekWidgetByName(m_root, "music"));
+    music->addTouchEventListener(CC_CALLBACK_2(GameScene::touchDown, this));
+    
+    m_score = (Text*)(Helper::seekWidgetByName(m_root, "score"));
+    m_score->setString("0");
     
     auto bg_particle = ParticleSystemQuad::create("bg_environment" + std::to_string(rand()%4) + ".plist");
     addChild(bg_particle,kzOrderPopUp);
@@ -299,6 +312,7 @@ void GameScene::removeSameColorStar() {
     }),NULL));
     
     xScor->addScore(sameColorList.size());
+    m_score->setString(std::to_string(xScor->getScore()));
 }
 
 void GameScene::playBrokenEffect() {
@@ -439,8 +453,19 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
     auto target = (Widget*)obj;
     std::string name = target->getName();
     
-    xData->saveToFile(m_starArr); // 保存 star 数据信息
-    yesBtnCall();
+    if (name.compare("pause") == 0) {
+        
+    }
+    else if (name.compare("music") == 0){
+    
+    }
+    else
+    {
+        xData->saveToFile(m_starArr); // 保存 star 数据信息
+        yesBtnCall();
+    }
+    
+    Audio->playEffect("click.mp3");
 }
 
 void GameScene::yesBtnCall() {

@@ -39,7 +39,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     searchPahts.push_back("sounds");
     searchPahts.push_back("star");
     searchPahts.push_back("ui");
-    searchPahts.push_back("studio");
+    searchPahts.push_back("cocos");
     
     FileUtils::getInstance()->setSearchPaths(searchPahts);
     

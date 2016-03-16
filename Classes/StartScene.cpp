@@ -16,6 +16,8 @@
 #include "Appconfig.hpp"
 #include "GameController.hpp"
 #include "AudioController.hpp"
+#include "ScoreManager.hpp"
+#include "DataManager.hpp"
 
 Scene* StartScene::scene() {
     Scene* pScene = Scene::create();
@@ -63,8 +65,23 @@ void StartScene::initBackGround() {
 void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
     if (ui::Widget::TouchEventType::ENDED != type) return;
     
-    Audio->playEffect("click.mp3");
-    GameController::getInstace()->enterGameScene();
+    auto target = (Widget*)pSender;
+    std::string name = target->getName();
+    
+    if (name.compare("new_game") == 0) {
+        //  清除历史纪录
+        xData->removeRecord();
+        xScor->resetScore();
+        GameController::getInstace()->enterGameScene();
+    }
+    else if (name.compare("resume") == 0){
+        GameController::getInstace()->enterGameScene();
+    }
+    else
+    {
+        
+    }
+     Audio->playEffect("click.mp3");
 }
 
 

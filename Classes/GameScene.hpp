@@ -13,6 +13,8 @@
 #include "StartSprite.hpp"
 #include "cocosGui.h"
 #include "PopLayer.hpp"
+#include "cocostudio/CocoStudio.h"
+#include "cocostudio/CCSGUIReader.h"
 
 USING_NS_CC;
 
@@ -91,6 +93,10 @@ private:
     PopLayer* m_popLayer;
     
     std::string m_data;
+    
+    ui::Widget* m_root;
+    
+    Text*  m_score;
     
 };
 
