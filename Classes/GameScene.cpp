@@ -105,12 +105,18 @@ void GameScene::initBackGround() {
 }
 
 void GameScene::initStar() {
+    m_delay = 0;
     for (int row = 0; row < NUMX; row++) {
         for (int col= 0; col < NUMY; col++) {
-            auto star = StartSprite::create(row, col);
-            m_starArr[row * m_width + col] = star;
-            addChild(star,kzOrderContent);
-            m_countStar++;
+            auto call = Sequence::create(DelayTime::create(m_delay),
+                                         CallFunc::create([=](){
+                auto star = StartSprite::create(row, col);
+                m_starArr[row * m_width + col] = star;
+                addChild(star,kzOrderContent);
+                m_countStar++;
+            }),NULL);
+            runAction(call);
+            m_delay += 0.05;
         }
     }
 }
