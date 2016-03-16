@@ -23,11 +23,14 @@ enum KSceneType{
 class GameController : public SingleTon<GameController>{
 public:
     
+    CC_SYNTHESIZE(int, mode, FallMode);
+    
     void enterStartScene();
     
     void enterGameScene();
     
     KSceneType getCurrentSceneType();
+    
     
 private:
     

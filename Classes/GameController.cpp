@@ -35,3 +35,4 @@ void GameController::enterGameScene() {
 KSceneType GameController::getCurrentSceneType() {
     return m_currentType;
 }
+

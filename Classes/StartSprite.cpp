@@ -17,6 +17,7 @@
 #include "StartSprite.hpp"
 #include "Globle.hpp"
 #include "UITools.h"
+#include "GameController.hpp"
 
 
 StartSprite* StartSprite::create(int row, int col) {
@@ -83,9 +84,23 @@ std::string StartSprite::getStarFilenameWhihTag(int tag) {
 
 void StartSprite::initAction(int row, int col){
     int starSize = 72;
-    setPosition(Vec2(36 + starSize * col, 1300));
-    //   row/5
-    auto fallTime = 1.2;
+    setPosition(Vec2(36 + starSize * col, 1330));
+    //   row/5     0     1.2
+    int mode = xGam->getFallMode();
+    float  fallTime;
+    switch (mode) {
+        case 0:
+            fallTime = 0;
+            break;
+        case 1:
+            fallTime = 1.2;
+            break;
+        case 2:
+            fallTime = row/5;
+            break;
+        default:
+            break;
+    }
     auto fallAction = MoveTo::create(fallTime, Vec2(36 + starSize * col, 36 + starSize * row));
     runAction(fallAction);
 }

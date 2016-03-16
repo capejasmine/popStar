@@ -18,6 +18,8 @@
 #include "AudioController.hpp"
 #include "ScoreManager.hpp"
 #include "DataManager.hpp"
+#include "GameController.hpp"
+#include "UITools.h"
 
 Scene* StartScene::scene() {
     Scene* pScene = Scene::create();
@@ -35,6 +37,8 @@ bool StartScene::init() {
     
     log("StartScene");
     initBackGround();
+    
+    xGam->setFallMode(quickRandom(0, 2));
     
     return true;
 }

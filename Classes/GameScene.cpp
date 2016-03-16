@@ -14,6 +14,7 @@
 #include "ScoreManager.hpp"
 #include "GameController.hpp"
 #include "DataManager.hpp"
+#include "UITools.h"
 
 GameScene::GameScene()
 :m_starArr(NULL)
@@ -52,6 +53,8 @@ bool GameScene::init() {
     xScor->initLevel();
     initBackGround();
     
+    settouchTag(false);   // 动画中不能 点击
+    
     if(!xData->isExsitRecord()){
         initStar();
     }
@@ -61,7 +64,7 @@ bool GameScene::init() {
     }
     
     setCurrentTouchStar(nullptr);
-    settouchTag(true);
+    settouchTag(false);
     //Audio->playMuic("");
     
     auto listener = EventListenerTouchOneByOne::create();
@@ -73,6 +76,7 @@ bool GameScene::init() {
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     this->schedule(schedule_selector(GameScene::updateAnimation), 5, 100, 5.0);
+    this->scheduleOnce(schedule_selector(GameScene::startAnimationOver), 5.0f);
     
     return true;
 }
@@ -92,7 +96,7 @@ void GameScene::initBackGround() {
     m_score = (Text*)(Helper::seekWidgetByName(m_root, "score"));
     m_score->setString("0");
     
-    auto bg_particle = ParticleSystemQuad::create("bg_environment" + std::to_string(rand()%4) + ".plist");
+    auto bg_particle = ParticleSystemQuad::create("bg_environment" + std::to_string(quickRandom(0, 3)) + ".plist");
     addChild(bg_particle,kzOrderPopUp);
     STsetPostion(bg_particle,Vec2(size.width/2,size.height));
     
@@ -503,6 +507,10 @@ void GameScene::updateAnimation(float dt) {
             }
         }
     }
+}
+
+void GameScene::startAnimationOver(float dt) {
+    settouchTag(true);
 }
 
 void GameScene::onTouchMoved(Touch *touch, Event *unused_event) {
