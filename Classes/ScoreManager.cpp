@@ -11,6 +11,8 @@
 
 void ScoreManager::initScore() {
     m_score = xUser->getIntegerForKey(POPSTAR_SCORE, 0);
+    
+    m_PreScore = m_score;
 }
 
 void ScoreManager::resetScore() {
@@ -25,9 +27,12 @@ void ScoreManager::saveScore() {
 
 void ScoreManager::addScore(int pair) {
     m_score += pair * pair * 5;
+    
+    log("score = %d",m_score);
 }
 
 int ScoreManager::getScore() {
+    log("result socre = %d ", m_score);
     return m_score;
 }
 
@@ -36,17 +41,22 @@ int ScoreManager::getTaskScore() {
 }
 
 void ScoreManager::settlementScore(int count) {
-    m_score += 2000 - count * count * 20;
+    if(count < 10)
+    {
+        m_score = m_score + (2000 - count * count * 20);
+    }
 }
 
 #pragma mark- Level
 
 void ScoreManager::initLevel() {
     m_level = xUser->getIntegerForKey(POPSTAR_LEVEL, 1);
+    
+    m_PreLevel = m_level;
 }
 
 void ScoreManager::resetLevel() {
-    xUser->setIntegerForKey(POPSTAR_LEVEL, 0);
+    xUser->setIntegerForKey(POPSTAR_LEVEL, 1);
     xUser->flush();
 }
 
@@ -57,6 +67,14 @@ int  ScoreManager::getLevel() {
 void ScoreManager::addLevel() {
     m_level += 1;
     xUser->setIntegerForKey(POPSTAR_LEVEL, m_level);
+    xUser->flush();
+}
+
+#pragma mark- preScore and preLevel
+
+void ScoreManager::resetPreScoreAndLevel() {
+    xUser->setIntegerForKey(POPSTAR_SCORE, m_PreScore);
+    xUser->setIntegerForKey(POPSTAR_LEVEL, m_PreLevel);
     xUser->flush();
 }
 

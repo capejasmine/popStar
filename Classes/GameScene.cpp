@@ -15,6 +15,7 @@
 #include "GameController.hpp"
 #include "DataManager.hpp"
 #include "UITools.h"
+#include "PassLayer.hpp"
 
 GameScene::GameScene()
 :m_starArr(NULL)
@@ -78,10 +79,6 @@ bool GameScene::init() {
     //this->schedule(schedule_selector(GameScene::updateAnimation), 5, 100, 5.0);
     this->scheduleOnce(schedule_selector(GameScene::startAnimationOver), 5.0f);
     
-//    m_popLayer = PopLayer::create("quit.json");
-//    m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
-//    m_popLayer->setText("Are you sure quit the game?");
-//    addChild(m_popLayer,kzOrderPopUp,"pop");
     
     return true;
 }
@@ -106,12 +103,6 @@ void GameScene::initBackGround() {
     auto bg_particle = ParticleSystemQuad::create("bg_environment" + std::to_string(quickRandom(0, 3)) + ".plist");
     addChild(bg_particle,kzOrderPopUp);
     STsetPostion(bg_particle,Vec2(size.width/2,size.height));
-    
-    
-    auto back = ui::Button::create("save&exit.png");
-    back->addTouchEventListener(CC_CALLBACK_2(GameScene::touchDown, this));
-    addChild(back,kzOrderUI);
-    back->setPosition(Vec2(size.width/2,size.height));
     
 }
 
@@ -284,15 +275,15 @@ void GameScene::cheakFourSide(StartSprite* star, kSideTag side, bool tag) {
     
     // 4. 颜色不一样 return
     
-    log("star = %s curr = %s ", star->getData().name.c_str(),getCurrentTouchStar()->getData().name.c_str());
+    //log("star = %s curr = %s ", star->getData().name.c_str(),getCurrentTouchStar()->getData().name.c_str());
     if (star->getData().name.compare(getCurrentTouchStar()->getData().name) == 0) {
         
         
         
-        log(".................");
+        //log(".................");
         for (auto s : sameColorList) {
         
-            log("row = %d , col = %d ",s->getData().row,s->getData().col);
+            //log("row = %d , col = %d ",s->getData().row,s->getData().col);
         }
         
         cheakSameColorStar(star, tag);  // 最后 简单的让我 恍然大悟
@@ -361,13 +352,13 @@ void GameScene::cheakAndFallStar() {
             auto target = m_starArr[row * m_width + col];
             
             if (target == nullptr) {
-                log("target = %d %d",row,col);
+                //log("target = %d %d",row,col);
                 // 如果 目标 为空 那么 由他上面那个方块掉下补充
                 StartSprite* temp = nullptr;
                 int dest = row;
                 do{
                     if (++dest < m_width ) {
-                        log("temp = %d %d",dest,col);
+                        //log("temp = %d %d",dest,col);
                         temp = m_starArr[dest * m_width + col];
                     }
                     else
@@ -380,7 +371,7 @@ void GameScene::cheakAndFallStar() {
                 
                 if(temp != nullptr) //再次判断， 因为temp 也可能为空
                 { // 交换 数据 并执行 动作
-                    log("temp : name = %s row = %d,col = %d",temp->getData().name.c_str(),temp->getData().row,temp->getData().col);
+                    //log("temp : name = %s row = %d,col = %d",temp->getData().name.c_str(),temp->getData().row,temp->getData().col);
                     temp->runAction(MoveBy::create(0.2, Vec2(0, -(dest - row) * 72)));
                     temp->setData(temp->getData().name, row, col);
                     m_starArr[dest* m_width + col] = nullptr;
@@ -450,15 +441,15 @@ void GameScene::cheakAndGameOver() {
         log("gameOver");
         settouchTag(false);
         xScor->settlementScore(m_countStar);
+    
         
         if (xScor->getScore() > xScor->getTaskScore()) {
             // 过关
             Audio->playEffect("fire.mp3");
             
-            m_popLayer = PopLayer::create("quit.json");
-            m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
-            m_popLayer->setText("Are you sure quit the game?");
-            addChild(m_popLayer,kzOrderPopUp,"pop");
+            auto passLayer = PassLayer::create("popup.json");
+            passLayer->setText("Will you go on your challenge?");
+            addChild(passLayer,kzOrderPopUp);
         }
         else
         {
@@ -486,18 +477,20 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
     std::string name = target->getName();
     
     if (name.compare("pause") == 0) {
-        m_popLayer = PopLayer::create("quit.json");
-        m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
-        m_popLayer->setText("Are you sure quit the game?");
-        addChild(m_popLayer,kzOrderPopUp,"pop");
+//        m_popLayer = PopLayer::create("quit.json");
+//        m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
+//        m_popLayer->setText("Are you sure quit the game?");
+//        addChild(m_popLayer,kzOrderPopUp,"pop");
+        auto passLayer = PassLayer::create("popup.json");
+        passLayer->setText("Will you go on your challenge?");
+        addChild(passLayer,kzOrderPopUp);
     }
     else if (name.compare("music") == 0){
         Audio->changeMode();
     }
     else
     {
-        xData->saveToFile(m_starArr); // 保存 star 数据信息
-        yesBtnCall();
+        
     }
     
     Audio->playEffect("click.mp3");
@@ -505,6 +498,7 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
 
 void GameScene::yesBtnCall() {
     // 保存 退出游戏
+    xData->saveToFile(m_starArr); // 保存 star 数据信息
     xScor->saveScore();
     xScor->addLevel();
     xGam->enterStartScene();
@@ -513,7 +507,6 @@ void GameScene::yesBtnCall() {
 void GameScene::noBtnCall() {
     m_popLayer->removeFromParent();
     m_popLayer = nullptr;
-    xGam->enterStartScene();
 }
 
 void GameScene::updateAnimation(float dt) {

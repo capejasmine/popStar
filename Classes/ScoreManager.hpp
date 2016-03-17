@@ -43,11 +43,18 @@ public:
     
     void addLevel();
     
+    // return preSocre and preLevel
+    
+    void resetPreScoreAndLevel();
+    
 private:
+    int m_PreScore;
+    
+    int m_PreLevel;
     
     int m_score;
     
-    int m_level;
+    float m_level;
 };
 
 #endif /* ScoreManager_hpp */

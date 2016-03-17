@@ -42,6 +42,7 @@ private:
     std::function<void()> m_noClick;
     
     Text* m_text;
+
 };
 
 #endif /* PopLayer_hpp */
