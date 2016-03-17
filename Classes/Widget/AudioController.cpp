@@ -9,6 +9,8 @@
 #include "AudioController.hpp"
 #include "SimpleAudioEngine.h"
 
+bool AudioController::m_tag = false;
+
 using namespace CocosDenshion;
 
 #define  GetAudioEnging     SimpleAudioEngine::getInstance()
@@ -28,5 +30,19 @@ void AudioController::playEffect(std::string filename){
 
 void AudioController::playMuic(std::string filename) {
     GetAudioEnging->playBackgroundMusic(filename.c_str());
+}
+
+void AudioController::changeMode() {
+    if(!m_tag){
+        GetAudioEnging->setEffectsVolume(0);
+        GetAudioEnging->setBackgroundMusicVolume(0);
+        m_tag = true;
+    }
+    else
+    {
+        GetAudioEnging->setEffectsVolume(1);
+        GetAudioEnging->setBackgroundMusicVolume(1);
+        m_tag = false;
+    }
 }
 

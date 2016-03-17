@@ -35,6 +35,10 @@ int ScoreManager::getTaskScore() {
     return 1000 * (1 + m_level) * m_level/2;
 }
 
+void ScoreManager::settlementScore(int count) {
+    m_score += 2000 - count * count * 20;
+}
+
 #pragma mark- Level
 
 void ScoreManager::initLevel() {

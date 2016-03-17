@@ -23,8 +23,12 @@ public:
     
     void playMuic(std::string filename);
     
+    void changeMode();
+    
 private:
     static AudioController* instance;
+    
+    static  bool m_tag;
 };
 
 #endif /* AudioController_hpp */

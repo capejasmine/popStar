@@ -23,13 +23,13 @@ bool PopLayer::init(std::string filename) {
     {
         auto widget = GUIReader::getInstance()->widgetFromJsonFile(filename.c_str());
         
-        Button* yesBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(widget, "yes_btn"));
+        Button* yesBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(widget, "yes"));
         yesBtn->addTouchEventListener(CC_CALLBACK_2(PopLayer::dialogYesClick, this));
         
-        Button* noBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(widget, "no_btn"));
+        Button* noBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(widget, "no"));
         noBtn->addTouchEventListener(CC_CALLBACK_2(PopLayer::dialogNoClick, this));
         
-        m_text = dynamic_cast<Text*>(Helper::seekWidgetByName(widget, "text"));
+        //m_text = dynamic_cast<Text*>(Helper::seekWidgetByName(widget, "text"));
         
         return true;
     }
@@ -54,5 +54,6 @@ void PopLayer::dialogNoClick(Ref* obj, ui::Widget::TouchEventType type) {
 
 
 void PopLayer::setText(std::string text) {
-    m_text->setString(text);
+    
+    //m_text->setString(text);
 }

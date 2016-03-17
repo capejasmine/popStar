@@ -31,6 +31,8 @@ public:
     
     int getTaskScore();
     
+    void settlementScore(int count);
+    
     //level
     
     void initLevel();

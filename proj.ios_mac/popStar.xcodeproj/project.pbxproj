@@ -28,12 +28,12 @@
 		26054ADD1C7C03C500DE718B /* LoadingLaeyr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26054ADB1C7C03C500DE718B /* LoadingLaeyr.cpp */; };
 		260CDF131C9668C80027A797 /* AudioController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 260CDF111C9668C80027A797 /* AudioController.cpp */; };
 		260CDF171C96ADAF0027A797 /* ScoreManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 260CDF151C96ADAF0027A797 /* ScoreManager.cpp */; };
+		261407871C9A87B90079BDB7 /* cocos in Resources */ = {isa = PBXBuildFile; fileRef = 261407861C9A87B90079BDB7 /* cocos */; };
 		261D5DF21C7D403900F7E4B8 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5DF01C7D403900F7E4B8 /* GameController.cpp */; };
 		261D5E021C7D919300F7E4B8 /* Globle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E001C7D919300F7E4B8 /* Globle.cpp */; };
 		261D5E061C7D9E3B00F7E4B8 /* StartSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E041C7D9E3B00F7E4B8 /* StartSprite.cpp */; };
 		261D5E0A1C7DA0C500F7E4B8 /* UITools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E081C7DA0C500F7E4B8 /* UITools.cpp */; };
 		262E43671C993A06005A17D2 /* background in Resources */ = {isa = PBXBuildFile; fileRef = 262E435F1C993A06005A17D2 /* background */; };
-		262E43681C993A06005A17D2 /* cocos in Resources */ = {isa = PBXBuildFile; fileRef = 262E43601C993A06005A17D2 /* cocos */; };
 		262E43691C993A06005A17D2 /* config in Resources */ = {isa = PBXBuildFile; fileRef = 262E43611C993A06005A17D2 /* config */; };
 		262E436A1C993A06005A17D2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 262E43621C993A06005A17D2 /* fonts */; };
 		262E436B1C993A06005A17D2 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = 262E43631C993A06005A17D2 /* particle */; };
@@ -276,6 +276,7 @@
 		260CDF121C9668C80027A797 /* AudioController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = AudioController.hpp; path = ../Classes/Widget/AudioController.hpp; sourceTree = "<group>"; };
 		260CDF151C96ADAF0027A797 /* ScoreManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScoreManager.cpp; path = ../Classes/ScoreManager.cpp; sourceTree = "<group>"; };
 		260CDF161C96ADAF0027A797 /* ScoreManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ScoreManager.hpp; path = ../Classes/ScoreManager.hpp; sourceTree = "<group>"; };
+		261407861C9A87B90079BDB7 /* cocos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocos; sourceTree = "<group>"; };
 		2617ED151C7E90B10050B1B2 /* UIHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIHeader.h; path = ../Classes/UIHeader.h; sourceTree = "<group>"; };
 		261D5DF01C7D403900F7E4B8 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameController.cpp; path = ../Classes/GameController.cpp; sourceTree = "<group>"; };
 		261D5DF11C7D403900F7E4B8 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameController.hpp; path = ../Classes/GameController.hpp; sourceTree = "<group>"; };
@@ -287,7 +288,6 @@
 		261D5E081C7DA0C500F7E4B8 /* UITools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITools.cpp; path = ../Classes/UITools.cpp; sourceTree = "<group>"; };
 		261D5E091C7DA0C500F7E4B8 /* UITools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITools.h; path = ../Classes/UITools.h; sourceTree = "<group>"; };
 		262E435F1C993A06005A17D2 /* background */ = {isa = PBXFileReference; lastKnownFileType = folder; path = background; sourceTree = "<group>"; };
-		262E43601C993A06005A17D2 /* cocos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocos; sourceTree = "<group>"; };
 		262E43611C993A06005A17D2 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; path = config; sourceTree = "<group>"; };
 		262E43621C993A06005A17D2 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		262E43631C993A06005A17D2 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particle; sourceTree = "<group>"; };
@@ -663,8 +663,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				261407861C9A87B90079BDB7 /* cocos */,
 				262E435F1C993A06005A17D2 /* background */,
-				262E43601C993A06005A17D2 /* cocos */,
 				262E43611C993A06005A17D2 /* config */,
 				262E43621C993A06005A17D2 /* fonts */,
 				262E43631C993A06005A17D2 /* particle */,
@@ -880,10 +880,10 @@
 				A20FFA241B3D0CD500A08F52 /* Default@2x.png in Resources */,
 				1AFAF8BC16D35E4900DB1158 /* CloseNormal.png in Resources */,
 				A20FFA2F1B3D0CD500A08F52 /* AppIcon76x76.png in Resources */,
+				261407871C9A87B90079BDB7 /* cocos in Resources */,
 				262E436C1C993A06005A17D2 /* sounds in Resources */,
 				A20FFA2E1B3D0CD500A08F52 /* AppIcon72x72@2x.png in Resources */,
 				262E43691C993A06005A17D2 /* config in Resources */,
-				262E43681C993A06005A17D2 /* cocos in Resources */,
 				262E436E1C993A06005A17D2 /* ui in Resources */,
 				A20FFA221B3D0CD500A08F52 /* Default-568h@2x.png in Resources */,
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,

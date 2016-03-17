@@ -79,7 +79,15 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
         GameController::getInstace()->enterGameScene();
     }
     else if (name.compare("resume") == 0){
-        GameController::getInstace()->enterGameScene();
+        if(!xData->isExsitRecord())
+        {
+            log("there is not exist the record");
+            
+        }
+        else
+        {
+            GameController::getInstace()->enterGameScene();
+        }
     }
     else
     {

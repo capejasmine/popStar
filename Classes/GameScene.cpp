@@ -75,8 +75,13 @@ bool GameScene::init() {
     listener->onTouchCancelled =  CC_CALLBACK_2(GameScene::onTouchCancelled, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    this->schedule(schedule_selector(GameScene::updateAnimation), 5, 100, 5.0);
+    //this->schedule(schedule_selector(GameScene::updateAnimation), 5, 100, 5.0);
     this->scheduleOnce(schedule_selector(GameScene::startAnimationOver), 5.0f);
+    
+//    m_popLayer = PopLayer::create("quit.json");
+//    m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
+//    m_popLayer->setText("Are you sure quit the game?");
+//    addChild(m_popLayer,kzOrderPopUp,"pop");
     
     return true;
 }
@@ -95,6 +100,8 @@ void GameScene::initBackGround() {
     
     m_score = (Text*)(Helper::seekWidgetByName(m_root, "score"));
     m_score->setString("0");
+    
+
     
     auto bg_particle = ParticleSystemQuad::create("bg_environment" + std::to_string(quickRandom(0, 3)) + ".plist");
     addChild(bg_particle,kzOrderPopUp);
@@ -127,17 +134,25 @@ void GameScene::initStar() {
 
 void GameScene::intStarWithRecord() {
     std::string record = xData->getData();
-    int pos = 0;
+    m_pos = 0;
+    m_delay = 0;
     
     for (int row = 0; row < NUMX; row++) {
         for (int col= 0; col < NUMY; col++) {
-            int tag = record.at(pos++) - 48;
-            auto star = StartSprite::createWithTag(row, col, tag);
-            m_starArr[row * m_width + col] = star;
-            if(star){
-                addChild(star,kzOrderContent);
-                m_countStar++;
-            }
+            auto call = Sequence::create(DelayTime::create(m_delay),
+                                         CallFunc::create([=](){
+                int tag = record.at(m_pos++) - 48;  // 获取到到 是字符
+                auto star = StartSprite::createWithTag(row, col, tag);
+                m_starArr[row * m_width + col] = star;
+                if(star){
+                    addChild(star,kzOrderContent);
+                    m_countStar++;
+                }
+
+            }),NULL);
+            runAction(call);
+            m_delay += 0.05;
+            
         }
     }
 }
@@ -173,8 +188,8 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
                             // 若不为空
                             if(sameColorList.size() != 0)
                             {
-                                auto action = ScaleTo::create(0.2, 1.0f);
                                 for (auto cava : sameColorList) {
+                                    auto action = ScaleTo::create(0.2, 1.0f);
                                     cava->runAction(action);
                                 }
                             }
@@ -302,12 +317,15 @@ void GameScene::removeSameColorStar() {
     auto time = sameColorList.size() ;
     auto repeat = Repeat::create(Sequence::create(CallFunc::create([=](){
         auto it = sameColorList.back();
+        if(it)
+        {
         sameColorList.pop_back();
         
         starData data = it->getData();
         it->deadAction();
         //cava->removeFromParent();
         m_starArr[data.row * m_width + data.col] = nullptr;
+        }
     }), DelayTime::create(0.08f),NULL), time);
     //runAction(repeat);
     
@@ -431,14 +449,13 @@ void GameScene::cheakAndGameOver() {
     {
         log("gameOver");
         settouchTag(false);
+        xScor->settlementScore(m_countStar);
         
         if (xScor->getScore() > xScor->getTaskScore()) {
             // 过关
             Audio->playEffect("fire.mp3");
-            xScor->saveScore();
-            xScor->addLevel();
             
-            m_popLayer = PopLayer::create("");
+            m_popLayer = PopLayer::create("quit.json");
             m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
             m_popLayer->setText("Are you sure quit the game?");
             addChild(m_popLayer,kzOrderPopUp,"pop");
@@ -469,10 +486,13 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
     std::string name = target->getName();
     
     if (name.compare("pause") == 0) {
-        
+        m_popLayer = PopLayer::create("quit.json");
+        m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
+        m_popLayer->setText("Are you sure quit the game?");
+        addChild(m_popLayer,kzOrderPopUp,"pop");
     }
     else if (name.compare("music") == 0){
-    
+        Audio->changeMode();
     }
     else
     {
@@ -486,12 +506,14 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
 void GameScene::yesBtnCall() {
     // 保存 退出游戏
     xScor->saveScore();
+    xScor->addLevel();
     xGam->enterStartScene();
 }
 
 void GameScene::noBtnCall() {
     m_popLayer->removeFromParent();
     m_popLayer = nullptr;
+    xGam->enterStartScene();
 }
 
 void GameScene::updateAnimation(float dt) {

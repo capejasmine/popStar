@@ -102,6 +102,8 @@ private:
     
     Text*  m_score;
     
+    int m_pos;
+    
     float m_delay = 0;
 };
 
