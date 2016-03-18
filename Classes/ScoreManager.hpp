@@ -52,9 +52,9 @@ private:
     
     int m_PreLevel;
     
-    int m_score;
+    int m_score = 0;
     
-    float m_level;
+    float m_level = 1;
 };
 
 #endif /* ScoreManager_hpp */

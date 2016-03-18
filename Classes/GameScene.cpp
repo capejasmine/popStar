@@ -16,6 +16,7 @@
 #include "DataManager.hpp"
 #include "UITools.h"
 #include "PassLayer.hpp"
+#include "PauseLayer.hpp"
 
 GameScene::GameScene()
 :m_starArr(NULL)
@@ -61,8 +62,8 @@ bool GameScene::init() {
     }
     else{
         intStarWithRecord();
-        m_score->setString(std::to_string(xScor->getScore()));
     }
+    m_score->setString(std::to_string(xScor->getScore()));
     
     setCurrentTouchStar(nullptr);
     settouchTag(false);
@@ -447,8 +448,7 @@ void GameScene::cheakAndGameOver() {
             // 过关
             Audio->playEffect("fire.mp3");
             
-            auto passLayer = PassLayer::create("popup.json");
-            passLayer->setText("Will you go on your challenge?");
+            auto passLayer = PassLayer::create("popup.json", 3);
             addChild(passLayer,kzOrderPopUp);
         }
         else
@@ -481,8 +481,8 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
 //        m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
 //        m_popLayer->setText("Are you sure quit the game?");
 //        addChild(m_popLayer,kzOrderPopUp,"pop");
-        auto passLayer = PassLayer::create("popup.json");
-        passLayer->setText("Will you go on your challenge?");
+        auto passLayer = PauseLayer::create("pause.json");
+        passLayer->setMenuClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this));
         addChild(passLayer,kzOrderPopUp);
     }
     else if (name.compare("music") == 0){

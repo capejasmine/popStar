@@ -22,20 +22,20 @@ using namespace cocos2d::ui;
 class PassLayer : public Layer {
 public:
     
-    static PassLayer* create(std::string filename);
+    static PassLayer* create(std::string filename,int count);
     
-    virtual bool init(std::string filename);
+    virtual bool init(std::string filename,int count);
     
     
     void dialogClick(Ref* obj, ui::Widget::TouchEventType type);
     
-    void setText(std::string text);
+    void starAniamtion(int count);
     
 private:
+    Widget* m_widget;
     
-    Text* m_text;
+    float m_delay;
     
-    Label* m_label;
 };
 
 #endif /* PassLayer_hpp */

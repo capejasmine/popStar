@@ -28,6 +28,7 @@
 		26054ADD1C7C03C500DE718B /* LoadingLaeyr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26054ADB1C7C03C500DE718B /* LoadingLaeyr.cpp */; };
 		260CDF131C9668C80027A797 /* AudioController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 260CDF111C9668C80027A797 /* AudioController.cpp */; };
 		260CDF171C96ADAF0027A797 /* ScoreManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 260CDF151C96ADAF0027A797 /* ScoreManager.cpp */; };
+		261376111C9BA8FE000DF95D /* PauseLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2613760F1C9BA8FE000DF95D /* PauseLayer.cpp */; };
 		261407871C9A87B90079BDB7 /* cocos in Resources */ = {isa = PBXBuildFile; fileRef = 261407861C9A87B90079BDB7 /* cocos */; };
 		2614078C1C9AA1410079BDB7 /* PassLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2614078A1C9AA1410079BDB7 /* PassLayer.cpp */; };
 		261D5DF21C7D403900F7E4B8 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5DF01C7D403900F7E4B8 /* GameController.cpp */; };
@@ -277,6 +278,8 @@
 		260CDF121C9668C80027A797 /* AudioController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = AudioController.hpp; path = ../Classes/Widget/AudioController.hpp; sourceTree = "<group>"; };
 		260CDF151C96ADAF0027A797 /* ScoreManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScoreManager.cpp; path = ../Classes/ScoreManager.cpp; sourceTree = "<group>"; };
 		260CDF161C96ADAF0027A797 /* ScoreManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ScoreManager.hpp; path = ../Classes/ScoreManager.hpp; sourceTree = "<group>"; };
+		2613760F1C9BA8FE000DF95D /* PauseLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PauseLayer.cpp; path = ../Classes/PauseLayer.cpp; sourceTree = "<group>"; };
+		261376101C9BA8FE000DF95D /* PauseLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PauseLayer.hpp; path = ../Classes/PauseLayer.hpp; sourceTree = "<group>"; };
 		261407861C9A87B90079BDB7 /* cocos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocos; sourceTree = "<group>"; };
 		2614078A1C9AA1410079BDB7 /* PassLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PassLayer.cpp; path = ../Classes/PassLayer.cpp; sourceTree = "<group>"; };
 		2614078B1C9AA1410079BDB7 /* PassLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PassLayer.hpp; path = ../Classes/PassLayer.hpp; sourceTree = "<group>"; };
@@ -531,14 +534,16 @@
 		26054AD11C7C013B00DE718B /* Layer */ = {
 			isa = PBXGroup;
 			children = (
-				26054AD81C7C03B800DE718B /* PopLayer.cpp */,
-				26054AD91C7C03B800DE718B /* PopLayer.hpp */,
 				26054ADB1C7C03C500DE718B /* LoadingLaeyr.cpp */,
 				26054ADC1C7C03C500DE718B /* LoadingLaeyr.hpp */,
 				261D5DF01C7D403900F7E4B8 /* GameController.cpp */,
 				261D5DF11C7D403900F7E4B8 /* GameController.hpp */,
 				2614078A1C9AA1410079BDB7 /* PassLayer.cpp */,
 				2614078B1C9AA1410079BDB7 /* PassLayer.hpp */,
+				2613760F1C9BA8FE000DF95D /* PauseLayer.cpp */,
+				261376101C9BA8FE000DF95D /* PauseLayer.hpp */,
+				26054AD81C7C03B800DE718B /* PopLayer.cpp */,
+				26054AD91C7C03B800DE718B /* PopLayer.hpp */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -927,6 +932,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				261376111C9BA8FE000DF95D /* PauseLayer.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				261D5E061C7D9E3B00F7E4B8 /* StartSprite.cpp in Sources */,
 				26054ADA1C7C03B800DE718B /* PopLayer.cpp in Sources */,
