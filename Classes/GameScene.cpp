@@ -57,8 +57,9 @@ bool GameScene::init() {
     
     settouchTag(false);   // 动画中不能 点击
     
-    if(!xData->isExsitRecord()){
+    if(!xData->isExsitRecord() || xData->getPassRecord()){
         initStar();
+        xData->setPassRecord(false);
     }
     else{
         intStarWithRecord();
@@ -77,7 +78,7 @@ bool GameScene::init() {
     listener->onTouchCancelled =  CC_CALLBACK_2(GameScene::onTouchCancelled, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    //this->schedule(schedule_selector(GameScene::updateAnimation), 5, 100, 5.0);
+    this->schedule(schedule_selector(GameScene::updateAnimation), 25, 100, 5.0);
     this->scheduleOnce(schedule_selector(GameScene::startAnimationOver), 5.0f);
     
     
@@ -309,6 +310,8 @@ void GameScene::removeSameColorStar() {
     auto time = sameColorList.size() ;
     auto repeat = Repeat::create(Sequence::create(CallFunc::create([=](){
         auto it = sameColorList.back();
+        auto pos = it->getPosition();
+        
         if(it)
         {
         sameColorList.pop_back();
@@ -320,6 +323,14 @@ void GameScene::removeSameColorStar() {
         }
     }), DelayTime::create(0.08f),NULL), time);
     //runAction(repeat);
+    
+    //particle
+    
+    auto particle = ParticleSystemQuad::create("point_star.plist");
+    particle->setPosition(pos);
+    addChild(particle);
+    
+    
     
     auto delay = CallFunc::create([=](){
         sameColorList.clear();
@@ -460,12 +471,7 @@ void GameScene::cheakAndGameOver() {
     sameColorList.clear();
     cheakedColorList.clear();
     
-}
-
-
-void GameScene::saveData() {
-    
-    
+    this->unschedule(schedule_selector(GameScene::updateAnimation));
     
 }
 

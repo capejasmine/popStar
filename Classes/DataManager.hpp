@@ -19,6 +19,9 @@ USING_NS_CC;
 
 class DataManager : public SingleTon<DataManager>{
 public:
+    
+    CC_SYNTHESIZE(bool, pass, PassRecord);
+    
     void removeRecord();
     
     void saveToFile(StartSprite** m_starArr);

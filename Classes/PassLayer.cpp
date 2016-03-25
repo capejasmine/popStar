@@ -59,9 +59,9 @@ void PassLayer::dialogClick(Ref* obj, ui::Widget::TouchEventType type) {
     }
     else if(name.compare("menu") == 0)
     {
+        xData->setPassRecord(true);
         xScor->saveScore();
         xScor->addLevel();
-        
         xGam->enterStartScene();
     }
     else

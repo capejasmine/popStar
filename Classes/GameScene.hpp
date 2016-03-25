@@ -66,8 +66,6 @@ public:
     
     void noBtnCall();
     
-    void saveData();
-    
     void updateAnimation(float dt);
     
     void startAnimationOver(float dt);
