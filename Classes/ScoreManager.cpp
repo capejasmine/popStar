@@ -51,6 +51,7 @@ void ScoreManager::settlementScore(int count) {
 
 void ScoreManager::initLevel() {
     m_level = xUser->getIntegerForKey(POPSTAR_LEVEL, 1);
+    m_PreLevel = m_level;
 }
 
 void ScoreManager::resetLevel() {
