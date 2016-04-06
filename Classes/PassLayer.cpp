@@ -13,8 +13,9 @@
 #include "ScoreManager.hpp"
 #include "DataManager.hpp"
 
-PassLayer* PassLayer::create(std::string filename,int count) {
+PassLayer* PassLayer::create(std::string filename,int count, bool pass) {
     PassLayer* layer = new PassLayer();
+    layer->setpassSign(pass);
     if(layer && layer->init(filename, count)){
         layer->autorelease();
         return layer;
@@ -38,6 +39,16 @@ bool PassLayer::init(std::string filename, int count) {
         Button* nextBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(m_widget, "next"));
         nextBtn->addTouchEventListener(CC_CALLBACK_2(PassLayer::dialogClick, this));
         
+        if(!getpassSign())
+        {
+            nextBtn->setVisible(false);
+            resetBtn->setPosition(nextBtn->getPosition());
+        }
+        else
+        {
+            resetBtn->setVisible(false);
+        }
+        
         m_delay = 1.0;
         starAniamtion(count);
         
@@ -52,17 +63,27 @@ void PassLayer::dialogClick(Ref* obj, ui::Widget::TouchEventType type) {
     auto name = target->getName();
     
     if(name.compare("next") == 0){
-        xData->removeRecord();
-        xScor->saveScore();
-        xScor->addLevel();
+//        xData->removeRecord();
+//        xScor->saveScore();
+//        xScor->addLevel();
         xGam->enterGameScene();
     }
     else if(name.compare("menu") == 0)
     {
-        xData->setPassRecord(true);
-        xScor->saveScore();
-        xScor->addLevel();
-        xGam->enterStartScene();
+        if(!getpassSign())
+        {
+            xScor->resetLevel();
+            xScor->resetScore();
+            xData->removeRecord();
+            xGam->enterStartScene();
+        }
+        else
+        {
+            xData->setPassRecord(true);
+            xScor->saveScore();
+            //xScor->addLevel();
+            xGam->enterStartScene();
+        }
     }
     else
     {

@@ -21,8 +21,9 @@ using namespace cocos2d::ui;
 
 class PassLayer : public Layer {
 public:
+    CC_SYNTHESIZE(bool, pass, passSign);
     
-    static PassLayer* create(std::string filename,int count);
+    static PassLayer* create(std::string filename,int count, bool pass);
     
     virtual bool init(std::string filename,int count);
     

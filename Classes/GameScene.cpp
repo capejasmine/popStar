@@ -446,7 +446,7 @@ void GameScene::cheakAndGameOver() {
             }
         }
     }
-    log("cheakAndGameOver()  sameColorList.szie =   %ld", sameColorList.size() - m_countStar);
+    log("cheakAndGameOver()  sameColorList.size =   %ld", sameColorList.size() - m_countStar);
     if(sameColorList.size() - m_countStar < 1)  //  减去 每次遍历 添加的 m_countStar 个本体,  剩下的就是目前游戏中还 可以 消除的 队列数
     {
         log("gameOver");
@@ -457,13 +457,34 @@ void GameScene::cheakAndGameOver() {
         if (xScor->getScore() > xScor->getTaskScore()) {
             // 过关
             Audio->playEffect("fire.mp3");
+            m_score->setString(std::to_string(xScor->getScore()));
             
-            auto passLayer = PassLayer::create("popup.json", 3);
+            int def = xScor->getScore() - xScor->getTaskScore();
+            int count = 0;
+            if (def < 100) {
+                count = 1;
+            }else if (def > 100 && def < 500){
+                count = 2;
+            }
+            else
+            {
+                count = 3;
+            }
+            
+            xData->removeRecord();
+            xScor->saveScore();
+            xScor->addLevel();
+            
+            auto passLayer = PassLayer::create("popup.json", count, true);
             addChild(passLayer,kzOrderPopUp);
         }
         else
         {
             Audio->playEffect("gameover.mp3");
+            
+            auto passLayer = PassLayer::create("popup.json", 0, false);
+            addChild(passLayer,kzOrderPopUp);
+            
         }
     }
     
@@ -486,9 +507,9 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
 //        m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
 //        m_popLayer->setText("Are you sure quit the game?");
 //        addChild(m_popLayer,kzOrderPopUp,"pop");
-        auto passLayer = PauseLayer::create("pause.json");
-        passLayer->setMenuClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this));
-        addChild(passLayer,kzOrderPopUp);
+        auto pauseLayer = PauseLayer::create("pause.json");
+        pauseLayer->setMenuClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this));
+        addChild(pauseLayer,kzOrderPopUp);
     }
     else if (name.compare("music") == 0){
         Audio->changeMode();
@@ -505,7 +526,7 @@ void GameScene::yesBtnCall() {
     // 保存 退出游戏
     xData->saveToFile(m_starArr); // 保存 star 数据信息
     xScor->saveScore();
-    xScor->addLevel();
+    //xScor->addLevel();
     xGam->enterStartScene();
 }
 

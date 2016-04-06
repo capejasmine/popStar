@@ -11,6 +11,7 @@
 
 void ScoreManager::initScore() {
     m_score = xUser->getIntegerForKey(POPSTAR_SCORE, 0);
+    m_PreScore = m_score;
 }
 
 void ScoreManager::resetScore() {
@@ -35,6 +36,7 @@ int ScoreManager::getScore() {
 }
 
 int ScoreManager::getTaskScore() {
+    log("task socre = %f ",1000 * (1 + m_level) * m_level/2);
     return 1000 * (1 + m_level) * m_level/2;
 }
 
@@ -44,7 +46,7 @@ void ScoreManager::settlementScore(int count) {
         m_score = m_score + (2000 - count * count * 20);
     }
     
-    m_PreScore = m_score;
+//    m_PreScore = m_score;
 }
 
 #pragma mark- Level
