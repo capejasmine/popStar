@@ -49,6 +49,15 @@ void ScoreManager::settlementScore(int count) {
 //    m_PreScore = m_score;
 }
 
+void ScoreManager::setBestScore(int score) {
+    xUser->setIntegerForKey(POPSTAR_BEST_SCORE, score);
+    xUser->flush();
+}
+
+int  ScoreManager::getBestScore() {
+    return xUser->getIntegerForKey(POPSTAR_BEST_SCORE, 0);
+}
+
 #pragma mark- Level
 
 void ScoreManager::initLevel() {

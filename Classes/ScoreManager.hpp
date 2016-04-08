@@ -33,6 +33,10 @@ public:
     
     void settlementScore(int count);
     
+    void setBestScore(int score);
+    
+    int  getBestScore();
+    
     //level
     
     void initLevel();

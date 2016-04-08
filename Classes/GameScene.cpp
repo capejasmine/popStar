@@ -99,7 +99,7 @@ void GameScene::initBackGround() {
     
     m_score = (Text*)(Helper::seekWidgetByName(m_root, "score"));
     m_score->setString("0");
-    
+    m_score->setColor(cocos2d::Color3B::BLACK);
 
     
     auto bg_particle = ParticleSystemQuad::create("bg_environment" + std::to_string(quickRandom(0, 3)) + ".plist");
@@ -456,6 +456,10 @@ void GameScene::cheakAndGameOver() {
         log("gameOver");
         settouchTag(false);
         xScor->settlementScore(m_countStar);
+        
+        if (xScor->getScore() > xScor->getBestScore()) {
+            xScor->setBestScore(xScor->getScore());
+        }
     
         
         if (xScor->getScore() > xScor->getTaskScore()) {
@@ -485,6 +489,7 @@ void GameScene::cheakAndGameOver() {
         else
         {
             Audio->playEffect("gameover.mp3");
+            
             
             auto passLayer = PassLayer::create("popup.json", 0, false);
             addChild(passLayer,kzOrderPopUp);

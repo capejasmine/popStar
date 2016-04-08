@@ -26,6 +26,7 @@ typedef enum {
 
 #define     POPSTAR_SCORE        "popstar_core"
 #define     POPSTAR_LEVEL        "popstar_level"
+#define     POPSTAR_BEST_SCORE   "popstar_best_score"
 
 
 #endif /* Appconfig_hpp */

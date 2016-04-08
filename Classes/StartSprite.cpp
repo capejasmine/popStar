@@ -6,11 +6,11 @@
 //
 //
 
-#define   STAR_BLUE         "star_b.png"
-#define   STAR_GREEN        "star_g.png"
-#define   STAR_PURPLE       "star_p.png"
-#define   STAR_RED          "star_r.png"
-#define   STAR_YELLOW       "star_y.png"
+#define   STAR_BLUE         "star_b1.png"
+#define   STAR_GREEN        "star_g1.png"
+#define   STAR_PURPLE       "star_p1.png"
+#define   STAR_RED          "star_r1.png"
+#define   STAR_YELLOW       "star_y1.png"
 
 #define   STAR_DEAD_PARTICLE  "point_star.plist"
 

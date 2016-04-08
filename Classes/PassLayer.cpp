@@ -39,6 +39,14 @@ bool PassLayer::init(std::string filename, int count) {
         Button* nextBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(m_widget, "next"));
         nextBtn->addTouchEventListener(CC_CALLBACK_2(PassLayer::dialogClick, this));
         
+        Text*  score = dynamic_cast<Text*>(Helper::seekWidgetByName(m_widget, "text1"));
+        score->setString(std::to_string(xScor->getScore()));
+        score->setColor(cocos2d::Color3B::BLACK);
+        
+        Text*  best = dynamic_cast<Text*>(Helper::seekWidgetByName(m_widget, "text2"));
+        best->setString(std::to_string(xScor->getBestScore()));
+        best->setColor(cocos2d::Color3B::BLACK);
+        
         if(!getpassSign())
         {
             nextBtn->setVisible(false);

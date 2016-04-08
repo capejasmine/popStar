@@ -65,22 +65,6 @@ void StartScene::initBackGround() {
 //    STsetPostion(start, size/2);
 //    start->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
     
-//    Size fontSize = Size(60,60);
-//    
-//    for (int i = 0; i < 5; i++) {
-//        auto node = Node::create();
-//        for (int j = 0; j < 10; j++) {
-//            auto temp = Label::createWithTTF(std::to_string(j), "Marker Felt.ttf", 50);
-//            temp->setPosition(Vec2(100 + fontSize.width * i, 1200 - fontSize.height*j));
-//            node->addChild(temp, kzOrderUI);
-//        }
-//        addChild(node, kzOrderUI);
-//        m_node.push_back(node);
-//    }
-    m_scroll = NumberScroller::create(5);
-    m_scroll->setPosition(Vec2(100, 100));
-    addChild(m_scroll);
-    
 }
 
 void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
@@ -110,7 +94,7 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
     else
     {
         
-        updateSocre(quickRandom(50, 200));
+        //updateSocre(quickRandom(50, 200));
     }
      Audio->playEffect("click.mp3");
 }
