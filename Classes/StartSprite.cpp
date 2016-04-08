@@ -116,11 +116,12 @@ starData StartSprite::getData() {
 }
 
 void StartSprite::deadAction() {
+    
     auto particle = ParticleSystemQuad::create(STAR_DEAD_PARTICLE);
     particle->setPosition(getContentSize()/2);
     addChild(particle);
     
-    auto dead = Sequence::create(ScaleTo::create(0.4, 0), CallFunc::create([&](){
+    auto dead = Sequence::create(ScaleTo::create(0.4, 0.15), MoveTo::create(0.5, Vec2(605,1220)),CallFunc::create([&](){
         this->removeFromParent();
     }),NULL);
     runAction(dead);

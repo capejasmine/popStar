@@ -14,6 +14,7 @@
 #include "ui/CocosGui.h"
 #include "cocostudio/CocoStudio.h"
 #include "cocostudio/CCSGUIReader.h"
+#include "NumberScroller.hpp"
 
 USING_NS_CC;
 
@@ -29,9 +30,17 @@ public:
     void initBackGround();
     
     void touchDown(Ref* pSender,ui::Widget::TouchEventType type);
+    
+    void updateSocre(int socre);
 private:
     
     cocos2d::ui::Widget* m_root;
+    
+    std::vector<Node*> m_node;
+    
+    NumberScroller*  m_scroll;
+    
+    int num = 10;
 };
 
 #endif /* StartScene_hpp */

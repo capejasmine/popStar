@@ -343,8 +343,12 @@ void GameScene::removeSameColorStar() {
         this->cheakAndGameOver();
     }),NULL));
     
+//    xScor->addScore(sameColorList.size());
+//    m_score->setString(std::to_string(xScor->getScore()));
+    m_last_score = xScor->getScore();
     xScor->addScore(sameColorList.size());
-    m_score->setString(std::to_string(xScor->getScore()));
+    this->schedule(schedule_selector(GameScene::updateScore));
+    
 }
 
 void GameScene::playBrokenEffect() {
@@ -548,6 +552,23 @@ void GameScene::updateAnimation(float dt) {
             }
         }
     }
+}
+
+void GameScene::updateScore(float dt) {
+    
+    int score = xScor->getScore();
+    
+    m_cur_score = m_last_score++;
+    
+    if (m_last_score != score) {
+        m_score->setString(std::to_string(m_cur_score));
+    }
+    else
+    {
+        m_score->setString(std::to_string(score));
+        unschedule(schedule_selector(GameScene::updateScore));
+    }
+
 }
 
 void GameScene::startAnimationOver(float dt) {

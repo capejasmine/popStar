@@ -70,6 +70,9 @@ public:
     
     void startAnimationOver(float dt);
     
+    void updateScore(float dt);
+    
+    
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
@@ -99,6 +102,10 @@ private:
     ui::Widget* m_root;
     
     Text*  m_score;
+    
+    int m_last_score;
+    
+    int m_cur_score;
     
     int m_pos;
     
