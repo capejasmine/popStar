@@ -20,8 +20,12 @@ public:
     static Scene* scene();
     
     virtual bool init();
-private:
+    
     void changeScene(float dt);
+private:
+    
+    
+    static bool firstPlay;
 };
 
 #endif /* LoadingLaeyr_hpp */

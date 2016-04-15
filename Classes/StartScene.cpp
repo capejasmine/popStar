@@ -78,7 +78,7 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
 //        xData->removeRecord();
 //        xScor->resetScore();
 //        xScor->resetLevel();
-        GameController::getInstace()->enterGameScene();
+        xGam->enterLoadinglayer();
     }
     else if (name.compare("resume") == 0){
         if(!xData->isExsitRecord() && !xData->getPassRecord())

@@ -66,11 +66,15 @@ public:
     
     void noBtnCall();
     
+    void showCombo(int count);
+    
     void updateAnimation(float dt);
     
     void startAnimationOver(float dt);
     
     void updateScore(float dt);
+    
+    void playAnimation(float dt);
     
     
     //touch event

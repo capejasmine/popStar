@@ -11,6 +11,8 @@
 #include "cocostudio/CocoStudio.h"
 #include "Appconfig.hpp"
 
+bool LoadingLaeyr::firstPlay = false;
+
 Scene* LoadingLaeyr::scene(){
     Scene* pScene = Scene::create();
     pScene->addChild(LoadingLaeyr::create());
@@ -40,5 +42,20 @@ bool LoadingLaeyr::init() {
 }
 
 void LoadingLaeyr::changeScene(float dt) {
-    xGam->enterStartScene();
+    if(!firstPlay)
+    {
+        xGam->enterStartScene();
+    }
+    else
+    {
+        if(xGam->getCurrentSceneType() == KSceneType::kTagStartScene)
+        {
+            xGam->enterGameScene();
+        }
+        else
+        {
+            xGam->enterStartScene();
+        }
+    }
+    firstPlay = true;
 }

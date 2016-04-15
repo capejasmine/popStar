@@ -21,7 +21,6 @@ void GameController::enterLoading() {
 }
 
 void GameController::enterLoadinglayer() {
-    m_currentType = KSceneType::kTagLoadingLayer;
     
     if (Director::getInstance()->getRunningScene()) {
         Director::getInstance()->replaceScene(TransitionFade::create(0.4, LoadingLaeyr::scene(), cocos2d::Color3B::WHITE));
@@ -48,11 +47,11 @@ void GameController::enterGameScene() {
     m_currentType = KSceneType::kTagGameScene;
     
     if (Director::getInstance()->getRunningScene()) {
-        Director::getInstance()->replaceScene(GameScene::scene());
+        Director::getInstance()->replaceScene(TransitionFade::create(0.4, GameScene::scene(), cocos2d::Color3B::WHITE));
     }
     else
     {
-        Director::getInstance()->runWithScene(GameScene::scene());
+        Director::getInstance()->runWithScene(TransitionFade::create(0.4, GameScene::scene(), cocos2d::Color3B::WHITE));
     }
 }
 

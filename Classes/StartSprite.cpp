@@ -13,6 +13,8 @@
 #define   STAR_YELLOW       "sb_w"
 
 #define   STAR_DEAD_PARTICLE  "point_star.plist"
+#define   EFFECT_CIRCLE       "effect/effect_pop_circle_RETINA.png"
+#define   EFFECT_CENTER       "effect/effect_pop_center_RETINA.png"
 
 #include "StartSprite.hpp"
 #include "Globle.hpp"
@@ -117,11 +119,22 @@ starData StartSprite::getData() {
 
 void StartSprite::deadAction() {
     
-    auto particle = ParticleSystemQuad::create(STAR_DEAD_PARTICLE);
-    particle->setPosition(getContentSize()/2);
-    addChild(particle);
+//    auto particle = ParticleSystemQuad::create(STAR_DEAD_PARTICLE);
+//    particle->setPosition(getContentSize()/2);
+//    addChild(particle);
     
-    auto dead = Sequence::create(ScaleTo::create(0.4, 0.15), MoveTo::create(0.5, Vec2(605,1220)),CallFunc::create([&](){
+    
+    auto circle = Sprite::create(EFFECT_CIRCLE);
+    circle->setPosition(getContentSize()/2);
+    addChild(circle);
+    
+    circle->runAction(Sequence::create(ScaleTo::create(0.4, 0.15), CallFunc::create([=](){
+        auto center = Sprite::create(EFFECT_CENTER);
+        circle->setTexture(center->getTexture());
+        circle->setScale(1.0);
+    }),NULL));
+    
+    auto dead = Sequence::create(ScaleTo::create(0.4, 0.15), Spawn::create(MoveTo::create(0.5, Vec2(620,1180)), FadeOut::create(0.5), NULL),CallFunc::create([&](){
         this->removeFromParent();
     }),NULL);
     runAction(dead);

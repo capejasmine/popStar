@@ -83,14 +83,14 @@ void PassLayer::dialogClick(Ref* obj, ui::Widget::TouchEventType type) {
             xScor->resetLevel();
             xScor->resetScore();
             xData->removeRecord();
-            xGam->enterStartScene();
+            xGam->enterLoadinglayer();
         }
         else
         {
             xData->setPassRecord(true);
             xScor->saveScore();
             //xScor->addLevel();
-            xGam->enterStartScene();
+            xGam->enterLoadinglayer();
         }
     }
     else

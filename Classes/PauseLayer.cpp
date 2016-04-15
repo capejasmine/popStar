@@ -60,7 +60,7 @@ void PauseLayer::dialogClick(Ref* obj, ui::Widget::TouchEventType type) {
     {
         if(m_menuClick){
             m_menuClick();
-            xGam->enterStartScene();
+            xGam->enterLoadinglayer();
         }
     }
     else

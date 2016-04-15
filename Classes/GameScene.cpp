@@ -7,6 +7,8 @@
 //
 #define   BACK_GROUND_PNG   "bg_main.png"
 #define   STAR_COUNT        100;
+#define   COMBOM            "combo/MultiplyNumber_"
+#define   COMBOM_TEXT       "combo/combo_landscape_RETINA.png"
 
 #include "GameScene.hpp"
 #include "AudioController.hpp"
@@ -17,6 +19,7 @@
 #include "UITools.h"
 #include "PassLayer.hpp"
 #include "PauseLayer.hpp"
+#include "cocostudio/CocoStudio.h"
 
 GameScene::GameScene()
 :m_starArr(NULL)
@@ -80,9 +83,27 @@ bool GameScene::init() {
     
     this->scheduleOnce(schedule_selector(GameScene::updateAnimation), 5.0);
     this->scheduleOnce(schedule_selector(GameScene::startAnimationOver), 5.0f);
+    this->scheduleOnce(schedule_selector(GameScene::playAnimation), 0.1f);
+    
     
     
     return true;
+}
+
+void GameScene::playAnimation(float dt) {
+    ArmatureDataManager::getInstance()->addArmatureFileInfo("animation/startAniamtion.ExportJson");
+    Size winSize = Director::getInstance()->getWinSize();
+    auto armature = Armature::create("startAniamtion");
+    armature->getAnimation()->playWithIndex(0);
+    addChild(armature, kzOrderPopUp);
+    armature->setPosition(winSize/2);
+    
+    auto sun_light = (ImageView*)(Helper::seekWidgetByName(m_root, "sun_1"));
+    auto sun_bg = (ImageView*)(Helper::seekWidgetByName(m_root, "sun_2"));
+    auto aciton1 = RepeatForever::create(Sequence::create(MoveBy::create(30, Vec2(-50,20)),MoveBy::create(25, Vec2(50,-20)),NULL));
+    auto aciton2 = RepeatForever::create(Sequence::create(MoveBy::create(30, Vec2(-50,20)),MoveBy::create(25, Vec2(50,-20)),NULL));
+    sun_bg->runAction(aciton1);
+    sun_light->runAction(aciton2);
 }
 
 void GameScene::initBackGround() {
@@ -307,7 +328,10 @@ void GameScene::removeSameColorStar() {
     // 延时 播放消失动作
     m_countStar -= sameColorList.size();
     
-    auto time = sameColorList.size() ;
+    auto count = sameColorList.size();
+    
+    showCombo(count);
+    
     auto repeat = Repeat::create(Sequence::create(CallFunc::create([=](){
         auto it = sameColorList.back();
         
@@ -320,7 +344,7 @@ void GameScene::removeSameColorStar() {
         //cava->removeFromParent();
         m_starArr[data.row * m_width + data.col] = nullptr;
         }
-    }), DelayTime::create(0.08f),NULL), time);
+    }), DelayTime::create(0.08f),NULL), count);
     //runAction(repeat);
     
     //particle
@@ -504,6 +528,33 @@ void GameScene::cheakAndGameOver() {
     
 }
 
+void GameScene::showCombo(int count) {
+    std::string filename = COMBOM;
+    if (count < 13) {
+        filename = filename + std::to_string(count) + ".png";
+    }
+    else
+    {
+        filename = filename + "MAX.png";
+    }
+    Size winSize = Director::getInstance()->getWinSize();
+    auto combom = Sprite::create(filename);
+    combom->setPosition(winSize/2 + Size(90,0));
+    addChild(combom, kzOrderContent);
+    combom->setScale(0);
+    combom->runAction(Sequence::create(ScaleTo::create(0.6, 2), CallFunc::create([=](){
+        combom->removeFromParent();
+    }),NULL));
+    
+    auto combomText = Sprite::create(COMBOM_TEXT);
+    addChild(combomText, kzOrderContent);
+    combomText->setScale(0);
+    combomText->setPosition(Vec2(winSize/2 - Size(90,0)));
+    combomText->runAction(Sequence::create(ScaleTo::create(0.6, 1.4), CallFunc::create([=](){
+        combomText->removeFromParent();
+    }),NULL));
+}
+
 
 void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
     if(ui::Widget::TouchEventType::ENDED != type) return;
@@ -539,7 +590,7 @@ void GameScene::yesBtnCall() {
     xData->saveToFile(m_starArr); // 保存 star 数据信息
     xScor->saveScore();
     //xScor->addLevel();
-    xGam->enterStartScene();
+    xGam->enterLoadinglayer();
 }
 
 void GameScene::noBtnCall() {
