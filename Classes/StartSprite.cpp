@@ -6,11 +6,11 @@
 //
 //
 
-#define   STAR_BLUE         "star_b1.png"
-#define   STAR_GREEN        "star_g1.png"
-#define   STAR_PURPLE       "star_p1.png"
-#define   STAR_RED          "star_r1.png"
-#define   STAR_YELLOW       "star_y1.png"
+#define   STAR_BLUE         "sb_b"
+#define   STAR_GREEN        "sb_p"
+#define   STAR_PURPLE       "sb_r"
+#define   STAR_RED          "sb_v"
+#define   STAR_YELLOW       "sb_w"
 
 #define   STAR_DEAD_PARTICLE  "point_star.plist"
 
@@ -24,7 +24,7 @@ StartSprite* StartSprite::create(int row, int col) {
     auto star = new StartSprite();
     auto filename = star->getStarFilename();
     if (star && star->initWithFile(filename)) {
-        star->setData(filename, row, col);
+        star->setData(filename.substr(0,4), row, col);
         star->autorelease();
         star->initAction(row, col);
         return star;
@@ -41,7 +41,7 @@ StartSprite* StartSprite::createWithTag(int row, int col, int tag) {
         auto star = new StartSprite();
         auto filename = star->getStarFilenameWhihTag(tag);
         if (star && star->initWithFile(filename)) {
-            star->setData(filename, row, col);
+            star->setData(filename.substr(0,4), row, col);
             star->autorelease();
             star->initAction(row, col);
             return star;
@@ -55,25 +55,25 @@ std::string StartSprite::getStarFilename() {
     std::string arrStar[] = {STAR_BLUE,STAR_GREEN,STAR_PURPLE,STAR_RED,STAR_YELLOW};
     
     int len = sizeof(arrStar)/sizeof(arrStar[0]) - 1;
-    return arrStar[quickRandom(0, len)];
+    return (string(arrStar[quickRandom(0, len)]) + std::to_string(quickRandom(1, 4)) +".png");
 }
 
 std::string StartSprite::getStarFilenameWhihTag(int tag) {
     switch (tag) {
         case 1:
-            return STAR_BLUE;
+            return STAR_BLUE + std::to_string(quickRandom(1, 4)) +".png";
             break;
         case 2:
-            return STAR_GREEN;
+            return STAR_GREEN + std::to_string(quickRandom(1, 4)) +".png";
             break;
         case 3:
-            return STAR_PURPLE;
+            return STAR_PURPLE + std::to_string(quickRandom(1, 4)) +".png";
             break;
         case 4:
-            return STAR_RED;
+            return STAR_RED + std::to_string(quickRandom(1, 4)) +".png";
             break;
         case 5:
-            return STAR_YELLOW;
+            return STAR_YELLOW + std::to_string(quickRandom(1, 4)) +".png";
             break;
         default:
             break;
@@ -83,7 +83,7 @@ std::string StartSprite::getStarFilenameWhihTag(int tag) {
 }
 
 void StartSprite::initAction(int row, int col){
-    int starSize = 72;
+    int starSize = 67;
     setPosition(Vec2(36 + starSize * col, 1330));
     //   row/5     0     1.2
     int mode = xGam->getFallMode();
@@ -101,7 +101,7 @@ void StartSprite::initAction(int row, int col){
         default:
             break;
     }
-    auto fallAction = MoveTo::create(fallTime, Vec2(36 + starSize * col, 36 + starSize * row));
+    auto fallAction = MoveTo::create(fallTime, Vec2(60 + starSize * col, 57 + starSize * row));
     runAction(fallAction);
 }
 

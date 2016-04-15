@@ -94,8 +94,8 @@ void GameScene::initBackGround() {
     auto pause = (Button*)(Helper::seekWidgetByName(m_root, "pause"));
     pause->addTouchEventListener(CC_CALLBACK_2(GameScene::touchDown, this));
     
-    auto music = (Button*)(Helper::seekWidgetByName(m_root, "music"));
-    music->addTouchEventListener(CC_CALLBACK_2(GameScene::touchDown, this));
+    auto quit = (Button*)(Helper::seekWidgetByName(m_root, "Button_17"));
+    quit->addTouchEventListener(CC_CALLBACK_2(GameScene::touchDown, this));
     
     m_score = (Text*)(Helper::seekWidgetByName(m_root, "score"));
     m_score->setString("0");
@@ -387,7 +387,7 @@ void GameScene::cheakAndFallStar() {
                 if(temp != nullptr) //再次判断， 因为temp 也可能为空
                 { // 交换 数据 并执行 动作
                     //log("temp : name = %s row = %d,col = %d",temp->getData().name.c_str(),temp->getData().row,temp->getData().col);
-                    temp->runAction(MoveBy::create(0.2, Vec2(0, -(dest - row) * 72)));
+                    temp->runAction(MoveBy::create(0.2, Vec2(0, -(dest - row) * 67)));
                     temp->setData(temp->getData().name, row, col);
                     m_starArr[dest* m_width + col] = nullptr;
                     m_starArr[row* m_width + col] = temp;
@@ -424,7 +424,7 @@ void GameScene::cheakAndCombineStar() {
                         auto temp_star = m_starArr[row * m_width + temp_col];  // 逐个 移动
                         if(temp_star != nullptr)
                         {
-                            temp_star->runAction(MoveBy::create(0.2, Vec2(-72 * (temp_col - col), 0)));
+                            temp_star->runAction(MoveBy::create(0.2, Vec2(-67 * (temp_col - col), 0)));
                             temp_star->setData(temp_star->getData().name, row, col);
                             m_starArr[row * m_width + temp_col] = nullptr;
                             m_starArr[row * m_width + col] = temp_star;
@@ -525,7 +525,10 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
     }
     else
     {
-        
+        m_popLayer = PopLayer::create("quit.json");
+        m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
+        m_popLayer->setText("Are you sure quit the game?");
+        addChild(m_popLayer,kzOrderPopUp,"pop");
     }
     
     Audio->playEffect("click.mp3");

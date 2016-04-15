@@ -8,15 +8,39 @@
 
 #include "GameController.hpp"
 
+void GameController::enterLoading() {
+    m_currentType = KSceneType::kTagLoading;
+    
+    if (Director::getInstance()->getRunningScene()) {
+        Director::getInstance()->replaceScene(Loading::scene());
+    }
+    else
+    {
+        Director::getInstance()->runWithScene(Loading::scene());
+    }
+}
+
+void GameController::enterLoadinglayer() {
+    m_currentType = KSceneType::kTagLoadingLayer;
+    
+    if (Director::getInstance()->getRunningScene()) {
+        Director::getInstance()->replaceScene(TransitionFade::create(0.4, LoadingLaeyr::scene(), cocos2d::Color3B::WHITE));
+    }
+    else
+    {
+        Director::getInstance()->runWithScene(TransitionFade::create(0.4, LoadingLaeyr::scene(), cocos2d::Color3B::WHITE));
+    }
+}
+
 void GameController::enterStartScene() {
     m_currentType = KSceneType::kTagStartScene;
     
     if (Director::getInstance()->getRunningScene()) {
-        Director::getInstance()->replaceScene(StartScene::scene());
+        Director::getInstance()->replaceScene(TransitionFade::create(0.4, StartScene::scene(), cocos2d::Color3B::WHITE));
     }
     else
     {
-        Director::getInstance()->runWithScene(StartScene::scene());
+        Director::getInstance()->runWithScene(TransitionFade::create(0.4, StartScene::scene(), cocos2d::Color3B::WHITE));
     }
 }
 

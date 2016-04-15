@@ -36,13 +36,14 @@ void DataManager::saveToFile(StartSprite** m_starArr) {
 }
 
 std::string DataManager::getTagFromNmae(std::string name) {
-    if (name.compare("star_b.png") == 0) {
+    name = name.substr(0,4);
+    if (name.compare("sb_b") == 0) {
         return "1";
-    }else if (name.compare("star_g.png") == 0){
+    }else if (name.compare("sb_p") == 0){
         return "2";
-    }else if (name.compare("star_p.png") == 0){
+    }else if (name.compare("sb_r") == 0){
         return "3";
-    }else if (name.compare("star_r.png") == 0){
+    }else if (name.compare("sb_v") == 0){
         return "4";
     }else{
         return "5";

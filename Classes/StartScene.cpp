@@ -48,8 +48,8 @@ void StartScene::initBackGround() {
     auto new_game = (Button*)(Helper::seekWidgetByName(m_root, "new_game"));
     new_game->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
     
-    auto rate = (Button*)(Helper::seekWidgetByName(m_root, "rate"));
-    rate->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
+//    auto rate = (Button*)(Helper::seekWidgetByName(m_root, "rate"));
+//    rate->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
     
     auto resume = (Button*)(Helper::seekWidgetByName(m_root, "resume"));
     resume->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
@@ -74,10 +74,10 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
     std::string name = target->getName();
     
     if (name.compare("new_game") == 0) {
-        //  清除历史纪录
-        xData->removeRecord();
-        xScor->resetScore();
-        xScor->resetLevel();
+//        //  清除历史纪录
+//        xData->removeRecord();
+//        xScor->resetScore();
+//        xScor->resetLevel();
         GameController::getInstace()->enterGameScene();
     }
     else if (name.compare("resume") == 0){
@@ -88,7 +88,11 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
         }
         else
         {
-            GameController::getInstace()->enterGameScene();
+            //  清除历史纪录
+            xData->removeRecord();
+            xScor->resetScore();
+            xScor->resetLevel();
+            //GameController::getInstace()->enterGameScene();
         }
     }
     else

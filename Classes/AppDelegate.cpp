@@ -40,13 +40,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
     searchPahts.push_back("star");
     searchPahts.push_back("ui");
     searchPahts.push_back("cocos");
+    searchPahts.push_back("animation");
     
     FileUtils::getInstance()->setSearchPaths(searchPahts);
     
     initDesignScale();
     
     // run
-    GameController::getInstace()->enterStartScene();
+    GameController::getInstace()->enterLoading();
 
     return true;
 }

@@ -43,7 +43,9 @@
 		262E436C1C993A06005A17D2 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 262E43641C993A06005A17D2 /* sounds */; };
 		262E436D1C993A06005A17D2 /* star in Resources */ = {isa = PBXBuildFile; fileRef = 262E43651C993A06005A17D2 /* star */; };
 		262E436E1C993A06005A17D2 /* ui in Resources */ = {isa = PBXBuildFile; fileRef = 262E43661C993A06005A17D2 /* ui */; };
+		2645A8291CBF8B4200C70AF3 /* animation in Resources */ = {isa = PBXBuildFile; fileRef = 2645A8281CBF8B4200C70AF3 /* animation */; settings = {ASSET_TAGS = (); }; };
 		26AA79D71C97E93C00D097A0 /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26AA79D51C97E93C00D097A0 /* DataManager.cpp */; };
+		26C239181CBF849300955BE4 /* Loading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26C239161CBF849300955BE4 /* Loading.cpp */; settings = {ASSET_TAGS = (); }; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -303,8 +305,11 @@
 		262E43641C993A06005A17D2 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		262E43651C993A06005A17D2 /* star */ = {isa = PBXFileReference; lastKnownFileType = folder; path = star; sourceTree = "<group>"; };
 		262E43661C993A06005A17D2 /* ui */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ui; sourceTree = "<group>"; };
+		2645A8281CBF8B4200C70AF3 /* animation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animation; sourceTree = "<group>"; };
 		26AA79D51C97E93C00D097A0 /* DataManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataManager.cpp; path = ../Classes/DataManager.cpp; sourceTree = "<group>"; };
 		26AA79D61C97E93C00D097A0 /* DataManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DataManager.hpp; path = ../Classes/DataManager.hpp; sourceTree = "<group>"; };
+		26C239161CBF849300955BE4 /* Loading.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Loading.cpp; path = ../Classes/Loading.cpp; sourceTree = "<group>"; };
+		26C239171CBF849300955BE4 /* Loading.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Loading.hpp; path = ../Classes/Loading.hpp; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -547,6 +552,8 @@
 				261376101C9BA8FE000DF95D /* PauseLayer.hpp */,
 				26054AD81C7C03B800DE718B /* PopLayer.cpp */,
 				26054AD91C7C03B800DE718B /* PopLayer.hpp */,
+				26C239161CBF849300955BE4 /* Loading.cpp */,
+				26C239171CBF849300955BE4 /* Loading.hpp */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -678,6 +685,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2645A8281CBF8B4200C70AF3 /* animation */,
 				261407861C9A87B90079BDB7 /* cocos */,
 				262E435F1C993A06005A17D2 /* background */,
 				262E43611C993A06005A17D2 /* config */,
@@ -897,6 +905,7 @@
 				262E436E1C993A06005A17D2 /* ui in Resources */,
 				A20FFA221B3D0CD500A08F52 /* Default-568h@2x.png in Resources */,
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
+				2645A8291CBF8B4200C70AF3 /* animation in Resources */,
 				262E436A1C993A06005A17D2 /* fonts in Resources */,
 				A20FFA2A1B3D0CD500A08F52 /* AppIcon57x57@2x.png in Resources */,
 				A20FFA321B3D0CE900A08F52 /* Info.plist in Resources */,
@@ -946,6 +955,7 @@
 				261D5DF21C7D403900F7E4B8 /* GameController.cpp in Sources */,
 				26054ADD1C7C03C500DE718B /* LoadingLaeyr.cpp in Sources */,
 				2619BAC51CB6170300F95641 /* NumberScroller.cpp in Sources */,
+				26C239181CBF849300955BE4 /* Loading.cpp in Sources */,
 				260CDF131C9668C80027A797 /* AudioController.cpp in Sources */,
 				2614078C1C9AA1410079BDB7 /* PassLayer.cpp in Sources */,
 				26054AD71C7C039C00DE718B /* GameScene.cpp in Sources */,

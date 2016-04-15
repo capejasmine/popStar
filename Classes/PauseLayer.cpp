@@ -11,6 +11,7 @@
 #include "Appconfig.hpp"
 #include "GameController.hpp"
 #include "ScoreManager.hpp"
+#include "DataManager.hpp"
 
 PauseLayer* PauseLayer::create(std::string filename) {
     PauseLayer* layer = new PauseLayer();
@@ -34,6 +35,7 @@ bool PauseLayer::init(std::string filename) {
         
         Button* resetBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(widget, "reset"));
         resetBtn->addTouchEventListener(CC_CALLBACK_2(PauseLayer::dialogClick, this));
+        resetBtn->setVisible(false);
         
         Button* playBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(widget, "play"));
         playBtn->addTouchEventListener(CC_CALLBACK_2(PauseLayer::dialogClick, this));
@@ -51,6 +53,7 @@ void PauseLayer::dialogClick(Ref* obj, ui::Widget::TouchEventType type) {
     
     if(name.compare("reset") == 0){
         xScor->resetPreScoreAndLevel();
+        xData->removeRecord();
         xGam->enterGameScene();
     }
     else if(name.compare("menu") == 0)
