@@ -21,6 +21,8 @@
 #include "GameController.hpp"
 #include "UITools.h"
 
+
+
 Scene* StartScene::scene() {
     Scene* pScene = Scene::create();
     pScene->addChild(StartScene::create());
@@ -40,6 +42,9 @@ bool StartScene::init() {
     
     xGam->setFallMode(quickRandom(0, 2));
     
+    
+    
+    
     return true;
 }
 
@@ -54,17 +59,6 @@ void StartScene::initBackGround() {
     auto resume = (Button*)(Helper::seekWidgetByName(m_root, "resume"));
     resume->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
     
-    auto size = Director::getInstance()->getWinSize();
-    
-//    auto bg = Sprite::create(BACK_GROUND_PNG);
-//    addChild(bg,kzOrderBackground);
-//    STsetPostion(bg,size/2);
-//    
-//    auto start = cocos2d::ui::Button::create(START_PNG);
-//    addChild(start,kzOrderUI);
-//    STsetPostion(start, size/2);
-//    start->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
-    
 }
 
 void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
@@ -72,6 +66,7 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
     
     auto target = (Widget*)pSender;
     std::string name = target->getName();
+    
     
     if (name.compare("new_game") == 0) {
 //        //  清除历史纪录

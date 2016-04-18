@@ -45,8 +45,12 @@ std::string DataManager::getTagFromNmae(std::string name) {
         return "3";
     }else if (name.compare("sb_v") == 0){
         return "4";
-    }else{
+    }else if (name.compare("sb_w") == 0){
         return "5";
+    }else if (name.compare("Bomb") == 0){
+        return "6";
+    }else{
+        return "7";
     }
 }
 

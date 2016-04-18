@@ -6,20 +6,14 @@
 //
 //
 
-#ifndef StartSprite_hpp
-#define StartSprite_hpp
+#ifndef PropsSprite_hpp
+#define PropsSprite_hpp
 
 #include "cocos2d.h"
 
 USING_NS_CC;
 
-enum kStarColorTag{
-    kBlueTag = 456,
-    kGreenTag,
-    kPurpleTag,
-    kRedTag,
-    kYellowTag
-};
+
 
 struct starData{
     int row;
@@ -27,12 +21,12 @@ struct starData{
     std::string name;
 };
 
-class StartSprite : public Sprite {
+class PropsSprite : public Sprite {
 public:
     
-    static StartSprite* create(int row, int col);
+    static PropsSprite* create(int row, int col);
     
-    static StartSprite* createWithTag(int row, int col, int tag);
+    static PropsSprite* createWithTag(int row, int col, int tag);
     
     std::string getStarFilename();
     
@@ -45,8 +39,6 @@ public:
     void deadAction();
     
     starData getData();
-    
-    void changeAnimation();
     
     
 private:

@@ -21,6 +21,12 @@
 #include "PauseLayer.hpp"
 #include "cocostudio/CocoStudio.h"
 
+#define TIMER_BG_1 "timer/timer_e_l_landscape_RETINA.png"
+#define TIMER_BG_2 "timer/timer_e_r_landscape_RETINA.png"
+#define TIMER_CONTENT_1 "timer/timer_f_l_landscape_RETINA.png"
+#define TIMER_CONTENT_2 "timer/timer_f_r_landscape_RETINA.png"
+#define TIMER_BG    "timer/timer_add_landscape_RETINA.png"
+
 GameScene::GameScene()
 :m_starArr(NULL)
 ,m_width(0)
@@ -85,7 +91,10 @@ bool GameScene::init() {
     this->scheduleOnce(schedule_selector(GameScene::startAnimationOver), 5.0f);
     this->scheduleOnce(schedule_selector(GameScene::playAnimation), 0.1f);
     
+    setDbScore(false);
+    setBomb(false);
     
+    showTimer();
     
     return true;
 }
@@ -171,6 +180,52 @@ void GameScene::intStarWithRecord() {
     }
 }
 
+void GameScene::propsAction(std::string type) {
+    if (type.compare("Mult") == 0) {
+        setDbScore(true);
+        this->scheduleOnce(schedule_selector(GameScene::doubleScore), 5.0);
+        log("double score time over");
+        
+    }
+    else
+    {
+        log("boom star!!!!!!!");
+        setBomb(true);
+        
+        auto target = getCurrentTouchStar();
+        auto data = target->getData();
+        int row = data.row;
+        int col = data.col;
+        
+        for (int i = 0; i < 10; i++) {
+            auto target_row = m_starArr[i * m_width + col];
+            auto target_col = m_starArr[row * m_width + i];
+            if (target_row) {
+                if (!inSameColorList(target_row)) {
+                    sameColorList.push_back(target_row);
+                }
+            }
+            
+            if (target_col) {
+                if (!inSameColorList(target_col)) {
+                    sameColorList.push_back(target_col);
+                }
+            }
+            
+        }
+        settouchTag(false);
+        
+    }
+    
+    removeSameColorStar();
+    // 当前点击star 设置为空
+    setCurrentTouchStar(nullptr);
+}
+
+void GameScene::doubleScore(float dt){
+    setDbScore(false);
+}
+
 bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
     if (gettouchTag()) {  // 还没有消除 不能点击
     
@@ -192,6 +247,14 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
                                 
                                 // 当前点击star 设置为空
                                 setCurrentTouchStar(nullptr);
+                            }
+                            
+                            log("%s",target->getName().c_str());
+                            
+                            if (target->getData().name.compare("Bomb") == 0) {
+                                propsAction("Bomb");
+                            }else if (target->getData().name.compare("Mult") == 0) {
+                                propsAction("Mult");
                             }
                         }
                         else
@@ -332,6 +395,11 @@ void GameScene::removeSameColorStar() {
     
     showCombo(count);
     
+    float time = 0.08;
+    if (getBomb()) {
+        time = 0;
+    }
+    
     auto repeat = Repeat::create(Sequence::create(CallFunc::create([=](){
         auto it = sameColorList.back();
         
@@ -344,7 +412,7 @@ void GameScene::removeSameColorStar() {
         //cava->removeFromParent();
         m_starArr[data.row * m_width + data.col] = nullptr;
         }
-    }), DelayTime::create(0.08f),NULL), count);
+    }), DelayTime::create(time),NULL), count);
     //runAction(repeat);
     
     //particle
@@ -370,7 +438,7 @@ void GameScene::removeSameColorStar() {
 //    xScor->addScore(sameColorList.size());
 //    m_score->setString(std::to_string(xScor->getScore()));
     m_last_score = xScor->getScore();
-    xScor->addScore(sameColorList.size());
+    xScor->addScore(sameColorList.size() * (getDbScore()? 2 : 1));
     this->schedule(schedule_selector(GameScene::updateScore));
     
 }
@@ -528,7 +596,80 @@ void GameScene::cheakAndGameOver() {
     
 }
 
+void GameScene::showTimer() {
+    auto size = Director::getInstance()->getWinSize();
+    
+    auto timer_center = Helper::seekWidgetByName(m_root, "timer_center");
+    auto timer_bg = Helper::seekWidgetByName(m_root, "timer_bg");
+    auto timer_t = Helper::seekWidgetByName(m_root, "timer");
+    timer_center->setScale(0);
+    timer_bg->setScale(0);
+    timer_t->setScale(0);
+    timer_center->runAction(ScaleTo::create(0.3, 1));
+    timer_bg->runAction(ScaleTo::create(0.3, 1));
+    timer_t->runAction(ScaleTo::create(0.3, 1));
+    
+    auto timer = Sprite::create(TIMER_BG);
+    timer_center->addChild(timer,kzOrderUI);
+    timer->setPosition(timer_center->getContentSize()/2);
+    
+    auto clipper_l = ClippingNode::create();
+    clipper_l->setInverted(true);
+    
+    clipper_l->setAnchorPoint(Vec2(1, 0.5));
+    timer->addChild(clipper_l);
+    clipper_l->setPosition(timer->getContentSize()/2);
+    
+    auto content_l = Sprite::create(TIMER_CONTENT_1);
+    content_l->setAnchorPoint(Vec2(1,0.5));
+    content_l->setPosition(clipper_l->getContentSize()/2);
+    clipper_l->addChild(content_l);
+    
+    auto stencil_l = Sprite::create(TIMER_BG_2);
+    stencil_l->setAnchorPoint(Vec2(0,0.5));
+    clipper_l->setStencil(stencil_l);
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    auto clipper_r = ClippingNode::create();
+    clipper_r->setInverted(true);
+    
+    clipper_r->setAnchorPoint(Vec2(0, 0.5));
+    timer->addChild(clipper_r);
+    clipper_r->setPosition(timer->getContentSize()/2);
+    
+    
+    auto content_r = Sprite::create(TIMER_CONTENT_2);
+    content_r->setAnchorPoint(Vec2(0,0.5));
+    content_r->setPosition(clipper_r->getContentSize()/2);
+    clipper_r->addChild(content_r);
+    
+    auto stencil_r = Sprite::create(TIMER_BG_1);
+    stencil_r->setAnchorPoint(Vec2(1,0.5));
+    clipper_r->setStencil(stencil_r);
+    
+    
+    auto action = Sequence::create(CallFunc::create([=](){
+        stencil_r->runAction(RotateBy::create(5.0, 180));
+    }),CallFunc::create([=](){
+        stencil_l->runAction(Sequence::create(DelayTime::create(5), RotateBy::create(5.0, 180),NULL));
+    }),CallFunc::create([=](){
+        timer_center->runAction(Sequence::create(DelayTime::create(10), ScaleTo::create(0.3, 0),NULL));
+        timer_bg->runAction(Sequence::create(DelayTime::create(10), ScaleTo::create(0.3, 0),NULL));
+        timer_t->runAction(Sequence::create(DelayTime::create(10), ScaleTo::create(0.3, 0),NULL));
+    }),NULL);
+    
+    auto call = CallFunc::create([=](){
+        timer->removeFromParent();
+    });
+    
+    runAction(Sequence::create(action, DelayTime::create(10.1),call,NULL));
+}
+
 void GameScene::showCombo(int count) {
+    if (count < 2) {
+        return;
+    }
+    
     std::string filename = COMBOM;
     if (count < 13) {
         filename = filename + std::to_string(count) + ".png";
@@ -563,13 +704,15 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
     std::string name = target->getName();
     
     if (name.compare("pause") == 0) {
-//        m_popLayer = PopLayer::create("quit.json");
-//        m_popLayer->setClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this), CC_CALLBACK_0(GameScene::noBtnCall, this));
-//        m_popLayer->setText("Are you sure quit the game?");
-//        addChild(m_popLayer,kzOrderPopUp,"pop");
-        auto pauseLayer = PauseLayer::create("pause.json");
-        pauseLayer->setMenuClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this));
-        addChild(pauseLayer,kzOrderPopUp);
+
+//        auto pauseLayer = PauseLayer::create("pause.json");
+//        pauseLayer->setMenuClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this));
+//        addChild(pauseLayer,kzOrderPopUp);
+        auto target = m_starArr[5 * NUMX + 5];
+        target->changeAnimation();
+        m_countStar -= 1;
+        
+        showTimer();
     }
     else if (name.compare("music") == 0){
         Audio->changeMode();

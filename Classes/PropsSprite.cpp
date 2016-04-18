@@ -12,9 +12,6 @@
 #define   STAR_RED          "sb_v"
 #define   STAR_YELLOW       "sb_w"
 
-#define   BOMB              "Bomb_RETINA.png"
-#define   MUTIPLY           "Multiply_RETINA.png"
-
 #define   STAR_DEAD_PARTICLE  "point_star.plist"
 #define   EFFECT_CIRCLE       "effect/effect_pop_circle_RETINA.png"
 #define   EFFECT_CENTER       "effect/effect_pop_center_RETINA.png"
@@ -80,12 +77,6 @@ std::string StartSprite::getStarFilenameWhihTag(int tag) {
         case 5:
             return STAR_YELLOW + std::to_string(quickRandom(1, 4)) +".png";
             break;
-        case 6:
-            return BOMB;
-            break;
-        case 7:
-            return MUTIPLY;
-            break;
         default:
             break;
     }
@@ -149,34 +140,6 @@ void StartSprite::deadAction() {
     runAction(dead);
 }
 
-void StartSprite::changeAnimation() {
-    std::string filename = quickRandom(0, 1) ? BOMB : MUTIPLY;
-    auto data = getData();
-    
-    
-    Texture2D* t1 = getTexture();
-    Texture2D* t2 = Sprite::create(filename)->getTexture();
-    
-    setData(filename.substr(0, 4), data.row, data.col);
-    
-    auto animation = Sequence::create(CallFunc::create([=](){
-        this->setTexture(t2);
-    }), DelayTime::create(0.2f),CallFunc::create([=](){
-        this->setTexture(t1);
-    }),DelayTime::create(0.2f),CallFunc::create([=](){
-        this->setTexture(t2);
-    }), DelayTime::create(0.2f),CallFunc::create([=](){
-        this->setTexture(t1);
-    }),DelayTime::create(0.2f),CallFunc::create([=](){
-        this->setTexture(t2);
-    }),DelayTime::create(0.2f),CallFunc::create([=](){
-        this->setTexture(t1);
-    }), DelayTime::create(0.2f),CallFunc::create([=](){
-        this->setTexture(t2);
-    }),NULL);
-    
-    runAction(animation);
-}
 
 
 

@@ -33,6 +33,8 @@ public:
     
     CC_SYNTHESIZE(StartSprite*, curentStar, CurrentTouchStar);
     CC_SYNTHESIZE(bool, touch, touchTag);
+    CC_SYNTHESIZE(bool, dscore, DbScore);
+    CC_SYNTHESIZE(bool, boom, Bomb);
     
     CREATE_FUNC(GameScene);
     
@@ -68,6 +70,10 @@ public:
     
     void showCombo(int count);
     
+    void showTimer();
+    
+    void propsAction(std::string type);
+    
     void updateAnimation(float dt);
     
     void startAnimationOver(float dt);
@@ -75,6 +81,8 @@ public:
     void updateScore(float dt);
     
     void playAnimation(float dt);
+    
+    void doubleScore(float dt);
     
     
     //touch event
@@ -114,6 +122,7 @@ private:
     int m_pos;
     
     float m_delay = 0;
+
 };
 
 #endif /* GameScene_hpp */
