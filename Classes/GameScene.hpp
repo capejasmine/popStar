@@ -25,6 +25,11 @@ enum kSideTag{
     kRight
 };
 
+enum kMessage{
+    kPass = 233,
+    kCombo
+};
+
 class GameScene : public Layer{
 public:
     GameScene();
@@ -72,6 +77,10 @@ public:
     
     void showTimer();
     
+    void gameoverAction();
+    
+    void messageAction(kMessage msg);
+    
     void propsAction(std::string type);
     
     void updateAnimation(float dt);
@@ -84,6 +93,7 @@ public:
     
     void doubleScore(float dt);
     
+
     
     //touch event
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
@@ -122,6 +132,12 @@ private:
     int m_pos;
     
     float m_delay = 0;
+    
+    ProgressTimer* m_progress;
+    
+    static bool passMessage;
+    
+    bool comboMessage = false;
 
 };
 

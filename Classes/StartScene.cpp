@@ -20,6 +20,7 @@
 #include "DataManager.hpp"
 #include "GameController.hpp"
 #include "UITools.h"
+#include "MessageLayer.hpp";
 
 
 
@@ -59,6 +60,12 @@ void StartScene::initBackGround() {
     auto resume = (Button*)(Helper::seekWidgetByName(m_root, "resume"));
     resume->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
     
+    auto about = (Button*)(Helper::seekWidgetByName(m_root, "about"));
+    about->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
+    
+    auto music = (Button*)(Helper::seekWidgetByName(m_root, "music"));
+    music->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
+    
 }
 
 void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
@@ -79,6 +86,8 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
         if(!xData->isExsitRecord() && !xData->getPassRecord())
         {
             log("there is not exist the record");
+            auto popup = MessageLaye::create(kEventType::kWorning);
+            addChild(popup, kzOrderPopUp);
             
         }
         else
@@ -88,7 +97,16 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
             xScor->resetScore();
             xScor->resetLevel();
             //GameController::getInstace()->enterGameScene();
+            
         }
+    }
+    else if(name.compare("about") == 0){
+        
+        auto popup = MessageLaye::create(kEventType::kAbout);
+        addChild(popup, kzOrderPopUp);
+    }
+    else if(name.compare("music") == 0){
+        Audio->changeMode();
     }
     else
     {

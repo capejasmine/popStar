@@ -36,6 +36,7 @@
 		261D5E021C7D919300F7E4B8 /* Globle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E001C7D919300F7E4B8 /* Globle.cpp */; };
 		261D5E061C7D9E3B00F7E4B8 /* StartSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E041C7D9E3B00F7E4B8 /* StartSprite.cpp */; };
 		261D5E0A1C7DA0C500F7E4B8 /* UITools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E081C7DA0C500F7E4B8 /* UITools.cpp */; };
+		262E16AC1CC62850002AB84D /* MessageLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 262E16AA1CC62850002AB84D /* MessageLayer.cpp */; settings = {ASSET_TAGS = (); }; };
 		262E43671C993A06005A17D2 /* background in Resources */ = {isa = PBXBuildFile; fileRef = 262E435F1C993A06005A17D2 /* background */; };
 		262E43691C993A06005A17D2 /* config in Resources */ = {isa = PBXBuildFile; fileRef = 262E43611C993A06005A17D2 /* config */; };
 		262E436A1C993A06005A17D2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 262E43621C993A06005A17D2 /* fonts */; };
@@ -298,6 +299,8 @@
 		261D5E051C7D9E3B00F7E4B8 /* StartSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = StartSprite.hpp; path = ../Classes/StartSprite.hpp; sourceTree = "<group>"; };
 		261D5E081C7DA0C500F7E4B8 /* UITools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITools.cpp; path = ../Classes/UITools.cpp; sourceTree = "<group>"; };
 		261D5E091C7DA0C500F7E4B8 /* UITools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITools.h; path = ../Classes/UITools.h; sourceTree = "<group>"; };
+		262E16AA1CC62850002AB84D /* MessageLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MessageLayer.cpp; path = ../Classes/MessageLayer.cpp; sourceTree = "<group>"; };
+		262E16AB1CC62850002AB84D /* MessageLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MessageLayer.hpp; path = ../Classes/MessageLayer.hpp; sourceTree = "<group>"; };
 		262E435F1C993A06005A17D2 /* background */ = {isa = PBXFileReference; lastKnownFileType = folder; path = background; sourceTree = "<group>"; };
 		262E43611C993A06005A17D2 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; path = config; sourceTree = "<group>"; };
 		262E43621C993A06005A17D2 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
@@ -554,6 +557,8 @@
 				26054AD91C7C03B800DE718B /* PopLayer.hpp */,
 				26C239161CBF849300955BE4 /* Loading.cpp */,
 				26C239171CBF849300955BE4 /* Loading.hpp */,
+				262E16AA1CC62850002AB84D /* MessageLayer.cpp */,
+				262E16AB1CC62850002AB84D /* MessageLayer.hpp */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -957,6 +962,7 @@
 				2619BAC51CB6170300F95641 /* NumberScroller.cpp in Sources */,
 				26C239181CBF849300955BE4 /* Loading.cpp in Sources */,
 				260CDF131C9668C80027A797 /* AudioController.cpp in Sources */,
+				262E16AC1CC62850002AB84D /* MessageLayer.cpp in Sources */,
 				2614078C1C9AA1410079BDB7 /* PassLayer.cpp in Sources */,
 				26054AD71C7C039C00DE718B /* GameScene.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,

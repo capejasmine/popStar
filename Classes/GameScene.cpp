@@ -5,10 +5,11 @@
 //  Created by huangwen on 16/2/23.
 //
 //
-#define   BACK_GROUND_PNG   "bg_main.png"
+
 #define   STAR_COUNT        100;
-#define   COMBOM            "combo/MultiplyNumber_"
-#define   COMBOM_TEXT       "combo/combo_landscape_RETINA.png"
+#define  TIMER_WAIT      6  //  6
+#define   TIME            60   // 60
+
 
 #include "GameScene.hpp"
 #include "AudioController.hpp"
@@ -21,11 +22,24 @@
 #include "PauseLayer.hpp"
 #include "cocostudio/CocoStudio.h"
 
-#define TIMER_BG_1 "timer/timer_e_l_landscape_RETINA.png"
-#define TIMER_BG_2 "timer/timer_e_r_landscape_RETINA.png"
-#define TIMER_CONTENT_1 "timer/timer_f_l_landscape_RETINA.png"
-#define TIMER_CONTENT_2 "timer/timer_f_r_landscape_RETINA.png"
-#define TIMER_BG    "timer/timer_add_landscape_RETINA.png"
+#define BACK_GROUND_PNG     "bg_main.png"
+#define COMBOM              "combo/MultiplyNumber_"
+
+#define COMBOM_TEXT         "combo/combo_landscape_RETINA.png"
+#define TIMER_BG_1          "timer/timer_e_l_landscape_RETINA.png"
+#define TIMER_BG_2          "timer/timer_e_r_landscape_RETINA.png"
+#define TIMER_CONTENT_1     "timer/timer_f_l_landscape_RETINA.png"
+#define TIMER_CONTENT_2     "timer/timer_f_r_landscape_RETINA.png"
+#define TIMER_BG            "timer/timer_add_landscape_RETINA.png"
+
+#define GAME_OVER           "public/StageTurnType_RETINA.png"
+
+#define PROGRESS_BAR        "public/next_star_RETINA.png"
+#define MESSAGE_BIRD        "public/t_pink_RETINA.png"
+#define MESSAGE_TEXT_COMBO  "public/text_combo.png"
+#define MESSAGE_TEXT_PASS   "public/text_pass.png"
+
+bool GameScene::passMessage = false;
 
 GameScene::GameScene()
 :m_starArr(NULL)
@@ -94,8 +108,9 @@ bool GameScene::init() {
     setDbScore(false);
     setBomb(false);
     
-    showTimer();
+    passMessage = false;
     
+    showTimer();
     return true;
 }
 
@@ -117,10 +132,6 @@ void GameScene::playAnimation(float dt) {
 
 void GameScene::initBackGround() {
     auto size = Director::getInstance()->getWinSize();
-    
-//    auto bg = Sprite::create(BACK_GROUND_PNG);
-//    addChild(bg,kzOrderBackground);
-//    STsetPostion(bg,size/2);
     auto pause = (Button*)(Helper::seekWidgetByName(m_root, "pause"));
     pause->addTouchEventListener(CC_CALLBACK_2(GameScene::touchDown, this));
     
@@ -136,6 +147,16 @@ void GameScene::initBackGround() {
     addChild(bg_particle,kzOrderPopUp);
     STsetPostion(bg_particle,Vec2(size.width/2,size.height));
     
+    auto bar_bg = (Helper::seekWidgetByName(m_root, "bar"));
+    
+    m_progress = ProgressTimer::create(Sprite::create(PROGRESS_BAR));
+    m_progress->setMidpoint(Point(0,0));
+    m_progress->setType(cocos2d::ProgressTimer::Type::BAR);
+    m_progress->setBarChangeRate(Vec2(0, 1));
+    bar_bg->addChild(m_progress);
+    m_progress->setPosition(Vec2(bar_bg->getContentSize()/2) - Vec2(0, 4));
+    
+ 
 }
 
 void GameScene::initStar() {
@@ -441,6 +462,15 @@ void GameScene::removeSameColorStar() {
     xScor->addScore(sameColorList.size() * (getDbScore()? 2 : 1));
     this->schedule(schedule_selector(GameScene::updateScore));
     
+    if (xScor->getScore() > xScor->getTaskScore() && !passMessage) {
+        messageAction(kMessage::kPass);
+        passMessage = true;
+    }
+    
+    if (quickRandom(0, 5) == 0 && !comboMessage) {
+        messageAction(kMessage::kCombo);
+        comboMessage = true;
+    }
 }
 
 void GameScene::playBrokenEffect() {
@@ -602,12 +632,13 @@ void GameScene::showTimer() {
     auto timer_center = Helper::seekWidgetByName(m_root, "timer_center");
     auto timer_bg = Helper::seekWidgetByName(m_root, "timer_bg");
     auto timer_t = Helper::seekWidgetByName(m_root, "timer");
+    
     timer_center->setScale(0);
     timer_bg->setScale(0);
     timer_t->setScale(0);
-    timer_center->runAction(ScaleTo::create(0.3, 1));
-    timer_bg->runAction(ScaleTo::create(0.3, 1));
-    timer_t->runAction(ScaleTo::create(0.3, 1));
+    timer_center->runAction(ScaleTo::create(0.3, 0.5));
+    timer_bg->runAction(ScaleTo::create(0.3, 0.5));
+    timer_t->runAction(ScaleTo::create(0.3, 0.5));
     
     auto timer = Sprite::create(TIMER_BG);
     timer_center->addChild(timer,kzOrderUI);
@@ -648,21 +679,65 @@ void GameScene::showTimer() {
     clipper_r->setStencil(stencil_r);
     
     
-    auto action = Sequence::create(CallFunc::create([=](){
-        stencil_r->runAction(RotateBy::create(5.0, 180));
-    }),CallFunc::create([=](){
-        stencil_l->runAction(Sequence::create(DelayTime::create(5), RotateBy::create(5.0, 180),NULL));
-    }),CallFunc::create([=](){
-        timer_center->runAction(Sequence::create(DelayTime::create(10), ScaleTo::create(0.3, 0),NULL));
-        timer_bg->runAction(Sequence::create(DelayTime::create(10), ScaleTo::create(0.3, 0),NULL));
-        timer_t->runAction(Sequence::create(DelayTime::create(10), ScaleTo::create(0.3, 0),NULL));
+   
+    stencil_r->runAction(Sequence::create(DelayTime::create(TIMER_WAIT), RotateBy::create(TIME, 180),NULL));
+ 
+    stencil_l->runAction(Sequence::create(DelayTime::create(TIMER_WAIT + TIME), RotateBy::create(TIME, 180),NULL));
+ 
+    timer_center->runAction(Sequence::create(DelayTime::create(TIMER_WAIT + TIME * 2), ScaleTo::create(0.3, 0),NULL));
+    timer_bg->runAction(Sequence::create(DelayTime::create(TIMER_WAIT + TIME * 2), ScaleTo::create(0.3, 0),NULL));
+    timer_t->runAction(Sequence::create(DelayTime::create(TIMER_WAIT + TIME * 2), ScaleTo::create(0.3, 0),NULL));
+
+    // game over call
+    auto call = CallFunc::create(CC_CALLBACK_0(GameScene::gameoverAction, this));
+    
+    runAction(Sequence::create(DelayTime::create(TIMER_WAIT + TIME * 2 + 0.01), call, NULL));
+    
+}
+
+void GameScene::messageAction(kMessage msg) {
+    auto size = Director::getInstance()->getWinSize();
+    auto bird = Sprite::create(MESSAGE_BIRD);
+    bird->setPosition(Vec2(-size.width/2, size.height/2));
+    addChild(bird, kzOrderPopUp);
+    
+    auto message = Sprite::create();
+    if(kMessage::kCombo == msg){
+        message->setTexture(MESSAGE_TEXT_COMBO);
+    }
+    else
+    {
+        message->setTexture(MESSAGE_TEXT_PASS);
+    }
+    message->setAnchorPoint(Point(0,0));
+    message->setScale(0);
+    
+    bird->addChild(message);
+    message->setPosition(Vec2(0, bird->getContentSize().height/2));
+    
+    auto action = Sequence::create(MoveBy::create(1.0, Vec2(size.width - 150, 0)),
+                                   Spawn::create(DelayTime::create(2.5f), CallFunc::create([=](){
+        message->runAction(ScaleTo::create(0.4, 1));
+    }),NULL),
+                                   MoveBy::create(1.0, Vec2(-size.width + 150, 0)), CallFunc::create([=](){
+        bird->removeFromParent();
     }),NULL);
     
-    auto call = CallFunc::create([=](){
-        timer->removeFromParent();
-    });
+    bird->runAction(action);
+}
+
+
+void GameScene::gameoverAction() {
+    auto size = Director::getInstance()->getWinSize();
     
-    runAction(Sequence::create(action, DelayTime::create(10.1),call,NULL));
+    auto over = Sprite::create(GAME_OVER);
+    over->setPosition(size/2);
+    over->setScale(0);
+    over->setAnchorPoint(Vec2(0.5, 0.5));
+    over->runAction(ScaleTo::create(0.3, 1.0));
+    this->addChild(over, kzOrderPopUp);
+    
+    this->settouchTag(false);
 }
 
 void GameScene::showCombo(int count) {
@@ -708,11 +783,12 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
 //        auto pauseLayer = PauseLayer::create("pause.json");
 //        pauseLayer->setMenuClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this));
 //        addChild(pauseLayer,kzOrderPopUp);
-        auto target = m_starArr[5 * NUMX + 5];
-        target->changeAnimation();
-        m_countStar -= 1;
         
-        showTimer();
+//        auto target = m_starArr[5 * NUMX + 5];
+//        target->changeAnimation();
+//        m_countStar -= 1;
+        
+        
     }
     else if (name.compare("music") == 0){
         Audio->changeMode();
@@ -764,10 +840,16 @@ void GameScene::updateScore(float dt) {
     
     if (m_last_score != score) {
         m_score->setString(std::to_string(m_cur_score));
+        if(m_progress->getPercentage() < 100){
+            m_progress->setPercentage((float)m_cur_score/(float)xScor->getTaskScore() * 100);
+        }
     }
     else
     {
         m_score->setString(std::to_string(score));
+        if(m_progress->getPercentage() < 100){
+            m_progress->setPercentage((float)score/(float)xScor->getTaskScore() * 100);
+        }
         unschedule(schedule_selector(GameScene::updateScore));
     }
 

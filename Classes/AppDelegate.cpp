@@ -47,7 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     initDesignScale();
     
     // run
-    GameController::getInstace()->enterGameScene();
+    GameController::getInstace()->enterStartScene();
 
     return true;
 }
