@@ -55,13 +55,13 @@ bool MessageLaye::init(kEventType type) {
     bg->addChild(text);
     text->setPosition(bg->getContentSize()/2);
     
-    
+    // 添加事件监听
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(MessageLaye::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(MessageLaye::onTouchBegan, this);
     listener->onTouchEnded = CC_CALLBACK_2(MessageLaye::onTouchBegan, this);
     listener->onTouchCancelled = CC_CALLBACK_2(MessageLaye::onTouchBegan, this);
-    
+    // 设置事件在该界面吞噬，不会继续往下传递事件
     listener->setSwallowTouches(true);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
@@ -73,6 +73,7 @@ bool MessageLaye::onTouchBegan(Touch *touch, Event *unused_event) {
     runAction(Sequence::create(ScaleTo::create(0.4, 0), CallFunc::create([=](){
         if(removeCall)
         {
+            //调用在菜单界面中实现的removecall借口
             removeCall();
         }
         this->removeFromParent();

@@ -78,10 +78,8 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
     
     
     if (name.compare("new_game") == 0) {
-//        //  清除历史纪录
-//        xData->removeRecord();
-//        xScor->resetScore();
-//        xScor->resetLevel();
+//          清除历史纪录
+
         Audio->stopMusic();
         xGam->enterLoadinglayer();
     }
