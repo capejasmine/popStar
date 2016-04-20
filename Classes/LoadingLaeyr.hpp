@@ -22,6 +22,8 @@ public:
     virtual bool init();
     
     void changeScene(float dt);
+    
+    void playEffect(float dt);
 private:
     
     

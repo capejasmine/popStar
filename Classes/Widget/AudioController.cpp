@@ -8,6 +8,7 @@
 
 #include "AudioController.hpp"
 #include "SimpleAudioEngine.h"
+#include "DataManager.hpp"
 
 bool AudioController::m_tag = false;
 
@@ -29,7 +30,11 @@ void AudioController::playEffect(std::string filename){
 }
 
 void AudioController::playMuic(std::string filename) {
-    GetAudioEnging->playBackgroundMusic(filename.c_str());
+    GetAudioEnging->playBackgroundMusic(filename.c_str(), true);
+}
+
+void AudioController::stopMusic() {
+    GetAudioEnging->stopBackgroundMusic();
 }
 
 void AudioController::changeMode() {
@@ -45,4 +50,13 @@ void AudioController::changeMode() {
         m_tag = false;
     }
 }
+
+void AudioController::playbirdTouchEffect() {
+    GetAudioEnging->playEffect(("music/note" + xData->getNoteFromPlist() + ".mp3").c_str());
+    m_note++;
+    if (m_note == 9) {
+        m_note = 1;
+    }
+}
+
 

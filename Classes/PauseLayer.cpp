@@ -29,6 +29,10 @@ bool PauseLayer::init(std::string filename) {
         auto widget = GUIReader::getInstance()->widgetFromJsonFile(filename.c_str());
         addChild(widget);
         
+        auto center = Helper::seekWidgetByName(widget, "center");
+        center->setScale(0);
+        
+        center->runAction(ScaleTo::create(0.4, 1));
         
         Button* menuBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(widget, "menu"));
         menuBtn->addTouchEventListener(CC_CALLBACK_2(PauseLayer::dialogClick, this));
@@ -40,6 +44,7 @@ bool PauseLayer::init(std::string filename) {
         Button* playBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(widget, "play"));
         playBtn->addTouchEventListener(CC_CALLBACK_2(PauseLayer::dialogClick, this));
         
+        Audio->playEffect("music/TPS_PopUp.caf");
         
         return true;
     }
@@ -61,12 +66,16 @@ void PauseLayer::dialogClick(Ref* obj, ui::Widget::TouchEventType type) {
         if(m_menuClick){
             m_menuClick();
             xGam->enterLoadinglayer();
+            
+            Audio->stopMusic();
         }
     }
     else
     {
+        
+        Audio->playEffect("music/TPS_PopUp.caf");
         this->removeFromParent();
     }
     
-    Audio->playEffect("Click.mp3");
+    Audio->playEffect("Media/ButtonClick.m4a");
 }

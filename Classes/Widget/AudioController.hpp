@@ -23,12 +23,19 @@ public:
     
     void playMuic(std::string filename);
     
+    void playbirdTouchEffect();
+    
+    void stopMusic();
+    
     void changeMode();
+    
     
 private:
     static AudioController* instance;
     
     static  bool m_tag;
+    
+    int m_note = 1;
 };
 
 #endif /* AudioController_hpp */

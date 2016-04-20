@@ -7,6 +7,7 @@
 //
 
 #include "PopLayer.hpp"
+#include "AudioController.hpp"
 
 PopLayer* PopLayer::create(std::string filename) {
     PopLayer* layer = new PopLayer();
@@ -24,6 +25,11 @@ bool PopLayer::init(std::string filename) {
         auto widget = GUIReader::getInstance()->widgetFromJsonFile(filename.c_str());
         addChild(widget);
         
+        auto center = Helper::seekWidgetByName(widget, "center");
+        center->setScale(0);
+        
+        center->runAction(ScaleTo::create(0.4, 1));
+        
         Button* yesBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(widget, "yes"));
         yesBtn->addTouchEventListener(CC_CALLBACK_2(PopLayer::dialogYesClick, this));
         
@@ -31,6 +37,7 @@ bool PopLayer::init(std::string filename) {
         noBtn->addTouchEventListener(CC_CALLBACK_2(PopLayer::dialogNoClick, this));
         
         //m_text = dynamic_cast<Text*>(Helper::seekWidgetByName(widget, "text"));
+        Audio->playEffect("music/TPS_PopUp.caf");
         return true;
     }
     return false;
@@ -40,6 +47,9 @@ void PopLayer::dialogYesClick(Ref* obj, ui::Widget::TouchEventType type) {
     if(type != ui::Widget::TouchEventType::ENDED) return;
     if(m_yesClick)
     {
+        Audio->stopMusic();
+        Audio->playEffect("Media/ButtonClick.m4a");
+        
         m_yesClick();
     }
 }
@@ -48,6 +58,8 @@ void PopLayer::dialogNoClick(Ref* obj, ui::Widget::TouchEventType type) {
     if(type != ui::Widget::TouchEventType::ENDED) return;
     if(m_noClick)
     {
+        Audio->playEffect("Media/ButtonClick.m4a");
+        Audio->playEffect("music/TPS_PopUp.caf");
         m_noClick();
     }
 }

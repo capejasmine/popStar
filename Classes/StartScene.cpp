@@ -20,7 +20,6 @@
 #include "DataManager.hpp"
 #include "GameController.hpp"
 #include "UITools.h"
-#include "MessageLayer.hpp";
 
 
 
@@ -43,7 +42,9 @@ bool StartScene::init() {
     
     xGam->setFallMode(quickRandom(0, 2));
     
+    Audio->playEffect("music/HERO_FEVER.caf");
     
+    Audio->playMuic("music/Title.caf");
     
     
     return true;
@@ -54,8 +55,9 @@ void StartScene::initBackGround() {
     auto new_game = (Button*)(Helper::seekWidgetByName(m_root, "new_game"));
     new_game->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
     
-//    auto rate = (Button*)(Helper::seekWidgetByName(m_root, "rate"));
-//    rate->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
+    auto bird = (ImageView*)(Helper::seekWidgetByName(m_root, "Image_5"));
+    bird->setScale(0);
+    bird->runAction(Sequence::create(DelayTime::create(0.5), ScaleTo::create(0.4, 1),NULL));
     
     auto resume = (Button*)(Helper::seekWidgetByName(m_root, "resume"));
     resume->addTouchEventListener(CC_CALLBACK_2(StartScene::touchDown, this));
@@ -80,14 +82,18 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
 //        xData->removeRecord();
 //        xScor->resetScore();
 //        xScor->resetLevel();
+        Audio->stopMusic();
         xGam->enterLoadinglayer();
     }
     else if (name.compare("resume") == 0){
         if(!xData->isExsitRecord() && !xData->getPassRecord())
         {
             log("there is not exist the record");
-            auto popup = MessageLaye::create(kEventType::kWorning);
-            addChild(popup, kzOrderPopUp);
+            if(!m_layer){
+                m_layer = MessageLaye::create(kEventType::kWorning);
+                m_layer->setClickCall(CC_CALLBACK_0(StartScene::clickCall, this));
+                addChild(m_layer, kzOrderPopUp);
+            }
             
         }
         else
@@ -96,14 +102,22 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
             xData->removeRecord();
             xScor->resetScore();
             xScor->resetLevel();
+            
+            if(!m_layer){
+                m_layer = MessageLaye::create(kEventType::kClear);
+                m_layer->setClickCall(CC_CALLBACK_0(StartScene::clickCall, this));
+                addChild(m_layer, kzOrderPopUp);
+            }
             //GameController::getInstace()->enterGameScene();
             
         }
     }
     else if(name.compare("about") == 0){
-        
-        auto popup = MessageLaye::create(kEventType::kAbout);
-        addChild(popup, kzOrderPopUp);
+        if(!m_layer){
+            m_layer = MessageLaye::create(kEventType::kAbout);
+            m_layer->setClickCall(CC_CALLBACK_0(StartScene::clickCall, this));
+            addChild(m_layer, kzOrderPopUp);
+        }
     }
     else if(name.compare("music") == 0){
         Audio->changeMode();
@@ -113,7 +127,7 @@ void StartScene::touchDown(Ref* pSender,ui::Widget::TouchEventType type) {
         
         //updateSocre(quickRandom(50, 200));
     }
-     Audio->playEffect("click.mp3");
+     Audio->playEffect("Media/ButtonClick.m4a");
 }
 
 void StartScene::updateSocre(int socre){
@@ -125,4 +139,8 @@ void StartScene::updateSocre(int socre){
     num+=30;
 }
 
+void StartScene::clickCall() {
+    Audio->playEffect("music/TPS_PopUp.caf");
+    m_layer = nullptr;
+}
 

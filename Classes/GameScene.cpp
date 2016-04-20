@@ -76,6 +76,7 @@ bool GameScene::init() {
     
     xScor->initScore();
     xScor->initLevel();
+    xData->initNote();
     initBackGround();
     
     settouchTag(false);   // 动画中不能 点击
@@ -91,7 +92,8 @@ bool GameScene::init() {
     
     setCurrentTouchStar(nullptr);
     settouchTag(false);
-    //Audio->playMuic("");
+    
+    Audio->playMuic("music/InGameBGM.caf");
     
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
@@ -128,6 +130,14 @@ void GameScene::playAnimation(float dt) {
     auto aciton2 = RepeatForever::create(Sequence::create(MoveBy::create(30, Vec2(-50,20)),MoveBy::create(25, Vec2(50,-20)),NULL));
     sun_bg->runAction(aciton1);
     sun_light->runAction(aciton2);
+    
+    auto effect = Sequence::create(CallFunc::create([=](){
+        Audio->playEffect("music/Number.caf");
+    }), DelayTime::create(1.1),NULL);
+    
+    runAction(Sequence::create(Repeat::create(effect, 5), CallFunc::create([=](){
+        Audio->playEffect("Media/Ready.m4a");
+    }),NULL));
 }
 
 void GameScene::initBackGround() {
@@ -256,6 +266,8 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
                 auto target = m_starArr[row * m_width + col];
                 if(target){
                     if (target->getBoundingBox().containsPoint(point)) {
+                        Audio->playbirdTouchEffect();
+                        
                         // 判断 是否是第一次点击star
                         if (getCurrentTouchStar() == target || inSameColorList(target)) {
                             // 第二次点击  消除 star 队列  (在相同颜色列表中获取点击位置判断)
@@ -281,7 +293,7 @@ bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
                         else
                         {
                             //第一次点击  判断  四周相同颜色star 加入队列
-                            Audio->playEffect("select.mp3");
+//                            Audio->playEffect("select.mp3");
                             
                             // 若不为空
                             if(sameColorList.size() != 0)
@@ -478,7 +490,7 @@ void GameScene::playBrokenEffect() {
     
     auto count = sameColorList.size();
     auto repeat = Repeat::create(Sequence::create(CallFunc::create([=](){
-        Audio->playEffect("broken.mp3");
+        Audio->playEffect("music/garden_catch_bubbles_bottle.mp3");
     }), DelayTime::create(0.05),NULL), count);
     runAction(repeat);
 }
@@ -586,7 +598,7 @@ void GameScene::cheakAndGameOver() {
         
         if (xScor->getScore() > xScor->getTaskScore()) {
             // 过关
-            Audio->playEffect("fire.mp3");
+            Audio->playEffect("music/Pass.caf");
             m_score->setString(std::to_string(xScor->getScore()));
             
             int def = xScor->getScore() - xScor->getTaskScore();
@@ -610,7 +622,7 @@ void GameScene::cheakAndGameOver() {
         }
         else
         {
-            Audio->playEffect("gameover.mp3");
+            Audio->playEffect("music/TimeOver.caf");
             
             
             auto passLayer = PassLayer::create("popup.json", 0, false);
@@ -696,6 +708,8 @@ void GameScene::showTimer() {
 }
 
 void GameScene::messageAction(kMessage msg) {
+    
+    
     auto size = Director::getInstance()->getWinSize();
     auto bird = Sprite::create(MESSAGE_BIRD);
     bird->setPosition(Vec2(-size.width/2, size.height/2));
@@ -718,6 +732,7 @@ void GameScene::messageAction(kMessage msg) {
     auto action = Sequence::create(MoveBy::create(1.0, Vec2(size.width - 150, 0)),
                                    Spawn::create(DelayTime::create(2.5f), CallFunc::create([=](){
         message->runAction(ScaleTo::create(0.4, 1));
+        Audio->playEffect("Media/star_gain.m4a");
     }),NULL),
                                    MoveBy::create(1.0, Vec2(-size.width + 150, 0)), CallFunc::create([=](){
         bird->removeFromParent();
@@ -735,9 +750,11 @@ void GameScene::gameoverAction() {
     over->setScale(0);
     over->setAnchorPoint(Vec2(0.5, 0.5));
     over->runAction(ScaleTo::create(0.3, 1.0));
-    this->addChild(over, kzOrderPopUp);
+    this->addChild(over, kzOrderPopUp + 1);
     
     this->settouchTag(false);
+    
+    Audio->playEffect("music/TimeOver.caf");
 }
 
 void GameScene::showCombo(int count) {
@@ -778,11 +795,13 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
     auto target = (Widget*)obj;
     std::string name = target->getName();
     
+    Audio->playEffect("Media/ButtonClick.m4a");
+    
     if (name.compare("pause") == 0) {
 
-//        auto pauseLayer = PauseLayer::create("pause.json");
-//        pauseLayer->setMenuClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this));
-//        addChild(pauseLayer,kzOrderPopUp);
+        auto pauseLayer = PauseLayer::create("pause.json");
+        pauseLayer->setMenuClickCall(CC_CALLBACK_0(GameScene::yesBtnCall, this));
+        addChild(pauseLayer,kzOrderPopUp);
         
 //        auto target = m_starArr[5 * NUMX + 5];
 //        target->changeAnimation();
@@ -801,7 +820,6 @@ void GameScene::touchDown(Ref* obj, ui::Widget::TouchEventType type) {
         addChild(m_popLayer,kzOrderPopUp,"pop");
     }
     
-    Audio->playEffect("click.mp3");
 }
 
 void GameScene::yesBtnCall() {
@@ -842,6 +860,7 @@ void GameScene::updateScore(float dt) {
         m_score->setString(std::to_string(m_cur_score));
         if(m_progress->getPercentage() < 100){
             m_progress->setPercentage((float)m_cur_score/(float)xScor->getTaskScore() * 100);
+            Audio->playEffect("Media/ScoreUp.m4a");
         }
     }
     else

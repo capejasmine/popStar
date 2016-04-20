@@ -15,6 +15,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "cocostudio/CCSGUIReader.h"
 #include "NumberScroller.hpp"
+#include "MessageLayer.hpp"
 
 USING_NS_CC;
 
@@ -32,6 +33,8 @@ public:
     void touchDown(Ref* pSender,ui::Widget::TouchEventType type);
     
     void updateSocre(int socre);
+    
+    void clickCall();
 private:
     
     cocos2d::ui::Widget* m_root;
@@ -39,6 +42,8 @@ private:
     std::vector<Node*> m_node;
     
     NumberScroller*  m_scroll;
+    
+    MessageLaye* m_layer;
     
     int num = 10;
 };

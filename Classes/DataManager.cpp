@@ -85,5 +85,23 @@ void DataManager::removeRecord() {
     }
 }
 
+#pragma note mark
+
+void DataManager::initNote() {
+    auto root = FileUtils::getInstance()->getValueMapFromFile("music.plist");
+    m_note = root["note"].asString();
+    
+    m_size = m_note.size();
+}
+
+std::string DataManager::getNoteFromPlist() {
+    auto note = m_note.at(m_pos);
+    m_pos++;
+    if (m_pos == m_size) {
+        m_pos = 0;
+    }
+    auto s = std::to_string(note - 48);
+    return std::to_string(note - 48);
+}
 
 

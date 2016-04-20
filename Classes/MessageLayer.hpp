@@ -15,7 +15,8 @@ USING_NS_CC;
 
 enum kEventType{
     kWorning = 188,
-    kAbout
+    kAbout,
+    kClear
 };
 
 class MessageLaye : public Layer {
@@ -31,8 +32,12 @@ public:
     virtual void onTouchEnded(Touch *touch, Event *unused_event);
     virtual void onTouchCancelled(Touch *touch, Event *unused_event);
     
-private:
+    void setClickCall(std::function<void()> call){
+        removeCall = call;
+    }
     
+private:
+    std::function<void()>   removeCall;
 };
 
 #endif /* MessageLayer_hpp */

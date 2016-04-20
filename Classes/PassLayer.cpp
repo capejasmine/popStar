@@ -30,6 +30,11 @@ bool PassLayer::init(std::string filename, int count) {
         m_widget = GUIReader::getInstance()->widgetFromJsonFile(filename.c_str());
         addChild(m_widget);
         
+        auto center = Helper::seekWidgetByName(m_widget, "center");
+        center->setScale(0);
+        
+        center->runAction(ScaleTo::create(0.4, 1));
+        
         Button* menuBtn = dynamic_cast<Button*>(Helper::seekWidgetByName(m_widget, "menu"));
         menuBtn->addTouchEventListener(CC_CALLBACK_2(PassLayer::dialogClick, this));
         
@@ -60,6 +65,8 @@ bool PassLayer::init(std::string filename, int count) {
         m_delay = 1.0;
         starAniamtion(count);
         
+        Audio->playEffect("music/TPS_PopUp.caf");
+        
         return true;
     }
     return false;
@@ -74,6 +81,7 @@ void PassLayer::dialogClick(Ref* obj, ui::Widget::TouchEventType type) {
 //        xData->removeRecord();
 //        xScor->saveScore();
 //        xScor->addLevel();
+        Audio->stopMusic();
         xGam->enterGameScene();
     }
     else if(name.compare("menu") == 0)
@@ -84,13 +92,17 @@ void PassLayer::dialogClick(Ref* obj, ui::Widget::TouchEventType type) {
             xScor->resetScore();
             xData->removeRecord();
             xGam->enterLoadinglayer();
+            
+            Audio->stopMusic();
         }
         else
         {
             xData->setPassRecord(true);
             xScor->saveScore();
             //xScor->addLevel();
+            
             xGam->enterLoadinglayer();
+            Audio->stopMusic();
         }
     }
     else
@@ -99,7 +111,7 @@ void PassLayer::dialogClick(Ref* obj, ui::Widget::TouchEventType type) {
         xGam->enterGameScene();
     }
 
-    Audio->playEffect("Click.mp3");
+    Audio->playEffect("Media/ButtonClick.m4a");
 }
 
 void PassLayer::starAniamtion(int count) {
@@ -107,10 +119,11 @@ void PassLayer::starAniamtion(int count) {
     for(int i = 1; i <= count; i++){
         auto star = dynamic_cast<ImageView*>(Helper::seekWidgetByName(m_widget, "star" + std::to_string(i)));
         auto action = Sequence::create(DelayTime::create(m_delay), CallFunc::create([=](){
+            Audio->playEffect("music/TPS_Star" + std::to_string(i) + ".caf");
             star->setVisible(true);
         }),NULL);
         star->runAction(action);
-        m_delay += 0.5;
+        m_delay += 0.7;
     }
     
 }

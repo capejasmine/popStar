@@ -32,8 +32,16 @@ public:
     
     bool isExsitRecord();
     
-private:
+    void initNote();
     
+    std::string getNoteFromPlist();
+    
+private:
+    std::string m_note;
+    
+    int m_pos = 0;
+    
+    int m_size;
 };
 
 #endif /* DataManager_hpp */

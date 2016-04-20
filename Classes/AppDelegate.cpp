@@ -41,13 +41,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
     searchPahts.push_back("ui");
     searchPahts.push_back("cocos");
     searchPahts.push_back("animation");
+    searchPahts.push_back("plist");
+
     
     FileUtils::getInstance()->setSearchPaths(searchPahts);
     
     initDesignScale();
     
     // run
-    GameController::getInstace()->enterStartScene();
+    GameController::getInstace()->enterGameScene();
 
     return true;
 }

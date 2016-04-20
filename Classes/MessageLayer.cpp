@@ -11,6 +11,7 @@
 
 #define  LAYER_BG       "popup/event_reward_cloud_RETINA.png"
 #define  TEXT_ABOUT     "popup/event_reward_cloud_about_RETINA.png"
+#define  TEXT_CLEAR     "popup/event_reward_cloud_clear_RETINA.png"
 #define  TEXT_WARNING   "popup/event_reward_cloud__waring_RETINA.png"
 
 MessageLaye* MessageLaye::create(kEventType type) {
@@ -43,9 +44,13 @@ bool MessageLaye::init(kEventType type) {
     if (type == kEventType::kAbout) {
         text->setTexture(TEXT_ABOUT);
     }
-    else
+    else if(type == kEventType::kWorning)
     {
         text->setTexture(TEXT_WARNING);
+    }
+    else
+    {
+        text->setTexture(TEXT_CLEAR);
     }
     bg->addChild(text);
     text->setPosition(bg->getContentSize()/2);
@@ -65,7 +70,13 @@ bool MessageLaye::init(kEventType type) {
 
 //touch event
 bool MessageLaye::onTouchBegan(Touch *touch, Event *unused_event) {
-    this->removeFromParent();
+    runAction(Sequence::create(ScaleTo::create(0.4, 0), CallFunc::create([=](){
+        if(removeCall)
+        {
+            removeCall();
+        }
+        this->removeFromParent();
+    }),NULL));
     return true;
 }
 
