@@ -750,9 +750,17 @@ void GameScene::gameoverAction() {
     over->setScale(0);
     over->setAnchorPoint(Vec2(0.5, 0.5));
     over->runAction(ScaleTo::create(0.3, 1.0));
-    this->addChild(over, kzOrderPopUp + 1);
+    this->addChild(over, kzOrderPopUp - 1);
     
     this->settouchTag(false);
+    
+    auto pause = (Button*)(Helper::seekWidgetByName(m_root, "pause"));
+    auto quit = (Button*)(Helper::seekWidgetByName(m_root, "Button_17"));
+    pause->setTouchEnabled(false);
+    quit->setTouchEnabled(false);
+    runAction(Sequence::create(DelayTime::create(2.0f), CallFunc::create([=](){
+        xGam->enterLoadinglayer();
+    }),NULL));
     
     Audio->playEffect("music/TimeOver.caf");
 }
