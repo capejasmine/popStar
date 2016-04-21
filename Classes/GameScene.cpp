@@ -166,6 +166,8 @@ void GameScene::initBackGround() {
     bar_bg->addChild(m_progress);
     m_progress->setPosition(Vec2(bar_bg->getContentSize()/2) - Vec2(0, 4));
     
+    m_progress->setPercentage((float)xScor->getScore()/(float)xScor->getTaskScore() * 100);
+    
  
 }
 
