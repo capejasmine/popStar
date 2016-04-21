@@ -39,7 +39,6 @@
 #define MESSAGE_TEXT_COMBO  "public/text_combo.png"
 #define MESSAGE_TEXT_PASS   "public/text_pass.png"
 
-bool GameScene::passMessage = false;
 
 GameScene::GameScene()
 :m_starArr(NULL)
@@ -111,6 +110,7 @@ bool GameScene::init() {
     setBomb(false);
     
     passMessage = false;
+    comboMessage = false;
     
     showTimer();
     return true;
@@ -216,8 +216,9 @@ void GameScene::intStarWithRecord() {
 void GameScene::propsAction(std::string type) {
     if (type.compare("Mult") == 0) {
         setDbScore(true);
-        this->scheduleOnce(schedule_selector(GameScene::doubleScore), 5.0);
-        log("double score time over");
+        // 5秒后取消 双倍积分
+        this->scheduleOnce(schedule_selector(GameScene::doubleScore), 3);
+        log("double score time!!!!");
         
     }
     else
@@ -257,6 +258,7 @@ void GameScene::propsAction(std::string type) {
 
 void GameScene::doubleScore(float dt){
     setDbScore(false);
+    log("double score time over");
 }
 
 bool GameScene::onTouchBegan(Touch *touch, Event *unused_event) {
@@ -440,16 +442,14 @@ void GameScene::removeSameColorStar() {
         
         if(it)
         {
-        sameColorList.pop_back();
-        
-        starData data = it->getData();
-        it->deadAction();
-        //cava->removeFromParent();
-        m_starArr[data.row * m_width + data.col] = nullptr;
+            sameColorList.pop_back();
+            
+            starData data = it->getData();
+            it->deadAction();
+            m_starArr[data.row * m_width + data.col] = nullptr;
         }
     }), DelayTime::create(time),NULL), count);
-    //runAction(repeat);
-    
+
     //particle
     
 //    auto particle = ParticleSystemQuad::create("point_star.plist");

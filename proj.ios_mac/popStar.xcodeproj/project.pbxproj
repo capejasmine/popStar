@@ -31,12 +31,12 @@
 		261376111C9BA8FE000DF95D /* PauseLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2613760F1C9BA8FE000DF95D /* PauseLayer.cpp */; };
 		261407871C9A87B90079BDB7 /* cocos in Resources */ = {isa = PBXBuildFile; fileRef = 261407861C9A87B90079BDB7 /* cocos */; };
 		2614078C1C9AA1410079BDB7 /* PassLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2614078A1C9AA1410079BDB7 /* PassLayer.cpp */; };
-		2619BAC51CB6170300F95641 /* NumberScroller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2619BAC31CB6170300F95641 /* NumberScroller.cpp */; settings = {ASSET_TAGS = (); }; };
+		2619BAC51CB6170300F95641 /* NumberScroller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2619BAC31CB6170300F95641 /* NumberScroller.cpp */; };
 		261D5DF21C7D403900F7E4B8 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5DF01C7D403900F7E4B8 /* GameController.cpp */; };
 		261D5E021C7D919300F7E4B8 /* Globle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E001C7D919300F7E4B8 /* Globle.cpp */; };
 		261D5E061C7D9E3B00F7E4B8 /* StartSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E041C7D9E3B00F7E4B8 /* StartSprite.cpp */; };
 		261D5E0A1C7DA0C500F7E4B8 /* UITools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261D5E081C7DA0C500F7E4B8 /* UITools.cpp */; };
-		262E16AC1CC62850002AB84D /* MessageLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 262E16AA1CC62850002AB84D /* MessageLayer.cpp */; settings = {ASSET_TAGS = (); }; };
+		262E16AC1CC62850002AB84D /* MessageLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 262E16AA1CC62850002AB84D /* MessageLayer.cpp */; };
 		262E43671C993A06005A17D2 /* background in Resources */ = {isa = PBXBuildFile; fileRef = 262E435F1C993A06005A17D2 /* background */; };
 		262E43691C993A06005A17D2 /* config in Resources */ = {isa = PBXBuildFile; fileRef = 262E43611C993A06005A17D2 /* config */; };
 		262E436A1C993A06005A17D2 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 262E43621C993A06005A17D2 /* fonts */; };
@@ -44,10 +44,10 @@
 		262E436C1C993A06005A17D2 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 262E43641C993A06005A17D2 /* sounds */; };
 		262E436D1C993A06005A17D2 /* star in Resources */ = {isa = PBXBuildFile; fileRef = 262E43651C993A06005A17D2 /* star */; };
 		262E436E1C993A06005A17D2 /* ui in Resources */ = {isa = PBXBuildFile; fileRef = 262E43661C993A06005A17D2 /* ui */; };
-		2645A8291CBF8B4200C70AF3 /* animation in Resources */ = {isa = PBXBuildFile; fileRef = 2645A8281CBF8B4200C70AF3 /* animation */; settings = {ASSET_TAGS = (); }; };
-		269EFD581CC73183003983C4 /* plist in Resources */ = {isa = PBXBuildFile; fileRef = 269EFD571CC73183003983C4 /* plist */; settings = {ASSET_TAGS = (); }; };
+		2645A8291CBF8B4200C70AF3 /* animation in Resources */ = {isa = PBXBuildFile; fileRef = 2645A8281CBF8B4200C70AF3 /* animation */; };
+		269EFD581CC73183003983C4 /* plist in Resources */ = {isa = PBXBuildFile; fileRef = 269EFD571CC73183003983C4 /* plist */; };
 		26AA79D71C97E93C00D097A0 /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26AA79D51C97E93C00D097A0 /* DataManager.cpp */; };
-		26C239181CBF849300955BE4 /* Loading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26C239161CBF849300955BE4 /* Loading.cpp */; settings = {ASSET_TAGS = (); }; };
+		26C239181CBF849300955BE4 /* Loading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26C239161CBF849300955BE4 /* Loading.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -795,6 +795,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = UQ6SNU9CD4;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "popStar" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1075,6 +1080,7 @@
 					"-ObjC",
 					"-lxml2",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.toyboxmediainc.good;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1115,6 +1121,7 @@
 					"-ObjC",
 					"-lxml2",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.toyboxmediainc.good;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

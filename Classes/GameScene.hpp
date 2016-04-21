@@ -135,9 +135,9 @@ private:
     
     ProgressTimer* m_progress;
     
-    static bool passMessage;
+    bool passMessage;
     
-    bool comboMessage = false;
+    bool comboMessage;
 
 };
 
